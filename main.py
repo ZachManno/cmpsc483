@@ -56,39 +56,68 @@ class ExressionTree(object):
     def __init__(self, root=None):
         self.__root = root
         self.postorder_result = []
+        self.preorder_result = []
+        self.inorder_result = []
 
-    def inorder(self):
+    """
+    Generate Order Trees
+    """
+    def generate_inorder(self):
+        self.inorder_result = []
         self.__inorder_helper(self.__root)
+
+    def generate_preorder(self):
+        self.preorder_result = []
+        self.__preorder_helper(self.__root)
+
+    def generate_postorder(self):
+        self.postorder_result = []
+        self.__postorder_helper(self.__root)
+
+    """
+    Recursive Order helper functions
+    """
 
     def __inorder_helper(self, node):
         if node:
             self.__inorder_helper(node.left)
-            print node.value
+            self.inorder_result.append(node.value)
             self.__inorder_helper(node.right)
-
-    def preorder(self):
-        self.__preorder_helper(self.__root)
 
     def __preorder_helper(self, node):
         if node:
-            print node.value
+            self.preorder_result.append(node.value)
             self.__preorder_helper(node.left)
             self.__preorder_helper(node.right)
-
-    def postorder(self):
-        self.__postorder_helper(self.__root)
 
     def __postorder_helper(self, node):
         if node:
             self.__postorder_helper(node.left)
             self.__postorder_helper(node.right)
-            print node.value
             self.postorder_result.append(node.value)
-            print "postorder", self.postorder_result
+
+    """
+    Getters for Order Results
+    """
 
     def get_postorder_result(self):
-        # print self.postorder_result
+        if self.postorder_result == []:
+            self.generate_postorder()
+
         return self.postorder_result
+
+    def get_preorder_result(self):
+        if self.preorder_result == []:
+            self.generate_preorder()
+
+        return self.preorder_result
+
+    def get_inorder_result(self):
+        if self.inorder_result == []:
+            self.generate_inorder()
+
+        return self.inorder_result
+
 
 
 def create_expression_tree(infix):
@@ -111,26 +140,28 @@ def create_expression_tree(infix):
 
     return ExressionTree(stack.pop())
 
+def run_tests():
+    print "In Order:"
+    create_expression_tree("(A+B)*6").generate_inorder()
+    #print "Post Order:"
+    #create_expression_tree("(A+B)*6").postorder()
+    print "Pre Order:"
+    create_expression_tree("(A+B)*6").generate_preorder()
 
-print "In Order:"
-create_expression_tree("(A+B)*6").inorder()
-#print "Post Order:"
-#create_expression_tree("(A+B)*6").postorder()
-print "Pre Order:"
-create_expression_tree("(A+B)*6").preorder()
-
-print "In Order:"
-create_expression_tree("(A+B+C+D)/4").inorder()
-print "Post Order:"
-exprtree = create_expression_tree("(A+B+C+D)/(4)")
-exprtree.postorder()
-
-
-print "Pre Order:"
-create_expression_tree("(A+B+C+D)/4").preorder()
+    print "In Order:"
+    create_expression_tree("(A+B+C+D)/4").generate_inorder()
+    print "Post Order:"
+    exprtree = create_expression_tree("(A+B+C+D)/(4)")
+    exprtree.generate_postorder()
 
 
-print "Result:"
-#print ExressionTree.get_postorder_result()
+    print "Pre Order:"
+    create_expression_tree("(A+B+C+D)/4").generate_preorder()
 
-print exprtree.get_postorder_result();
+
+    print "Result:"
+    #print ExressionTree.get_postorder_result()
+
+    print exprtree.get_postorder_result()
+
+def wells_tests():
