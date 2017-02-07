@@ -165,3 +165,4 @@ def run_tests():
     print exprtree.get_postorder_result()
 
 def wells_tests():
+    pass
