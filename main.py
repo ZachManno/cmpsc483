@@ -142,24 +142,26 @@ class ExpressionTreeBuilder(object):
 def run_tests():
     builder = ExpressionTreeBuilder()
 
-    print "In Order:"
+    print ("In Order:")
     builder.create_expression_tree("(A+B)*6").generate_inorder()
 
-    print "Pre Order:"
+    print ("Pre Order:")
     builder.create_expression_tree("(A+B)*6").generate_preorder()
 
-    print "In Order:"
+    print ("In Order:")
     builder.create_expression_tree("(A+B+C+D)/4").generate_inorder()
-    print "Post Order:"
+    print ("Post Order:")
     exprtree = builder.create_expression_tree("(A+B+C+D)/(4)")
     exprtree.generate_postorder()
 
-    print "Pre Order:"
+    print ("Pre Order:")
     builder.create_expression_tree("(A+B+C+D)/4").generate_preorder()
 
-    print "Result:"
-    print exprtree.get_postorder_result()
+    print ("PostOrder Result:")
+    print (exprtree.get_postorder_result())
 
 
 def wells_tests():
     pass
+
+run_tests()
