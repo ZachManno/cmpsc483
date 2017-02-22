@@ -26,7 +26,7 @@ class ExressionTree(object):
         self.postorder_result = []
         self.preorder_result = []
         self.inorder_result = []
-
+        self.node_list = []
 
     """
     Generate Order Trees
@@ -47,12 +47,14 @@ class ExressionTree(object):
     Recursive Order helper functions
     """
     def __inorder_helper(self, node):
+        self.node_list.append(node)
         if node:
             self.__inorder_helper(node.left)
             self.inorder_result.append(node.value)
             self.__inorder_helper(node.right)
 
     def __preorder_helper(self, node):
+        self.node_list.append(node)
         if node:
             self.preorder_result.append(node.value)
             self.__preorder_helper(node.left)
@@ -60,6 +62,7 @@ class ExressionTree(object):
 
     def __postorder_helper(self, node):
         if node:
+            self.node_list.append(node)
             self.__postorder_helper(node.left)
             self.__postorder_helper(node.right)
             self.postorder_result.append(node.value)
