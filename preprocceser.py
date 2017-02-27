@@ -104,6 +104,16 @@ def preproc_main(input):
         def __str__(self):
             return "Equation: " + self.value + '\n' + "Flags: " + ','.join(self.flags) + '\n' + "isAns: " + str(self.isAns)
 
+    ### Variable declarations ###
+
+    eq_list = []  # list of Equations including the ANS equation (marked by the isAns member of class Equation
+    variable_dec = []  # list of variable declarations (might not need idk yet)
+    const_dec = []  # list of consant declarations
+    answer = ""  # final answer string after substitutions
+
+    ### End Variable Declarations ###
+
+    ### Stripping all white space, putting each line into a list ##
     print("Original input:\n\""+input+"\"")
     input = input.replace(" ", "")
     input = input.replace("\t", "")
@@ -112,10 +122,7 @@ def preproc_main(input):
     print ("Input split:")
     print (input)
     print ("----------------- end input string testing ------------------\n")
-    eq_list = [] #list of Equations including the ANS equation (marked by the isAns member of class Equation
-    variable_dec = [] #list of variable declarations (might not need idk yet)
-    const_dec = [] #list of consant declarations
-    answer = ""#final answer string after substitutions
+
 
     for line in input:
             if line.startswith("CONST"): #test if line is a constant
