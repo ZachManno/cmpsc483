@@ -104,7 +104,7 @@ def preproc_main(input):
         def __str__(self):
             return "Equation: " + self.value + '\n' + "Flags: " + ','.join(self.flags) + '\n' + "isAns: " + str(self.isAns)
 
-    print("Original input:\n\"\n"+input+"\n\"")
+    print("Original input:\n\""+input+"\"")
     input = input.replace(" ", "")
     input = input.replace("\t", "")
     print("Input stripped:\n" + input)
