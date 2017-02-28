@@ -166,14 +166,10 @@ def preproc_main(input):
     ### ANSWER PROCESSING ###
     print ("---------Begin answer processing debug printing-----------")
 
-
-
-
-
     print("Printout of all equations parsed:\n--------")
     for item in eq_list:
         print(item)
-        print("------")
+        print("--------")
 
 
 #Don't know if necessary to separate out variable dec
@@ -181,7 +177,7 @@ def preproc_main(input):
  #   """
   #  :param input:
    # append to variable dec if it is a variable dec
-    #somehow need to figure out a way to determine if it is a variable dec vs equation
+    #somehow need to figure out a way to determine if it is a variable dec vs equation, but a var dec is an equation
     #"""
 #
 
@@ -196,12 +192,20 @@ def preproc_main(input):
 
 
 ### TESTING ###
-test1 ="""x=5
+def run_tests(tests):
+    for test in tests:
+        preproc_main(test)
+
+### define test inputs ###
+tests = [
+"""x=5
         y=7
 ANS = x+y"""
-test2 ="""x=5
+,
+"""x=5
         y=7
         z=AVG(x,y)
 ANS = SQUARE(z,AREA(x,y))"""
-preproc_main(test1)
-preproc_main(test2)
+]
+
+run_tests(tests)
