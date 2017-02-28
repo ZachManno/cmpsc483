@@ -97,23 +97,35 @@ def preproc_main(input):
     class Equation:
         def __init__(self,value):
             self.value = value
+            tokens = value.split('=')  # this splits the equation into two parts
+            # Example:
+            # VAR1=x+y+6
+            # tokens = ['VAR1','x+y+6]
+            self.varName = tokens[0]
+            self.expression = tokens[1] #part of equation after the equals sign
             self.flags = [] #flags such as AVG SQUARE etc
-            self.isAns = None #is the ANS equation
+            if self.varName == "ANS":
+                self.isAns = True
+            else:
+                self.isAns = False
             self.isVarDec = None #is a simple variable declaration such as x=5
 
+
         def __str__(self):
-            return "Equation: " + self.value + '\n' + "Flags: " + ','.join(self.flags) + '\n' + "isAns: " + str(self.isAns)
+            return "Equation: " + self.value + '\n' + "varName: " + self.varName + '\n' + "expression: " + self.expression + '\n' + "Flags: " + ','.join(self.flags) + '\n' + "isAns: " + str(self.isAns)
 
     ### Variable declarations ###
 
+    FLAGS = ['AVG','SQUARE','SQRT', 'QUADRATIC','AREA', 'AREA_TRIANGLE']
     eq_list = []  # list of Equations including the ANS equation (marked by the isAns member of class Equation
     variable_dec = []  # list of variable declarations (might not need idk yet)
-    const_dec = []  # list of consant declarations
+    const_dec = []  # list of constant declarations
     answer = ""  # final answer string after substitutions
 
     ### End Variable Declarations ###
 
     ### Stripping all white space, putting each line into a list ##
+    print("----------------- Begin input string testing ------------------\n")
     print("Original input:\n\""+input+"\"")
     input = input.replace(" ", "")
     input = input.replace("\t", "")
@@ -121,23 +133,41 @@ def preproc_main(input):
     input = input.splitlines()
     print ("Input split:")
     print (input)
-    print ("----------------- end input string testing ------------------\n")
+    print ("----------------- End input string testing ------------------\n")
+
+    def other_equation(line,eq_list):
+        """
+        :param input,eq_list:
+        :return:
+        parse out any keywords, return equation and keyword flags
+        """
+        eq = Equation(line)
+
+        #check for flags in equation
+        for flag in FLAGS:
+            if flag in eq.expression:
+                eq.flags.append(flag)
+
+        eq_list.append(eq)
+
+        #possibly add in isVarDec
+
 
 
     for line in input:
             if line.startswith("CONST"): #test if line is a constant
                 const_dec.append(line)
-            other_equation(line,eq_list) #call func to look for other equations, append to other_eq list
             if line.startswith("ANS"):  # test if line is answer equation
                 answer = line
+            other_equation(line, eq_list)  # call func to look for other equations, append to other_eq list
+
+
+
     ### ANSWER PROCESSING ###
     print ("---------Begin answer processing debug printing-----------")
-    eq1 = Equation("z=7")
-    eq1.isVarDec = True
-    eq2 = Equation("ANS=6+y")
-    eq2.isAns = True
-    eq_list.append(eq1)
-    eq_list.append(eq2)
+
+
+
 
 
     print("Printout of all equations parsed:\n--------")
@@ -157,21 +187,21 @@ def preproc_main(input):
 
 
 
-def other_equation(line,eq_list):
-    """
-    :param input,eq_list:
-    :return:
-    parse out any keywords, return equation and keyword flags
-    """
+
+
+
 
 
 
 
 
 ### TESTING ###
-test1 = "L      IN  E1\nLI   NE2\n  L  INE3 "
-test2 ="""x=5
-y=7
+test1 ="""x=5
+        y=7
 ANS = x+y"""
+test2 ="""x=5
+        y=7
+        z=AVG(x,y)
+ANS = SQUARE(z,AREA(x,y))"""
 preproc_main(test1)
 preproc_main(test2)
