@@ -207,15 +207,10 @@ def preproc_main(input):
 
 
 
-        #possibly add in isVarDec
-
-
     # Equation Procesessing #
     for line in input:
             if line.startswith("CONST"): #test if line is a constant (not sure if needed, ask Dr. S)
                 const_dec.append(line)
-            if line.startswith("ANS"):  # test if line is answer equation
-                answer_string = line
             other_equation(line, eq_list)  # call func to look for other equations, append to other_eq list
 
     # ANSWER PROCESSING #
