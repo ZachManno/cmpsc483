@@ -89,6 +89,37 @@ ALGORITHM:
 4. Return final ANS equation and flags
 5. Return all other equations and flags
 
+INPUT REQUIREMENTS:
+-All equation vars have lower case letters
+-The final result must begin with the variable "ANS"
+-Any equations that are unrelated to the "ANS" equation will be disregarded
+-Any spaces and tabs are okay
+
+VALID INPUT EXAMPLE:
+"
+    x=5+y
+    z  = 6
+
+    ANS = z * x
+"
+RESULT:
+(6)*(5+y)
+
+INVALID INPUT EXAMPLE:
+"
+    x=5+y
+    z  = 6
+
+    w = z * x
+"
+INVALID INPUT EXAMPLE:
+"
+    X=5+y
+    Zeta  = 6
+
+    white = Zeta * X
+"
+
 """
 
 import copy
