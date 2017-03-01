@@ -174,5 +174,27 @@ def wells_tests():
     print(exprtree.get_inorder_result())
 
 
+"""
+Things to exploit:
+FLAGS = ['AVG','SQUARE','SQRT', 'QUADRATIC','AREA', 'AREA_TRIANGLE']
+Each piece needs to be identified.
+
+AVG
+(x + y) / 2
+
+Square
+Not average, two terms mul together?
+
+Sort
+??????
+
+Area
+Multiple terms multiplied together
+
+Area triangle
+Multiple terms multiplied together / 2
+
+
+"""
 
 wells_tests()
