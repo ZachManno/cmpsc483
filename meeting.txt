@@ -1,0 +1,38 @@
+- Macro expansion is quirky
+
+Big Z Question: Ans = x * y but this isn't a real problem! Ruh roh! Scooby snacks?
+JD: We have just arithmatic statements atm.
+
+Shaffer: Good start! There's plenty of work to be done. Just work on the straight equations for now (later address Macros.)
+
+Rodney thought: Honestly think that this should be handled immediately. Substantial refactor would be required imo otherwise
+
+Shaffer:
+A lot of this isn't defined, but flags sound like a really good approach.
+Make final equation made up of smaller equations. <---- This is obvious but very important. Everyone should understand this.
+Special case processing doesn't work.
+Something about tildes. Ole?
+No reason to try to do this outside of a tree.
+
+Big Z with the last question:
+I have an idea of a constant, some problems have these (F to C conversion such as 9/5)
+
+Little Lasky with the clarification: User wants to define constants
+
+Shaffer: Sounds good.
+
+Stephen comes back with a great XCOM 2 reference, followed by a funny black box comic from Shaffer.
+
+Stephen follows up with a clutch binoculars example to really convey how we all feel, and then presses on with
+making Shaffer feel bad about an inside joke that doesn't exist.
+
+Shaffer continues the discussion with marriage advice on the engineering mindset. Code refuse.
+
+
+God Stephens trolling is relentless.
+Shaffer now thinks I'm emotional and JD gave up a promising acting career for college.
+
+
+Do plenty of research (Ontology). Another mindspin followed by an inevitable dig from Stephen about my Heart Rate Monitor
+
+Shaffer "I thought you were giving it to me." RIP Rodney 2017
