@@ -17,6 +17,8 @@ class Node(object):
         self.value = value
         self.left = None
         self.right = None
+        self.flags = []
+        self.isans = False
 
 class ExressionTree(object):
 
@@ -92,6 +94,12 @@ class ExpressionTreeBuilder(object):
         pass
 
     def create_expression_tree(self, infix):
+        """
+        Create an expression tree based on infix. Assign flags to potential areas of the tree.
+        """
+
+
+
         infix = "".join(infix.split())
         postfix = self.postfix_convert(infix)
 
@@ -109,12 +117,54 @@ class ExpressionTreeBuilder(object):
                 node.left = left
                 stack.append(node)
 
-        return ExressionTree(stack.pop())
+        # Declare root as answer
+        root = stack.pop()
+        root.isans = True
+        exprtree = ExressionTree(root)
+
+        # Base expression tree created. Identify potential answer structure.
+
+    def evaluate_AVG(self, exprtree):
+        """
+        Check for average strategy:
+        - Iterate to each node and identify division.
+            - If division, count number of nodes on left. If it it equals num on right, or num on right is letter,
+            set flag and return.
+
+        """
+        if exprtree.__root.value == "/":
+            # Possible AVG problem.
+            expected = exprtree.__root.value.right.value
+            if expected.isalpha():
+                exprtree.__root.flags.append("AVG")
+            elif expected.isdigit():
+                # Confirm same count on left, otherwise it's not an average.
+                valcount = self.avg_recurse(exprtree.__root)
+
+                if valcount == expected:
+                    # We have a match! This is an average.
+                    exprtree.__root.flags.append("AVG")
+
+
+    def avg_recurse(self, node):
+        """
+        Recursive helper for average. Traverses tree and counts nodes.
+        """
+        count = 0
+        if node != None:
+            if node.value.isdigit():
+                count += 1
+
+                count += self.avg_recurse(node.left)
+                count += self.avg_recurse(node.right)
+
+        return count
 
     def postfix_convert(self, infix):
         stack = []
         postfix = []
 
+        #Append each char to stack / postfix in appropriate order.
         for char in infix:
             if char not in operator_precedence:
                 postfix.append(char)
@@ -137,9 +187,12 @@ class ExpressionTreeBuilder(object):
                             postfix.append(stack.pop())
                         stack.append(char)
 
+        # Transfer stack to postfix.
         while len(stack) != 0:
-            postfix.append(stack.pop())
-
+            val = stack.pop()
+            print(val)
+            postfix.append(val)
+        print(postfix)
         return postfix
 
 
@@ -172,6 +225,37 @@ def wells_tests():
     print(exprtree.get_postorder_result())
     print(exprtree.get_preorder_result())
     print(exprtree.get_inorder_result())
+
+
+class BTElement(object):
+    def __init__(self, left, right, relation):
+        self.left = left
+        self.right = right
+        self.relation = relation
+
+class STGroup(object):
+    def __init__(self, stelements):
+        self.stelements = stelements
+
+    def __str__(self):
+        displaystr = ""
+        for elem in self.stelements:
+            displaystr += elem + " "
+
+        return displaystr[:-1]
+
+class STElement(object):
+    def __init__(self, value, isnegative, isnumber):
+        self.value = value
+        self.isnegative = isnegative
+        self.isnumber = isnumber
+
+    def __str__(self):
+        negmodifier = ""
+        if self.isnegative:
+            negmodifier = "-"
+
+        return negmodifier + self.value
 
 
 """
