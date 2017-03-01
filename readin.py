@@ -16,6 +16,7 @@ def readin():
         i=i+1
     return lines
 
+
 def doread(lines):
     next=input("Input next line of code (hit ENTER to finish)\n")
     if len(next)==0:
