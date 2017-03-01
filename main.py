@@ -71,17 +71,18 @@ class ExressionTree(object):
     Getters for Order Results
     """
     def get_postorder_result(self):
-        if self.postorder_result is False:
+        if len(self.postorder_result) == 0:
+            print("Gen!")
             self.generate_postorder()
         return self.postorder_result
 
     def get_preorder_result(self):
-        if self.preorder_result is False:
+        if len(self.preorder_result) == 0:
             self.generate_preorder()
         return self.preorder_result
 
     def get_inorder_result(self):
-        if self.inorder_result is False:
+        if len(self.inorder_result) == 0:
             self.generate_inorder()
         return self.inorder_result
 
@@ -145,26 +146,33 @@ class ExpressionTreeBuilder(object):
 def run_tests():
     builder = ExpressionTreeBuilder()
 
-    print ("In Order:")
+    print("In Order:")
     builder.create_expression_tree("(A+B)*6").generate_inorder()
 
-    print ("Pre Order:")
+    print("Pre Order:")
     builder.create_expression_tree("(A+B)*6").generate_preorder()
 
-    print ("In Order:")
+    print("In Order:")
     builder.create_expression_tree("(A+B+C+D)/4").generate_inorder()
-    print ("Post Order:")
+
+    print("Post Order:")
     exprtree = builder.create_expression_tree("(A+B+C+D)/(4)")
     exprtree.generate_postorder()
 
-    print ("Pre Order:")
+    print("Pre Order:")
     builder.create_expression_tree("(A+B+C+D)/4").generate_preorder()
 
-    print ("PostOrder Result:")
-    print (exprtree.get_postorder_result())
+    print("PostOrder Result:")
+    print(exprtree.get_postorder_result())
 
 
 def wells_tests():
-    pass
+    builder = ExpressionTreeBuilder()
+    exprtree = builder.create_expression_tree("(5 + 4 + 3) / 3")
+    print(exprtree.get_postorder_result())
+    print(exprtree.get_preorder_result())
+    print(exprtree.get_inorder_result())
 
-run_tests()
+
+
+wells_tests()
