@@ -99,7 +99,6 @@ class ExpressionTreeBuilder(object):
         """
 
 
-
         infix = "".join(infix.split())
         postfix = self.postfix_convert(infix)
 
@@ -123,6 +122,7 @@ class ExpressionTreeBuilder(object):
         exprtree = ExressionTree(root)
 
         # Base expression tree created. Identify potential answer structure.
+        return exprtree
 
     def evaluate_AVG(self, exprtree):
         """
@@ -145,7 +145,6 @@ class ExpressionTreeBuilder(object):
                     # We have a match! This is an average.
                     exprtree.__root.flags.append("AVG")
 
-
     def avg_recurse(self, node):
         """
         Recursive helper for average. Traverses tree and counts nodes.
@@ -164,7 +163,7 @@ class ExpressionTreeBuilder(object):
         stack = []
         postfix = []
 
-        #Append each char to stack / postfix in appropriate order.
+        # Append each char to stack / postfix in appropriate order.
         for char in infix:
             if char not in operator_precedence:
                 postfix.append(char)
