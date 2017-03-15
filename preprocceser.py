@@ -235,9 +235,6 @@ def preproc_main(input):
     print (input)
     print ("----------------- End input string testing ------------------\n")
 
-
-
-
     # Equation Procesessing #
     for line in input:
             if line.startswith("CONST"): #test if line is a constant (not sure if needed, ask Dr. S)
@@ -251,22 +248,16 @@ def preproc_main(input):
         print(item)
         print("--------")
 
-
-
     substituted_answer_string = ""
-
-    #Check if ans has any substitutions
-    if len(eq_list) > 1:
+    if len(eq_list) > 1: #Check if ans has any substitutions
         for item in eq_list:
             if item.isAns is True:
                 answer_equation = copy.copy(item)
                 ans_string = answer_equation.expression #storing answer equation expression
-        substituted_answer_string = substitute(ans_string,eq_list)
+        substituted_answer_string = substitute(ans_string,eq_list) #substitute all equations in
         print("|||||||||||||||||||")
         print("Substituted answer string ==" + substituted_answer_string)
         print("|||||||||||||||||||")
-
-
 
 
 
