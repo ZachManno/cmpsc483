@@ -124,10 +124,8 @@ INVALID INPUT EXAMPLE:
 
 import copy
 
-
-def preproc_main(input):
-    ### CLASSES ###
-    class Equation:
+### CLASSES ###
+class Equation:
         def __init__(self,value):
             self.value = value
             tokens = value.split('=')  # this splits the equation into two parts
@@ -148,8 +146,10 @@ def preproc_main(input):
         def __str__(self):
             return "Equation: " + self.value + '\n' + "varName: " + self.varName + '\n' + "expression: " + self.expression + '\n' + "Flags: " + ','.join(self.flags) + '\n' + "isAns: " + str(self.isAns)
 
-    ### END CLASSES ###
+### END CLASSES ###
 
+
+def preproc_main(input):
 
     ### FUNCTIONS ###
 
@@ -313,7 +313,11 @@ ANS = z/4"""
 """x=5
         y=7
         z=AVG(x,y)
-ANS = SQUARE(z,AREA(x,y))"""
+ANS = SQUARE(z,AREA(x,y))""",
+"""x=2
+    y=4
+    z= 3
+ANS = (x + y + z)/3"""
 ]
 
 
