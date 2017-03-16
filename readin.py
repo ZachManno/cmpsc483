@@ -3,16 +3,28 @@
 import sys
 import getopt
 
+
+### get the options to only come up once all code has been input; until then, just read input code until first blank
+### output should be a single string, each line separated by \n
+
 def readin():
     ### save each line of input to a list of lines, output them when the next input is an empty line
     ### print all previous lines before prompting for next line
-    ### in future: add delete feature?
+
     lines = []
 
-    intro=input("Enter the first line of code to get started, or hit ENTER to quit:\n")
+    intro=input("Enter the first line of code, or hit ENTER to quit:\n")
     if len(intro)==0:
         return
     lines.append(intro)
+
+    newline=1;
+    while newline>0:
+        next = input("Enter the next line of code followed by ENTER, or hit ENTER to finish:\n")
+        newline=len(next)
+        if len(next)!=0:
+            lines.append(next)
+
     options(lines)
 
     print("Your code input:\n")
@@ -35,7 +47,7 @@ def options(lines):
         return
     else:
         print(next + " is not an option.")
-    options(lines)
+    ###options(lines)
 
 def doread(lines):
     next=input("Input next line of code:\n")
