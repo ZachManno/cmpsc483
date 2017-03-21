@@ -1,6 +1,5 @@
 #https://abhirama.wordpress.com/2009/08/26/expression-tree/
 
-
 operator_precedence = {
     '(': 0,
     ')': 0,
@@ -24,7 +23,7 @@ class ExressionTree(object):
 
     def __init__(self, root=None):
         # Field values
-        self.__root = root
+        self.root = root
         self.postorder_result = []
         self.preorder_result = []
         self.inorder_result = []
@@ -35,15 +34,15 @@ class ExressionTree(object):
     """
     def generate_inorder(self):
         self.inorder_result = []
-        self.__inorder_helper(self.__root)
+        self.__inorder_helper(self.root)
 
     def generate_preorder(self):
         self.preorder_result = []
-        self.__preorder_helper(self.__root)
+        self.__preorder_helper(self.root)
 
     def generate_postorder(self):
         self.postorder_result = []
-        self.__postorder_helper(self.__root)
+        self.__postorder_helper(self.root)
 
     """
     Recursive Order helper functions
@@ -122,6 +121,9 @@ class ExpressionTreeBuilder(object):
         exprtree = ExressionTree(root)
 
         # Base expression tree created. Identify potential answer structure.
+        self.evaluate_AVG(exprtree)
+
+        # Return evaluated expression tree.
         return exprtree
 
     def evaluate_AVG(self, exprtree):
@@ -132,18 +134,18 @@ class ExpressionTreeBuilder(object):
             set flag and return.
 
         """
-        if exprtree.__root.value == "/":
+        if exprtree.root.value == '/':
             # Possible AVG problem.
-            expected = exprtree.__root.value.right.value
+            expected = exprtree.root.right.value
             if expected.isalpha():
-                exprtree.__root.flags.append("AVG")
+                exprtree.root.flags.append("AVG")
             elif expected.isdigit():
                 # Confirm same count on left, otherwise it's not an average.
-                valcount = self.avg_recurse(exprtree.__root)
+                valcount = self.avg_recurse(exprtree.root)
 
                 if valcount == expected:
                     # We have a match! This is an average.
-                    exprtree.__root.flags.append("AVG")
+                    exprtree.root.flags.append("AVG")
 
     def avg_recurse(self, node):
         """
@@ -154,8 +156,8 @@ class ExpressionTreeBuilder(object):
             if node.value.isdigit():
                 count += 1
 
-                count += self.avg_recurse(node.left)
-                count += self.avg_recurse(node.right)
+            count += self.avg_recurse(node.left)
+            count += self.avg_recurse(node.right)
 
         return count
 
