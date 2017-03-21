@@ -281,3 +281,5 @@ Multiple terms multiplied together / 2
 """
 
 wells_tests()
+
+"y = 8 - a"

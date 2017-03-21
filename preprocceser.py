@@ -80,14 +80,12 @@ ANS = AVG(a,b,c) + AVG(d,e,f)
 
 ALGORITHM:
 
-1. scan through variable declarations, store
-2. Scan through equations that do not begin with "ANS"
-     -parse out any keywords (ie AVG)
-     -store all information
-3. Scan equation that begins with ANS
+1. Scan through equations that do not begin with "ANS"
+     -store each equation in a list
+2. Scan equation that begins with ANS
     - scan each variable in ANS equation, substitute with other equations as necessary, add flags
-4. Return final ANS equation and flags
-5. Return all other equations and flags
+3. Return final ANS equation and flags
+
 
 INPUT REQUIREMENTS:
 -All equation vars have lower case letters
@@ -199,7 +197,7 @@ def preproc_main(input):
                 new_answer_string = substitute_helper(new_answer_string, i, temp_equation_list)  # substitute out variable
                     # print("new ans str[" + str(i) + "] = " + new_answer_string)
 
-        # print("45454new ans str = " + new_answer_string)
+        # print("new ans str = " + new_answer_string)
         # print("Len eq list 1= " + str(len(equation_list)))
         return substitute(new_answer_string,temp_equation_list)  # call sub with new answer string until there are no more equations to substitute
 
@@ -285,12 +283,12 @@ def preproc_main(input):
 
     # Equation Procesessing #
     for line in input:
-            if line.startswith("CONST"): #test if line is a constant (not sure if needed, ask Dr. S)
-                const_dec.append(line)
+            # if line.startswith("CONST"): #test if line is a constant (not sure if needed, ask Dr. S)
+            #    const_dec.append(line)
             other_equation(line, eq_list)  # call func to look for other equations, append to other_eq list
 
     # ANSWER PROCESSING #
-    print ("---------Begin answer processing debug printing-----------")
+    print("---------Begin answer processing debug printing-----------")
     print("Printout of all equations parsed:\n--------")
     for item in eq_list:
         print(item)
@@ -301,8 +299,6 @@ def preproc_main(input):
         for item in eq_list:
             if item.isAns is True:
                 substituted_ans_string = substitute(item.expression, eq_list)  # substitute all equations in
-
-        # substituted_ans_string = substitute(ans_string,eq_list) #substitute all equations in
         print("Substituted answer string ==" + substituted_ans_string)
 
     # PREPROCESSOR:  (decrypting any AVG, SQUARE, TRI etc)
@@ -355,10 +351,6 @@ def preproc_main(input):
 
 #other idea: preprocessor must minify all vars except for ANS. Will help with equation parser
 
-
-#should we spend time on input validation (syntax checker etc) or is that not worth it - focus only on the actual problem
-
-
 ### TESTING ###
 def run_tests(tests):
     for test in tests:
@@ -402,7 +394,6 @@ run_tests(tests)
 
 #IS IT OKAY IF EQUATION VARIABLES CAN ONLY BE LOWER CASE LETTERS, OR SHOULD WE CONVERT THEM TO ALL LOWER CASE LETTERS FIRST
 
-
 # RECURSIVE SUBSTITUTION ALGORITHM:
 #  x=5
 #  y=7
@@ -425,25 +416,6 @@ run_tests(tests)
 # ANS=((5)+y)+9
 # reevaluate
 
-
-
-
-
-
-
-
-#possible idea: Since we assume all input is valid. the equations further down the eq_list can have variables from
-#equations in the beginning of the eq_list. If not there, assume variable is on its own
-#Example:
-#x=y+7
-#z=a+b
-#ANS=z+k
-#Look for variable dec that match "z"
-#Found z=a+b
-#ANS=(a+b)+k
-#Look for variable dec that match "k"
-#None found
-#End
 
 
 
@@ -472,6 +444,14 @@ def parse_nested(text, left=r'[(]', right=r'[)]', sep=r','):
 text = 'SQUARE((AVG((5),(7))),AREA(x,y+4))'
 print("---------------------------")
 print(parse_nested(text))
+equations = parse_nested(text)
+def recursiveRef(li):
+    if len(idxList) > 1:
+        return recursiveRef(nested[idxList[0]], idxList[1:])
+    return nested[idxList[0]]
+
+
+
 
 text = 'x+AVG(x,y+5,z)*SQUARE(x+y,z*f)'
 print("---------------------------")
@@ -479,15 +459,30 @@ print(parse_nested(text))
 
 text = 'x+AVG(x,y+5,z)*(x+y)'
 
-#
-#test = 'x + AVG(w,y,z) * 5'
-#
+
+test = 'x + AVG(w,y,z) * 5'
+
 #"x + ((w+y+z)/3)*-b"
 #"term + term * term"
 #"        term:AVG,3 term:5 positivity:-1"
- #   "class average with list of term classes"
+#   "class average with list of term classes"
 
 
 print("---------------------------")
 print(parse_nested(text))
+
+text = 'p*AVG(x,AREA(y,z),AVG(a,b,c)) + j'
+print("---------------------------")
+print(parse_nested(text))
+
+
+text = 'AVG(a,b,c) + AVG(x,y)'
+print("---------------------------")
+print(parse_nested(text))
+
+
+
+
+
+
 
