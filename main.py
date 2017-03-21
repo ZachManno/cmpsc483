@@ -9,6 +9,11 @@ operator_precedence = {
     '/': 2
 }
 
+
+
+# Term for each num and sign
+
+
 result = []
 
 class Node(object):
@@ -19,7 +24,7 @@ class Node(object):
         self.flags = []
         self.isans = False
 
-class ExressionTree(object):
+class ExpressionTree(object):
 
     def __init__(self, root=None):
         # Field values
@@ -73,7 +78,6 @@ class ExressionTree(object):
     """
     def get_postorder_result(self):
         if len(self.postorder_result) == 0:
-            print("Gen!")
             self.generate_postorder()
         return self.postorder_result
 
@@ -96,8 +100,6 @@ class ExpressionTreeBuilder(object):
         """
         Create an expression tree based on infix. Assign flags to potential areas of the tree.
         """
-
-
         infix = "".join(infix.split())
         postfix = self.postfix_convert(infix)
 
@@ -118,7 +120,7 @@ class ExpressionTreeBuilder(object):
         # Declare root as answer
         root = stack.pop()
         root.isans = True
-        exprtree = ExressionTree(root)
+        exprtree = ExpressionTree(root)
 
         # Base expression tree created. Identify potential answer structure.
         self.evaluate_AVG(exprtree)
@@ -191,9 +193,7 @@ class ExpressionTreeBuilder(object):
         # Transfer stack to postfix.
         while len(stack) != 0:
             val = stack.pop()
-            print(val)
             postfix.append(val)
-        print(postfix)
         return postfix
 
 
@@ -221,12 +221,19 @@ def run_tests():
 
 
 def wells_tests():
-    builder = ExpressionTreeBuilder()
-    exprtree = builder.create_expression_tree("(5 + 4 + 3) / 3")
-    print(exprtree.get_postorder_result())
-    print(exprtree.get_preorder_result())
-    print(exprtree.get_inorder_result())
+    equations = ["5*x+2", "a * x - 5 * b + c + d + 2 * b", "5 + (1+2+3)/3 - (4+5+6)/(1+2+3)"]
+    equations = ["(6*5)/(4*2)", "(6*5)/4*2", "(6*5*4)/4*2"]
+    equations = ["-2"]
 
+    for equation in equations:
+        print("====================")
+        print(equation)
+        builder = ExpressionTreeBuilder()
+        exprtree = builder.create_expression_tree(equation)
+        print(exprtree.get_postorder_result())
+        # print(exprtree.get_preorder_result())
+        # print(exprtree.get_inorder_result())
+        print("====================")
 
 class BTElement(object):
     def __init__(self, left, right, relation):
@@ -282,4 +289,4 @@ Multiple terms multiplied together / 2
 
 """
 
-wells_tests()
+# wells_tests()
