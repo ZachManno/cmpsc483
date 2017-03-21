@@ -56,31 +56,18 @@ class Term(object):
 
         # Determine if an "attribute" is a char or a num.
         if attribute.isalpha() or attribute.isdigit():
-            try:
-                # Attempt to parse integer from value
-                value = int(valueinput)
-                self.value = abs(value)
+            stripvalue = "".join(attribute.split())
 
-                # Determine Sign
-                if value < 0:
-                    self.sign = "-"
-                else:
-                    self.sign = "+"
+            # Determine Sign
+            if stripvalue[0] == "-" or stripvalue[0] == "+":
+                self.sign = stripvalue[0]
+                self.value = stripvalue[1:]
+            else:
+                self.sign = "+"
+                self.value = stripvalue
 
-            except ValueError:
-                # Parse variable chars from value
-                stripvalue = "".join(attribute.split())
-
-                # Determine Sign
-                if stripvalue[0] == "-" or stripvalue[0] == "+":
-                    self.sign = stripvalue[0]
-                    self.value = stripvalue[1:]
-                else:
-                    self.sign = "+"
-                    self.value = stripvalue
-
-                if len(self.value) != 1:
-                    raise SystemError("Error! " + valueinput + " not valid input!")
+            if len(self.value) != 1:
+                raise SystemError("Error! " + valueinput + " not valid input!")
         elif attribute == '*' or attribute == '/':
             # Multiplication / Division Term. Break apart using postorder result.
             oppositeattribute = "/"
@@ -116,39 +103,7 @@ class Term(object):
 
         return strrep
 
-
-
-def divtermsplit(input):
-    curridx = 0
-    terms = []
-    parencount = 0
-    for idx in range(len(input)):
-        # Identify parenthesis
-        if input[idx] == '(':
-            parencount += 1
-        if input[idx] == ')':
-            parencount -= 1
-
-        if parencount == 0 and input[idx] == '/':
-            terms.append(input[curridx:idx])
-            curridx = idx
-    terms.append(input[curridx:])
-    return terms
-
 equations = ["5x+20", "ax - 5b + c + d + 2005 + 20b", "5 + (1+2+3)/3 - (4+5+6)/(1+2+3)"]
-# for equation in equations:
-#     equation = "".join(equation.split())
-#     print(equation)
-
-# for equation in equations:
-#     equation = "".join(equation.split())
-#     terms = additiontermsplit(equation)
-#     divrefinement = []
-#     for term in terms:
-#         for divterm in divtermsplit(term):
-#             divrefinement.append(divterm)
-#     print(divrefinement)
-
 easyequations = [
     "1 + 2",
     "1 + 3 -c + 5",
