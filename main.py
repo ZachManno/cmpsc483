@@ -9,12 +9,10 @@ operator_precedence = {
     '/': 2
 }
 
-
-
 # Term for each num and sign
 
-
 result = []
+
 
 class Node(object):
     def __init__(self, value):
@@ -23,6 +21,7 @@ class Node(object):
         self.right = None
         self.flags = []
         self.isans = False
+
 
 class ExpressionTree(object):
 
@@ -235,36 +234,6 @@ def wells_tests():
         # print(exprtree.get_inorder_result())
         print("====================")
 
-class BTElement(object):
-    def __init__(self, left, right, relation):
-        self.left = left
-        self.right = right
-        self.relation = relation
-
-class STGroup(object):
-    def __init__(self, stelements):
-        self.stelements = stelements
-
-    def __str__(self):
-        displaystr = ""
-        for elem in self.stelements:
-            displaystr += elem + " "
-
-        return displaystr[:-1]
-
-class STElement(object):
-    def __init__(self, value, isnegative, isnumber):
-        self.value = value
-        self.isnegative = isnegative
-        self.isnumber = isnumber
-
-    def __str__(self):
-        negmodifier = ""
-        if self.isnegative:
-            negmodifier = "-"
-
-        return negmodifier + self.value
-
 
 """
 Things to exploit:
@@ -285,8 +254,6 @@ Multiple terms multiplied together
 
 Area triangle
 Multiple terms multiplied together / 2
-
-
 """
 
 # wells_tests()
