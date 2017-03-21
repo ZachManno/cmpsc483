@@ -2,9 +2,15 @@ import sys
 import main
 
 
-class EquationConstructor(object):
+class Equation(object):
 
     def __init__(self, equation):
+        """
+        Generate a list of terms in self.terms that represents the equation split by addition/subtraction.
+
+        :param equation: String representation of an equation. Can contain macros.
+        """
+
         self.originalequation = equation
         self.terms = []
 
@@ -49,7 +55,13 @@ class EquationConstructor(object):
 class Term(object):
     def __init__(self, valueinput, postorder, attribute):
         """
-        Construct a term, with a stored sign, accepts chars and ints
+        Construct a term, with a stored sign.
+        Terms may have a tag, which better describes the term in the context of the problem.
+
+        :param valueinput: String representation of an equation. Can contain macros. (TODO: OUTDATED)
+        :param postorder: post order representation of an equation.
+        :param attribute: Representation of "Value" of a term. * or / for mul and div, variable or integer for base
+        value.
         """
         self.originalvalue = valueinput
         self.postorder = postorder
@@ -63,12 +75,12 @@ class Term(object):
             # Determine Sign
             if stripvalue[0] == "-" or stripvalue[0] == "+":
                 self.sign = stripvalue[0]
-                self.value = stripvalue[1:]
+                self.attribute = stripvalue[1:]
             else:
                 self.sign = "+"
-                self.value = stripvalue
+                self.attribute = stripvalue
 
-            if len(self.value) != 1:
+            if len(self.attribute) != 1:
                 raise SystemError("Error! " + valueinput + " not valid input!")
 
         elif attribute == '*' or attribute == '/':
@@ -105,7 +117,7 @@ class Term(object):
                 strrep += self.attribute
             strrep = strrep[:len(strrep) - 1]
         else:
-            strrep = "(" + str(self.sign) + str(self.value) + ")"
+            strrep = "(" + str(self.sign) + str(self.attribute) + ")"
 
         return strrep
 
@@ -131,7 +143,7 @@ def run_tests():
     ]
 
     for equation in easyequations:
-        formatequation = EquationConstructor(equation)
+        formatequation = Equation(equation)
         print("------")
         print(equation)
         for term in formatequation.terms:
