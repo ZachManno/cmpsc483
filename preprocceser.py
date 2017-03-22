@@ -80,20 +80,20 @@ ANS = AVG(a,b,c) + AVG(d,e,f)
 
 ALGORITHM:
 
-1. scan through variable declarations, store
-2. Scan through equations that do not begin with "ANS"
-     -parse out any keywords (ie AVG)
-     -store all information
-3. Scan equation that begins with ANS
+1. Scan through equations that do not begin with "ANS"
+     -store each equation in a list
+2. Scan equation that begins with ANS
     - scan each variable in ANS equation, substitute with other equations as necessary, add flags
-4. Return final ANS equation and flags
-5. Return all other equations and flags
+3. Return final ANS equation and flags
+
 
 INPUT REQUIREMENTS:
 -All equation vars have lower case letters
 -The final result must begin with the variable "ANS"
 -Any equations that are unrelated to the "ANS" equation will be disregarded
 -Any spaces and tabs are okay
+-Variables should be 1 letter
+-All macros are wrapped in brackets
 
 VALID INPUT EXAMPLE:
 "
@@ -123,6 +123,7 @@ INVALID INPUT EXAMPLE:
 """
 
 import copy
+import re
 
 ### CLASSES ###
 class Equation:
@@ -198,7 +199,7 @@ def preproc_main(input):
                 new_answer_string = substitute_helper(new_answer_string, i, temp_equation_list)  # substitute out variable
                     # print("new ans str[" + str(i) + "] = " + new_answer_string)
 
-        # print("45454new ans str = " + new_answer_string)
+        # print("new ans str = " + new_answer_string)
         # print("Len eq list 1= " + str(len(equation_list)))
         return substitute(new_answer_string,temp_equation_list)  # call sub with new answer string until there are no more equations to substitute
 
@@ -211,18 +212,65 @@ def preproc_main(input):
                 eq.flags.append(flag)
 
         eq_list.append(eq)
+
+
+    #///////////// Macro Functions \\\\\\\\\\\\\\\\
+    def macro_avg():
+        print("AVG")
+        return "SEEEVEN"
+
+    def macro_square():
+        return "SEEEVEN"
+
+    def macro_sqrt():
+        return "SEEEVEN"
+
+    def macro_quadratic():
+        return "SEEEVEN"
+
+    def macro_area():
+        return "SEEEVEN"
+
+    def macro_area_triangle():
+        return "SEEEVEN"
+
+    macro_dispatcher = \
+        {
+            'AVG': macro_avg,
+            'SQUARE': macro_square,
+            'SQRT': macro_sqrt,
+            'QUADRATIC': macro_quadratic,
+            'AREA': macro_area,
+            'AREA_TRIANGLE': macro_area_triangle,
+        }
+    # //////// End Macro Functions \\\\\\\\\\\\\\
+
+    def macro_processing(flag,input_str,position):
+        """
+
+        :param flag: the flag to be processed
+        :param input_str: the input string in which to process out the flag
+        :param position: position in the string that the flag occurs
+        :return: string with the flags processed out
+        """
+        print("Flag = " + flag + "\nInput = " + input_str + "\nPosition = " + str(position))
+        #print("rest of string = " + input_str[position+len(flag):])
+
+
+
+        return input_str[0:position] + macro_dispatcher[flag]() + input_str[position+len(flag):] #macro_dispatcher replaces the flag
+
     ### END FUNCTIONS ###
 
     ### VARIABLE DECLARATIONS ###
 
     #POSSIBLE IDEA FOR FLAGS IN FUTURE (BY JOSH): User can add their own flags and definitions for flags
     FLAGS = ['AVG','SQUARE','SQRT', 'QUADRATIC','AREA', 'AREA_TRIANGLE']
-    eq_list = []  # list of Equations including the ANS equation (marked by the isAns member of class Equation
-    variable_dec = []  # list of variable declarations (might not need idk yet)
+    eq_list = []  # list of Equations including the ANS equation (marked by the isAns member of class Equation)
     const_dec = []  # list of constant declarations
-    ans_string = ""  # final answer string after substitutions
 
     ### END VARIABLE DECLARATIONS ###
+
 
     ### Stripping all white space, putting each line into a list ##
     print("----------------- Begin input string testing ------------------\n")
@@ -237,52 +285,65 @@ def preproc_main(input):
 
     # Equation Procesessing #
     for line in input:
-            if line.startswith("CONST"): #test if line is a constant (not sure if needed, ask Dr. S)
-                const_dec.append(line)
+            # if line.startswith("CONST"): #test if line is a constant (not sure if needed, ask Dr. S)
+            #    const_dec.append(line)
             other_equation(line, eq_list)  # call func to look for other equations, append to other_eq list
 
     # ANSWER PROCESSING #
-    print ("---------Begin answer processing debug printing-----------")
+    print("---------Begin answer processing debug printing-----------")
     print("Printout of all equations parsed:\n--------")
     for item in eq_list:
         print(item)
         print("--------")
 
 
-
-    substituted_answer_string = ""
-
-    #Check if ans has any substitutions
-    if len(eq_list) > 1:
+    if len(eq_list) > 1:  # Check if ans has any substitutions
         for item in eq_list:
             if item.isAns is True:
-                answer_equation = copy.copy(item)
-                ans_string = answer_equation.expression #storing answer equation expression
-        substituted_answer_string = substitute(ans_string,eq_list)
-        print("|||||||||||||||||||")
-        print("Substituted answer string ==" + substituted_answer_string)
-        print("|||||||||||||||||||")
+                substituted_ans_string = substitute(item.expression, eq_list)  # substitute all equations in
+        print("Substituted answer string ==" + substituted_ans_string)
+
+    # PREPROCESSOR:  (decrypting any AVG, SQUARE, TRI etc)
+    flagsExist = True
+    while(flagsExist):
+        flagsExist = False  # assume no flags exist, if one is found in the for loop below, reset back to true
+        for flag in FLAGS:
+            if flag in substituted_ans_string:
+                substituted_ans_string =macro_processing(flag,substituted_ans_string,substituted_ans_string.find(flag))
+                flagsExist = True
 
 
 
 
 
-#Don't know if necessary to separate out variable dec
-#somehow need to figure out a way to determine if it is a variable dec vs equation, but a var dec is an equation
 
 
-#possible idea: Since we assume all input is valid. the equations further down the eq_list can have variables from
-#equations in the beginning of the eq_list. If not there, assume variable is on its own
-#Example:
-#x=y+7
-#z=a+b
-#ANS=z+k
-#Look for variable dec that match "z"
-#Found z=a+b
-#ANS=(a+b)+k
-#Look for variable dec that match "k"
-#None found
-#End
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -291,10 +352,6 @@ def preproc_main(input):
 
 
 #other idea: preprocessor must minify all vars except for ANS. Will help with equation parser
-
-
-#should we spend time on input validation (syntax checker etc) or is that not worth it - focus only on the actual problem
-
 
 ### TESTING ###
 def run_tests(tests):
@@ -339,7 +396,6 @@ run_tests(tests)
 
 #IS IT OKAY IF EQUATION VARIABLES CAN ONLY BE LOWER CASE LETTERS, OR SHOULD WE CONVERT THEM TO ALL LOWER CASE LETTERS FIRST
 
-
 # RECURSIVE SUBSTITUTION ALGORITHM:
 #  x=5
 #  y=7
@@ -361,3 +417,74 @@ run_tests(tests)
 
 # ANS=((5)+y)+9
 # reevaluate
+
+
+
+
+def parse_nested(text, left=r'[(]', right=r'[)]', sep=r','):
+    """ Based on http://stackoverflow.com/a/17141899/190597 (falsetru) """
+    pat = r'({}|{}|{})'.format(left, right, sep)
+    tokens = re.split(pat, text)
+    stack = [[]]
+    for x in tokens:
+        if not x or re.match(sep, x): continue
+        if re.match(left, x):
+            stack[-1].append([])
+            stack.append(stack[-1][-1])
+        elif re.match(right, x):
+            stack.pop()
+            if not stack:
+                raise ValueError('error: opening bracket is missing')
+        else:
+            stack[-1].append(x)
+    if len(stack) > 1:
+        print(stack)
+        raise ValueError('error: closing bracket is missing')
+    return stack.pop()
+
+
+text = 'SQUARE((AVG((5),(7))),AREA(x,y+4))'
+print("---------------------------")
+print(parse_nested(text))
+equations = parse_nested(text)
+def recursiveRef(li):
+    if len(idxList) > 1:
+        return recursiveRef(nested[idxList[0]], idxList[1:])
+    return nested[idxList[0]]
+
+
+
+
+text = 'x+AVG(x,y+5,z)*SQUARE(x+y,z*f)'
+print("---------------------------")
+print(parse_nested(text))
+
+text = 'x+AVG(x,y+5,z)*(x+y)'
+
+
+test = 'x + AVG(w,y,z) * 5'
+
+#"x + ((w+y+z)/3)*-b"
+#"term + term * term"
+#"        term:AVG,3 term:5 positivity:-1"
+#   "class average with list of term classes"
+
+
+print("---------------------------")
+print(parse_nested(text))
+
+text = 'p*AVG(x,AREA(y,z),AVG(a,b,c)) + j'
+print("---------------------------")
+print(parse_nested(text))
+
+
+text = 'AVG(a,b,c) + AVG(x,y)'
+print("---------------------------")
+print(parse_nested(text))
+
+
+
+
+
+
+
