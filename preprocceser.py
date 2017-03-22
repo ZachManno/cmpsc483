@@ -94,6 +94,8 @@ INPUT REQUIREMENTS:
 -The final result must begin with the variable "ANS"
 -Any equations that are unrelated to the "ANS" equation will be disregarded
 -Any spaces and tabs are okay
+-Variables should be 1 letter
+-All macros are wrapped in brackets
 
 VALID INPUT EXAMPLE:
 "
