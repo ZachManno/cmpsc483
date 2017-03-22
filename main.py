@@ -9,12 +9,9 @@ operator_precedence = {
     '/': 2
 }
 
-
-
 # Term for each num and sign
-
-
 result = []
+
 
 class Node(object):
     def __init__(self, value):
@@ -23,6 +20,7 @@ class Node(object):
         self.right = None
         self.flags = []
         self.isans = False
+
 
 class ExpressionTree(object):
 
@@ -101,9 +99,9 @@ class ExpressionTreeBuilder(object):
         Create an expression tree based on infix. Assign flags to potential areas of the tree.
         """
         infix = "".join(infix.split())
-        postfix = self.postfix_convert(infix)
-
         stack = []
+
+        postfix = self.postfix_convert(infix)
 
         for char in postfix:
             if char not in operator_precedence:
@@ -122,56 +120,23 @@ class ExpressionTreeBuilder(object):
         root.isans = True
         exprtree = ExpressionTree(root)
 
-        # Base expression tree created. Identify potential answer structure.
-        self.evaluate_AVG(exprtree)
-
         # Return evaluated expression tree.
         return exprtree
-
-    def evaluate_AVG(self, exprtree):
-        """
-        Check for average strategy:
-        - Iterate to each node and identify division.
-            - If division, count number of nodes on left. If it it equals num on right, or num on right is letter,
-            set flag and return.
-
-        """
-        if exprtree.root.value == '/':
-            # Possible AVG problem.
-            expected = exprtree.root.right.value
-            if expected.isalpha():
-                exprtree.root.flags.append("AVG")
-            elif expected.isdigit():
-                # Confirm same count on left, otherwise it's not an average.
-                valcount = self.avg_recurse(exprtree.root)
-
-                if valcount == expected:
-                    # We have a match! This is an average.
-                    exprtree.root.flags.append("AVG")
-
-    def avg_recurse(self, node):
-        """
-        Recursive helper for average. Traverses tree and counts nodes.
-        """
-        count = 0
-        if node != None:
-            if node.value.isdigit():
-                count += 1
-
-            count += self.avg_recurse(node.left)
-            count += self.avg_recurse(node.right)
-
-        return count
 
     def postfix_convert(self, infix):
         stack = []
         postfix = []
+        previdx = 0
+        idx = 0
 
         # Append each char to stack / postfix in appropriate order.
         for char in infix:
-            if char not in operator_precedence:
-                postfix.append(char)
-            else:
+            if char in operator_precedence:
+                prevcontent = infix[previdx: idx]
+                if len(prevcontent) > 0:
+                    postfix.append(prevcontent)
+                previdx = idx + 1
+
                 if len(stack) == 0:
                     stack.append(char)
                 else:
@@ -189,6 +154,11 @@ class ExpressionTreeBuilder(object):
                                 break
                             postfix.append(stack.pop())
                         stack.append(char)
+            idx += 1
+
+        prevcontent = infix[previdx: idx]
+        if len(prevcontent) > 0:
+            postfix.append(prevcontent)
 
         # Transfer stack to postfix.
         while len(stack) != 0:
@@ -221,49 +191,34 @@ def run_tests():
 
 
 def wells_tests():
-    equations = ["5*x+2", "a * x - 5 * b + c + d + 2 * b", "5 + (1+2+3)/3 - (4+5+6)/(1+2+3)"]
-    equations = ["(6*5)/(4*2)", "(6*5)/4*2", "(6*5*4)/4*2"]
-    equations = ["-2"]
+    equations = [
+                "5*x+2", "a * x - 5 * b + c + d + 2 * b",
+                 "5 + (1+2+3)/3 - (4+5+6)/(1+2+3)"]
+    equations = ["(600*5)/(SWAG[5,3,4]*2)", "(6*5)/4*2", "(6*5*4)/4*2"]
+    # equations = ["-2"]
+    # equations = ["1 + 2*3","2*3 + 1", "5 + 4", "6/3 + 2"]
+
+    builder = ExpressionTreeBuilder()
 
     for equation in equations:
         print("====================")
         print(equation)
-        builder = ExpressionTreeBuilder()
         exprtree = builder.create_expression_tree(equation)
         print(exprtree.get_postorder_result())
-        # print(exprtree.get_preorder_result())
-        # print(exprtree.get_inorder_result())
+        print(exprtree.get_preorder_result())
+        print(exprtree.get_inorder_result())
         print("====================")
 
-class BTElement(object):
-    def __init__(self, left, right, relation):
-        self.left = left
-        self.right = right
-        self.relation = relation
 
-class STGroup(object):
-    def __init__(self, stelements):
-        self.stelements = stelements
-
-    def __str__(self):
-        displaystr = ""
-        for elem in self.stelements:
-            displaystr += elem + " "
-
-        return displaystr[:-1]
-
-class STElement(object):
-    def __init__(self, value, isnegative, isnumber):
-        self.value = value
-        self.isnegative = isnegative
-        self.isnumber = isnumber
-
-    def __str__(self):
-        negmodifier = ""
-        if self.isnegative:
-            negmodifier = "-"
-
-        return negmodifier + self.value
+def equalitycheck(val1, val2):
+    print("---")
+    print(val1)
+    print(val2)
+    if val1 == val2:
+        print("Correct")
+    else:
+        print("==========FAIL==========")
+    print("---")
 
 
 """
@@ -285,8 +240,6 @@ Multiple terms multiplied together
 
 Area triangle
 Multiple terms multiplied together / 2
-
-
 """
 
-# wells_tests()
+wells_tests()
