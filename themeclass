@@ -1,4 +1,5 @@
 import math
+import random
 
 # This class provides the detail of a "unit"
 # For example, it could describe a unit of length
@@ -9,7 +10,7 @@ import math
 # For example, a car would be a rectangular prism
 # Required functions:
 #   volume:         returns the volume of the shape
-#   surfaca_area:   returns the surface area of the shape
+#   surface_area:   returns the surface area of the shape
 class Shape(object):
     RECTANGULAR_PRISM = 0
     SPHERE = 1
@@ -68,6 +69,9 @@ class Unit(object):
         self.CONVERSION = {}
         self.unit = unit
 
+    def get_name(self):
+        return self.UNIT_NAMES(self.unit)
+
 
 # This is the LENGTH class, it extends the UNIT class
 # base unit: meter
@@ -104,6 +108,10 @@ class Money(Unit):
 
 
 
+
+
+
+
 class Theme(object):
     # initialization function for the theme class
     # argument:     names are all possible names for the theme class, names[0] is considered the official name of the class; example: [car, sedan, truck]
@@ -112,20 +120,54 @@ class Theme(object):
     #               these ratios are passed as a LIST of TUPLES, where (money, time) would indicate money : time
     #               the tuple contains two UNIT objects; unit objects are defined above
     #               thus, the ratios list should appear formatted as follows: [ (UNIT, UNIT), (UNIT, UNIT), (UNIT, UNIT) ... (UNIT, UNIT) ]
-
-
-
-
-
     def __init__(self, names, shape, ratios):
         self.names = names
         self.shape = shape
         self.ratios = ratios
 
 
+    def get_random_ratio(self):
+        number_of_ratios = len(self.ratios)
+        random_index = random.randint(0, number_of_ratios - 1)
+        return self.ratios[random_index]
 
 
 
+### Sample run ###
+# generate a theme class
+car_names = ["car", "sedan", "truck"]
+car_shape = Rectnagular_prism(5, 5, 5)
+car_ratios = [ (Length, Time), (Money, Time), (Money, Length) ]
+car_theme = Theme(car_names, car_shape, car_ratios)
+
+base_ratio = car_theme.get_random_ratio()
+
+# sample parse input
+str = "a*b"
+tree = []
+
+last_term = ""
+last_op = ""
+for i in range(0,len(str)):
+    term = str[i]
+    if term >= 'a' and term <= 'z':
+        if last_op != "":
+            tuple = (last_term, term, last_op)
+            tree.append(tuple)
+
+        else:
+            last_term = term
+    else:
+        last_op = term
+
+expression = ""
+for i in range(0,len(tree)):
+    tuple = tree[i]
+    operator = tuple[2]
+    if operator == "*":
+        expression += "A " + car_theme.names[0] + " has " + tuple[0] + " " +  base_ratio[0].get_name() + " and " + tuple[1] + " " + base_ratio[1].get_name(sel)
+
+print(expression)
 
 
 
