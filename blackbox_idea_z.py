@@ -64,8 +64,7 @@ class Option(object):
 class Property(object):
     def __init__(self, numNouns,numNumbers):
         """
-        Template that will store one base equation such as "a*b"
-        Right now id = "a*b" but possbily later on the id can be a Term
+        Class that the property data of each option is wrapped in
 
         :param propertiesInput: Input of class Property that describes the properties of this option (number of nouns verbs units etc)
         :param templateListInput: Input of a list containing the question for this option.
