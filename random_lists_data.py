@@ -1,10 +1,15 @@
 NAMES = [
 'Rodrigo',
 'Miles',
-'Kathe',
+'Marisa',
+'Zach',
+'Rodney',
+'Steve',
+'Josh',
+'Kathy',
 'Daren',
 'Rubye',
-'See',
+'Sean',
 'Delcie',
 'Carley',
 'Lenard',
@@ -55,3 +60,13 @@ NAMES = [
 'Toys R Us',
 'Ford',
 'General Motors']
+
+VERBS = [
+    'has',
+    'have',
+    'goes',
+    'performs',
+    'does',
+    'are'
+]
+
