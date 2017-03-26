@@ -104,9 +104,6 @@ class RandItem(object):
         """
         self.id = idInput
 
-
-
-
     def getRand(self,rangeInput=None):
         if rangeInput is None: #no range input, get random item based on id
             #could use a dispatcher here to call rand funct based on id but for now will use if else
@@ -122,7 +119,7 @@ class RandItem(object):
         return self.id
 
     def __str__(self):
-        return "ID = " + self.id
+        return "Class: RandItem\nID = " + self.id
 
 
 
@@ -140,19 +137,22 @@ def test():
     t1.options.append(o3)
     print(t1)
 
-    print("------------\nOption 1 template list printout:")
+    print("--------------------------------")
+    print("Option 1 template list printout:")
     for item in o1.templateList:
-        if isinstance(item,str): #if the item in the list is a string print it
-            print(item + " ",end='')
-        else: #item is a RandItem object, need to get the random value (later on will use theme class)
+        # if the item in the list is a string print it
+        if isinstance(item,str):
+            print(item + " ", end='')
+        # item is a RandItem object, need to get the random value (later on will use theme class)
+        else:
             if item.getId() == 'num':
-                print(str(item.getRand(7)) + " ",end='')
+                print(str(item.getRand(7)) + " ", end='')
             else:
-                print(item.getRand() + " ",end='')
+                print(item.getRand() + " ", end='')
 
     print('.')
 
 test()
 
-#NOTE: ADD FUNCTIONALITY TO PUT AS MANY PROPERTIES IN THE PROPERTIES CLASS AS YOU WANT, BY NAME
+
 
