@@ -8,7 +8,9 @@
 #Some might make sense and some might not
 #Extra logic can go into how to substitute certain types of Templates
 
-
+import math
+import random
+import random_lists_data
 
 
 
@@ -60,9 +62,8 @@ class Option(object):
 
 
 
-
 class Property(object):
-    def __init__(self, numNouns,numNumbers):
+    def __init__(self, numNouns=None,numNumbers=None,numUnits=None, lessMoreInput = None):
         """
         Class that the property data of each option is wrapped in
 
@@ -71,18 +72,66 @@ class Property(object):
                                   This list can consist of strings, objects, or functions
                                   Ex: ["The", rand_noun, "has", rand_num, "apples]
         """
-        self.nouns = numNouns
-        self.numbers = numNumbers
+        if numNouns is None:
+            self.nouns=0
+        else:
+            self.nouns = numNouns
+        if numNumbers is None:
+            self.numbers=0
+        else:
+            self.numbers = numNumbers
+        if numUnits is None:
+            self.units = 0
+        else:
+            self.units = numUnits
+        if lessMoreInput is None:
+            self.lessMore = 0
+        else:
+            self.lessMore = lessMoreInput
+
 
     def __str__(self):
-        return "Properties:\nnouns = " + str(self.nouns) + "\nnumbers =" + str(self.numbers)
+        return "Properties:\nnouns = " + str(self.nouns) + "\nnumbers =" + str(self.numbers) + "\nunits =" + str(self.units) \
+               + "\nlessMore =" + str(self.lessMore)
+
+class RandItem(object):
+    def __init__(self,idInput):
+        """
+        Class that has methods for getting random words/numbers
+
+        :param idInput: The id determines which type of random item to return when the getRand() method is called
+
+        """
+        self.id = idInput
+
+
+
+
+    def getRand(self,rangeInput=None):
+        if rangeInput is None: #no range input, get random item based on id
+            #could use a dispatcher here to call rand funct based on id but for now will use if else
+            if self.id == 'noun':
+                return 'dog' #just return any noun for now. later on could be theme class now or rand noun
+            elif self.id == 'name':
+                return random.choice(random_lists_data.NAMES)
+
+        else: #this means there was a range input, so return a random number
+            return random.randint(1,rangeInput)
+
+    def getId(self):
+        return self.id
+
+    def __str__(self):
+        return "ID = " + self.id
+
+
 
 def test():
-    p1 = Property(2,3)
+    p1 = Property(numUnits=3, numNouns=1)
     print("P1 =")
     print(p1)
     print('-------------')
-    o1 = Option(p1, ["The", "Dog"])
+    o1 = Option(p1, [RandItem('name'),"gets",RandItem('num'),"cars"])
     o2 = Option(p1, ["A", "Boy"])
     o3 = Option(p1, [4, "Cats"])
     t1 = Template("a*b")
@@ -91,6 +140,19 @@ def test():
     t1.options.append(o3)
     print(t1)
 
+    print("------------\nOption 1 template list printout:")
+    for item in o1.templateList:
+        if isinstance(item,str): #if the item in the list is a string print it
+            print(item + " ",end='')
+        else: #item is a RandItem object, need to get the random value (later on will use theme class)
+            if item.getId() == 'num':
+                print(str(item.getRand(7)) + " ",end='')
+            else:
+                print(item.getRand() + " ",end='')
+
+    print('.')
+
 test()
 
 #NOTE: ADD FUNCTIONALITY TO PUT AS MANY PROPERTIES IN THE PROPERTIES CLASS AS YOU WANT, BY NAME
+
