@@ -53,13 +53,8 @@ NAMES = [
 'Azzie',
 'Erlene',
 'Candy',
-'Tashia',
-'Google',
-'Microsoft',
-'Facebook',
-'Toys R Us',
-'Ford',
-'General Motors']
+'Tashia'
+]
 
 VERBS = [
     'has',
@@ -68,5 +63,25 @@ VERBS = [
     'performs',
     'does',
     'are'
+]
+
+NOUNS = [
+    'dog',
+    'cat',
+    'ball',
+    'dress',
+    'pencil',
+    'apple',
+    'football',
+    'shoe',
+    'computer'
+]
+
+UNITS = [
+    'dollar',
+    'cent',
+    'gallon',
+    'cup',
+    'meter'
 ]
 

@@ -12,7 +12,15 @@ import math
 import random
 import random_lists_data
 
+#helper function to remove duplicates from list
+def removeDuplicates(input):
+  output = []
+  for x in input:
+    if x not in output:
+      output.append(x)
+  return output
 
+#CREATE CLASS THAT HAS ALL NAME NOUN VAR DATA
 
 class Template(object):
     def __init__(self, idInput):
@@ -48,6 +56,58 @@ class Option(object):
         """
         self.properties = propertiesInput
         self.templateList = templateListInput
+
+    def generateTemplate(self):
+        names = []
+        nums = []
+        nouns = []
+        units = []
+        outputstr = ""
+        for item in self.templateList:
+            if isinstance(item, str):
+                pass
+            elif isinstance(item, NameVar):
+                names.append(item.value)
+            elif isinstance(item, NumberVar):
+                nums.append(item.value)
+            elif isinstance(item, NounVar):
+                nouns.append(item.value)
+            elif isinstance(item, UnitVar):
+                units.append(item.value)
+
+        names = removeDuplicates(names)
+        nums = removeDuplicates(nums)
+        nouns = removeDuplicates(nouns)
+        units = removeDuplicates(units)
+
+
+        for item in self.templateList:
+            if isinstance(item, str):
+                outputstr += item + " "
+            elif isinstance(item, NameVar):
+                for name in names:
+                    if name == item.value:
+                        outputstr += name + " "
+            elif isinstance(item, NumberVar):
+                for num in nums:
+                    if num == item.value:
+                        outputstr += str(num) + " "
+            elif isinstance(item, NounVar):
+                for noun in nouns:
+                    if noun == item.value:
+                        outputstr += noun
+            elif isinstance(item, UnitVar):
+                for unit in units:
+                    if unit == item.value:
+                        outputstr += unit
+        outputstr += "?"
+        return outputstr
+
+
+
+
+
+
 
     def __str__(self):
         str1 = "\ntemplateList:"
@@ -91,10 +151,11 @@ class Property(object):
 
 
     def __str__(self):
-        return "Properties:\nnouns = " + str(self.nouns) + "\nnumbers =" + str(self.numbers) + "\nunits =" + str(self.units) \
-               + "\nlessMore =" + str(self.lessMore)
+        return "Properties:\nnouns = " + str(self.nouns) + "\nnumbers =" + str(self.numbers) + "\nunits =" + str(self.units)
 
 class RandItem(object):
+
+    numsUsed = [] #keeping tabs on random numbers used so they are not used again
     def __init__(self,idInput):
         """
         Class that has methods for getting random words/numbers
@@ -108,12 +169,25 @@ class RandItem(object):
         if rangeInput is None: #no range input, get random item based on id
             #could use a dispatcher here to call rand funct based on id but for now will use if else
             if self.id == 'noun':
-                return 'dog' #just return any noun for now. later on could be theme class now or rand noun
+                noun = random.choice(random_lists_data.NOUNS)
+                random_lists_data.NOUNS.remove(noun)
+                return noun
             elif self.id == 'name':
-                return random.choice(random_lists_data.NAMES)
-
+                name = random.choice(random_lists_data.NAMES)
+                random_lists_data.NAMES.remove(name)
+                return name
+            elif self.id == 'unit':
+                unit = random.choice(random_lists_data.UNITS)
+                random_lists_data.UNITS.remove(unit)
+                return unit
         else: #this means there was a range input, so return a random number
-            return random.randint(1,rangeInput)
+            num = random.randint(1, rangeInput)
+            if num not in RandItem.numsUsed:
+                RandItem.numsUsed.append(num)
+                return num
+            else:
+                print("ERROR RANDOM NUM THE SAME. FIX THIS ISSUE LATER")
+
 
     def getId(self):
         return self.id
@@ -121,38 +195,145 @@ class RandItem(object):
     def __str__(self):
         return "Class: RandItem\nID = " + self.id
 
+class NumberVar(object):
+    nums = []
+    def __init__(self,idInput):
+        """
+        Class that represents a random number variable
+
+        :param idInput: The id of the variable ( 'a' or 'b' or 'c' or etc)
+
+        """
+        self.id = idInput
+        flag = True
+        for num in NumberVar.nums:
+            if num.id == self.id:
+                self.value = num.value
+                flag = False
+
+        if flag:
+            self.value = RandItem('num').getRand(20)
+            NumberVar.nums.append(self)
+
+    def __str__(self):
+        return "Num Var: id = " + self.id + " value = " + str(self.value)
+
+class NameVar(object):
+    names = []
+    def __init__(self,idInput):
+        """
+        Class that represents a random name variable
+
+        :param idInput: The id of the variable ( 'a' or 'b' or 'c' or etc)
+
+        """
+        self.id = idInput
+        flag = True
+        for name in NameVar.names:
+            if name.id == self.id:
+                self.value = name.value
+                flag = False
+
+        if flag:
+            self.value = RandItem('name').getRand()
+            NameVar.names.append(self)
+
+    def __str__(self):
+        return "Name Var: id = " + self.id + " value = " + self.value
+
+
+class UnitVar(object):
+    units = []
+    def __init__(self, idInput):
+        """
+        Class that represents a random unit variable
+
+        :param idInput: The id of the variable ( 'a' or 'b' or 'c' or etc)
+
+        """
+        self.id = idInput
+        flag = True
+        for unit in UnitVar.units:
+            if unit.id == self.id:
+                self.value = unit.value
+                flag = False
+
+        if flag:
+            self.value = RandItem('unit').getRand()
+            UnitVar.units.append(self)
+
+    def __str__(self):
+        return "Unit Var: id = " + self.id + " value = " + self.value
+
+class NounVar(object):
+    nouns = []
+
+    def __init__(self, idInput):
+        """
+        Class that represents a random noun variable
+
+        :param idInput: The id of the variable ( 'a' or 'b' or 'c' or etc)
+
+        """
+        self.id = idInput
+        flag = True
+        for noun in NounVar.nouns:
+            if noun.id == self.id:
+                self.value = noun.value
+                flag = False
+
+        if flag:
+            self.value = RandItem('noun').getRand()
+            NounVar.nouns.append(self)
+
+    def __str__(self):
+        return "Noun Var: id = " + self.id + " value = " + self.value
 
 
 def test():
-    p1 = Property(numUnits=3, numNouns=1)
-    print("P1 =")
+
+    #create property
+    p1 = Property(numNouns=2,numNumbers=2)
+    print("Property class example =")
     print(p1)
     print('-------------')
-    o1 = Option(p1, [RandItem('name'),"gets",RandItem('num'),"cars"])
-    o2 = Option(p1, ["A", "Boy"])
-    o3 = Option(p1, [4, "Cats"])
-    t1 = Template("a*b")
+
+    #create option with property
+    o1 = Option(p1, [NameVar('a'), 'spent', NumberVar('a'), 'dollars','for',NounVar('a'),'.','This','was',NumberVar('b'),'dollars','less','than','what',NameVar('b')
+                     ,'spent','for',NounVar('b'),'.','How','much','did',NameVar('b'),'spend','on',NounVar('b')])
+
+    #create another option with property
+    p2 = Property(numNumbers=2,numNouns=1)
+    o2 = Option(p2,[NameVar('a'),'has',NumberVar('a'),NounVar('a'),'s.',NameVar('b'),'has',NumberVar('b'),NounVar('a'), 's. '
+                    'How','many','more',NounVar('a'), 's does', NameVar('b'),'have','than',NameVar('a')])
+    #create template
+    t1 = Template("a-b")
+    #add two options to template
     t1.options.append(o1)
     t1.options.append(o2)
-    t1.options.append(o3)
     print(t1)
 
-    print("--------------------------------")
-    print("Option 1 template list printout:")
-    for item in o1.templateList:
-        # if the item in the list is a string print it
-        if isinstance(item,str):
-            print(item + " ", end='')
-        # item is a RandItem object, need to get the random value (later on will use theme class)
-        else:
-            if item.getId() == 'num':
-                print(str(item.getRand(7)) + " ", end='')
-            else:
-                print(item.getRand() + " ", end='')
+    #repeat for template t2
+    p3 = Property(numNumbers=2,numNouns=1,numUnits=1)
+    o3 = Option(p3,['One',UnitVar('a'), ' is' , NumberVar('a'), UnitVar('b'),'s. How much', UnitVar('b'), 's is', NumberVar('b'), UnitVar('a'),'s'])
 
-    print('.')
+    t2 = Template("a*b")
+    t2.options.append(o3)
+
+    print("--------------------------------")
+    print("Template \"a-b\"")
+    print("Option 1:")
+    print(o1.generateTemplate())
+    print("Option 2:")
+    print(o2.generateTemplate())
+
+    print("--------------------------------")
+    print("Template \"a*b\"")
+    print("Option 1:")
+    print(o3.generateTemplate())
+
 
 test()
 
-
+#IDEA: maybe do all random item getting inside the Option class init
 
