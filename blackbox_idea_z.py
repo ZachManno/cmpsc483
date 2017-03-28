@@ -2,11 +2,16 @@
 #We have Templates that represent base equations such as a/b
 #Each Template has a list of Options
 #The Options contain the actual templates such as "A noun has b nouns. How many nouns does noun have?"
+#The "actual templates" just mentioned are stored as a list of strings and "Variable Classes" such as NounVar, NameVar
+#[A, NounVar('a'), has , NumberVar('b'), NounVar('b') , ". How many" , NounVar('b'), does, NounVar('a'), have? ]
+#Each NumberVar or NounVar or etc goes through the RandItem class to get the number or noun
+#As of now I'm just pulling random numbers, nouns, names from a list. But later on it will pull from the Theme Class
 #Each Option also contains a Property class, which has properties about the Option such as how many nouns, does it use units, etc
-#The idea is that when a user enters "(a+b)/c" we can use the parse tree to piece these templates together
+#The idea is that when a user enters "(a+b)/c" we can use the parse tree info with the Property class to piece these templates together
 #Many different combinations of Options and Templates can be used for the example above, we can print out say the best 5 or 10
 #Some might make sense and some might not
 #Extra logic can go into how to substitute certain types of Templates
+
 
 import math
 import random
@@ -20,13 +25,12 @@ def removeDuplicates(input):
       output.append(x)
   return output
 
-#CREATE CLASS THAT HAS ALL NAME NOUN VAR DATA
 
 class Template(object):
     def __init__(self, idInput):
         """
         Template that will store one base equation such as "a*b"
-        Right now id = "a*b" but possbily later on the id can be a Term
+        Right now id = "a*b" but I should make this a Term
 
         :param idInput: String representation of an equation
         """
@@ -103,12 +107,6 @@ class Option(object):
         outputstr += "?"
         return outputstr
 
-
-
-
-
-
-
     def __str__(self):
         str1 = "\ntemplateList:"
         str1 += "["
@@ -156,6 +154,9 @@ class Property(object):
 class RandItem(object):
 
     numsUsed = [] #keeping tabs on random numbers used so they are not used again
+
+    #IDEA: Get random theme class right here, store as static variables, whenever random number or noun is needed pull from that
+
     def __init__(self,idInput):
         """
         Class that has methods for getting random words/numbers
@@ -195,6 +196,10 @@ class RandItem(object):
     def __str__(self):
         return "Class: RandItem\nID = " + self.id
 
+#////////// VARIABLE CLASSES \\\\\\\\\\\\\\\\
+#Each type of variable class takes in an id such as 'a' or 'b'
+#For example, a template could be "NameVar('a') has NumberVar('a') items. How many items does NameVar('a') have? "
+#                                   "Rodney has 5 items. How many items does Rodney have?
 class NumberVar(object):
     nums = []
     def __init__(self,idInput):
@@ -298,7 +303,7 @@ def test():
     print(p1)
     print('-------------')
 
-    #create option with property
+    #create option with property (option takes in property and option list)
     o1 = Option(p1, [NameVar('a'), 'spent', NumberVar('a'), 'dollars','for',NounVar('a'),'.','This','was',NumberVar('b'),'dollars','less','than','what',NameVar('b')
                      ,'spent','for',NounVar('b'),'.','How','much','did',NameVar('b'),'spend','on',NounVar('b')])
 
