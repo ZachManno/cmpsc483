@@ -295,9 +295,6 @@ def preproc_main(input):
 #other idea: preprocessor must minify all vars except for ANS. Will help with equation parser
 
 
-#should we spend time on input validation (syntax checker etc) or is that not worth it - focus only on the actual problem
-
-
 ### TESTING ###
 def run_tests(tests):
     for test in tests:
