@@ -314,45 +314,6 @@ def preproc_main(input):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#ANS=(z*(x+y))/4
-
-
-#other idea: preprocessor must minify all vars except for ANS. Will help with equation parser
-
 ### TESTING ###
 def run_tests(tests):
     for test in tests:
@@ -385,9 +346,6 @@ ANS = (x + y + z)/3"""
 
 
 run_tests(tests)
-
-
-
 
 
 
@@ -447,10 +405,10 @@ text = 'SQUARE((AVG((5),(7))),AREA(x,y+4))'
 print("---------------------------")
 print(parse_nested(text))
 equations = parse_nested(text)
-def recursiveRef(li):
-    if len(idxList) > 1:
-        return recursiveRef(nested[idxList[0]], idxList[1:])
-    return nested[idxList[0]]
+# def recursiveRef(li):
+#     if len(idxList) > 1:
+#         return recursiveRef(nested[idxList[0]], idxList[1:])
+#     return nested[idxList[0]]
 
 
 

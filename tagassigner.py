@@ -19,15 +19,22 @@ class Equation(object):
 
         # Convert each strterm to a term object, save to formatted equation.
         for strterm in strterms:
-            # Create postorder for term, and build term object.
             builder = main.ExpressionTreeBuilder()
 
             # Remove math from front of term temporarily.
             tempterm = strterm
+            oldsign = ""
             if tempterm[0] == '+' or tempterm[0] == '-':
+                oldsign = tempterm[0]
                 tempterm = tempterm[1:]
 
+
+
             postorder = builder.create_expression_tree(tempterm).get_postorder_result()
+
+            if oldsign != "":
+                postorder[0] = oldsign + postorder[0]
+
             self.terms.append(Term(strterm, postorder[:len(postorder)-1], postorder[len(postorder)-1]))
 
     def additiontermsplit(self, input):
@@ -44,8 +51,9 @@ class Equation(object):
             if input[idx] == ')':
                 parencount -= 1
             if parencount == 0 and (input[idx] == '+' or input[idx] == '-'):
-                terms.append("".join(input[curridx:idx].split()))
-                curridx = idx
+                if curridx != idx:
+                    terms.append("".join(input[curridx:idx].split()))
+                    curridx = idx
 
         # Append ending term
         terms.append(input[curridx:])
@@ -67,9 +75,19 @@ class Term(object):
         self.postorder = postorder
         self.attribute = attribute
         self.terms = []
+        self.tag = ""
+
+        self.determine_macro(attribute)
+
+        # Attempt to determine if value is digit
+        is_dig = True
+        try:
+            int (self.attribute)
+        except:
+            is_dig = False
 
         # Determine if an "attribute" is a char or a num.
-        if attribute.isalpha() or attribute.isdigit():
+        if self.attribute[len(self.attribute) - 1].isalpha() or is_dig:
             stripvalue = "".join(attribute.split())
 
             # Determine Sign
@@ -83,20 +101,20 @@ class Term(object):
             if len(self.attribute) != 1:
                 raise SystemError("Error! " + valueinput + " not valid input!")
 
-        elif attribute == '*' or attribute == '/':
+        elif self.attribute == '*' or self.attribute == '/':
             # Multiplication / Division Term. Break apart using postorder result.
             oppositeattribute = "/"
-            if attribute == "/":
+            if self.attribute == "/":
                 oppositeattribute = "*"
 
             postorderidx = len(postorder) - 1
-            if attribute == '*' or attribute == '/':
+            if self.attribute == '*' or self.attribute == '/':
                 for postorderval in reversed(postorder):
-                    if postorderval == attribute:
+                    if postorderval == self.attribute:
                         postorderidx -= 1
                         continue
 
-                    self.terms.append(Term("", postorder[:postorderidx], postorder[postorderidx]))
+                    self.terms.insert(0, Term("", postorder[:postorderidx], postorder[postorderidx]))
 
                     if postorderval == oppositeattribute:
                         break
@@ -105,8 +123,70 @@ class Term(object):
                 self.sign = "+"
             else:
                 sys.exit("Invalid attribute!")
+        elif self.attribute == '+':
+            postorderidx = len(postorder) - 1
+
+            for postorderval in reversed(postorder):
+                if self.attribute == postorderval:
+                    postorderidx -= 1
+                    continue
+
+                self.terms.append(Term("", "", postorder[postorderidx]))
+
+                if postorderval == '*' or postorderval == '/':
+                    break
+                else:
+                    postorderidx -= 1
+            self.sign = "+"
+
         else:
-            raise SystemError("Invalid attribute " + attribute + " provided!")
+            raise SystemError("Invalid attribute '" + attribute + "' provided!")
+
+    def determine_macro(self, attribute):
+        # Check for macro
+            macrocheck = attribute.find('[')
+            if macrocheck > -1:
+
+                # Term is a macro.
+                self.tag = attribute[:macrocheck]
+
+                # Evaluate Macro.
+                endmacro = attribute.rfind(']')
+                if endmacro == -1:
+                    raise SystemError("Non matching bracket in term " + attribute + " found!")
+                self.attribute = attribute[macrocheck + 1:endmacro]
+
+                # Obtain the individual pieces of the macro in a list.
+                parencount = 0
+                previdx = 0
+                pieces = []
+                for idx in range(len(self.attribute)):
+                    if self.attribute[idx] == ',' and parencount == 0:
+                        pieces.append(self.attribute[previdx:idx])
+                        previdx = idx + 1
+                    if self.attribute[idx] == '(' or self.attribute[idx] == '[':
+                        parencount += 1
+                    if self.attribute[idx] == ')' or self.attribute[idx] == ']':
+                        parencount -= 1
+                pieces.append(self.attribute[previdx:])
+                strrep = "("
+
+                # Format macro based on TAG type.
+                if self.tag == "AVG":
+                    for x in pieces:
+                        strrep += x + "+"
+                    strrep= strrep[:len(strrep) - 1] + ')'
+                    strrep += "/"
+                    strrep += str(len(pieces))
+
+                builder = main.ExpressionTreeBuilder()
+                postorder = builder.create_expression_tree(strrep).get_postorder_result()
+
+                self.postorder = postorder[:len(postorder)-1]
+                self.attribute = postorder[len(postorder)-1]
+
+    def is_sign(self, char):
+        return char == '/' or char == '*' or char == '+' or char == '-'
 
     def __str__(self):
         # Generate string representation of term.
@@ -134,12 +214,15 @@ def run_tests():
     ]
 
     easyequations = [
-        "1 + 2",
-        "1 + 3 -c + 5",
-        "6 * b",
-        "a + b + c*b + d + e * g * h",
-        "a * b * c + 5 + c * b * a",
-        "c * b / a"
+        # "1 + 2",
+        # "1 + 3 - c - 1* 5",
+        # "6 * b",
+        # "a + b + c*b + d + e * g * h",
+        # "a * b * c + 5 + c * b * a",
+        # "-1",
+        "(1+2)/(3)",
+        # "(1)/(2 + 3)",
+        # "AVG[1,2,3]"
     ]
 
     for equation in easyequations:
