@@ -2,7 +2,7 @@
 #We have Templates that represent base equations such as a/b
 #Each Template has a list of Options
 #The Options contain the actual templates such as "A noun has b nouns. How many nouns does noun have?"
-#The "actual templates" just mentioned are stored as a list of strings and "Variable Classes" such as NounVar, NameVar
+#The "actual templates" just mentioned are stored as a list of strings and "Variable Classes" such as NounVar, NameVar, UnitVar
 #[A, NounVar('a'), has , NumberVar('b'), NounVar('b') , ". How many" , NounVar('b'), does, NounVar('a'), have? ]
 #Each NumberVar or NounVar or etc goes through the RandItem class to get the number or noun
 #As of now I'm just pulling random numbers, nouns, names from a list. But later on it will pull from the Theme Class
@@ -131,11 +131,11 @@ class Property(object):
                                   Ex: ["The", rand_noun, "has", rand_num, "apples]
         """
         if numNouns is None:
-            self.nouns=0
+            self.nouns = 0
         else:
             self.nouns = numNouns
         if numNumbers is None:
-            self.numbers=0
+            self.numbers = 0
         else:
             self.numbers = numNumbers
         if numUnits is None:
@@ -187,7 +187,7 @@ class RandItem(object):
                 RandItem.numsUsed.append(num)
                 return num
             else:
-                print("ERROR RANDOM NUM THE SAME. FIX THIS ISSUE LATER")
+                print("ERROR RANDOM NUM THE SAME. FIX THIS ISSUE LATER(put while loop in)")
 
 
     def getId(self):
@@ -320,7 +320,7 @@ def test():
 
     #repeat for template t2
     p3 = Property(numNumbers=2,numNouns=1,numUnits=1)
-    o3 = Option(p3,['One',UnitVar('a'), ' is' , NumberVar('a'), UnitVar('b'),'s. How much', UnitVar('b'), 's is', NumberVar('b'), UnitVar('a'),'s'])
+    o3 = Option(p3,['One',UnitVar('a'),' is' , NumberVar('a'), UnitVar('b'),'s. How much', UnitVar('b'), 's is', NumberVar('b'), UnitVar('a'),'s'])
 
     t2 = Template("a*b")
     t2.options.append(o3)
