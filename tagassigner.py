@@ -1,6 +1,6 @@
 import sys
 import main
-
+import random
 
 class Equation(object):
 
@@ -84,7 +84,7 @@ class Term(object):
             self.attribute = attribute
             self.terms = []
             self.tag = None
-            self.determine_macro(attribute)
+            self.identify_and_deconstruct_macro(attribute)
 
             """
             A term consists of several sub terms, as well as an 'attribute' which describes
@@ -169,7 +169,7 @@ class Term(object):
             else:
                 raise SystemError("Invalid attribute '" + attribute + "' provided!")
 
-    def determine_macro(self, attribute):
+    def identify_and_deconstruct_macro(self, attribute):
         """
         Check to see if the given attribute contains a macro.
         :param attribute:
@@ -210,9 +210,17 @@ class Term(object):
             if self.tag == "AVG":
                 for x in pieces:
                     strrep += x + "+"
-                strrep= strrep[:len(strrep) - 1] + ')'
+                strrep = strrep[:len(strrep) - 1] + ')'
                 strrep += "/"
                 strrep += str(len(pieces))
+            elif self.tag == "SQR":
+                if len(pieces) > 1:
+                    raise SystemError("Invalid input for SQR macro. Expected only 1 term, got " + str(len(pieces)))
+                strrep = pieces[0] + "*" + pieces[0]
+            elif self.tag == "RAND":
+                if len(pieces) > 1:
+                    raise  SystemError("Invalid input for RAND macro. Expected 1 term, got" + str(len(pieces)))
+                strrep = str(random.randrange(int(pieces[0])))
 
             builder = main.ExpressionTreeBuilder()
             postorder = builder.create_expression_tree(strrep).get_postorder_result()
@@ -271,17 +279,20 @@ def run_tests():
     ]
 
     easyequations = [
-        "1 + 2",
-        "1 + 3 - c - 1* 5",
-        "a * b",
-        "a * b + a*c",
-        "a + b + c*b + d + e * g * h",
-        "a * b * c + 5 + c * b * a",
-        "-1-4",
-        "(1+2)/(3)",
-        "(1)/(2 + 3)",
-        "AVG[1,AVG[1,2,3],3]",
-        "AVG[1,9,90,40,50] + AVG[1,9,90,40,50]"
+        # "1 + 2",
+        # "1 + 3 - c - 1* 5",
+        # "a * b",
+        # "a * b + a*c",
+        # "a + b + c*b + d + e * g * h",
+        # "a * b * c + 5 + c * b * a",
+        # "-1-4",
+        # "(1+2)/(3)",
+        # "(1)/(2 + 3)",
+        # "AVG[1,AVG[1,2,3],3]",
+        # "AVG[1,9,90,40,50] + AVG[1,9,90,40,50]",
+        "SQR[10]",
+        "SQR[RAND[10]]",
+        "RAND[100] * RAND[50] + AVG[RAND[20], RAND[20], RAND[20]]"
     ]
 
     for equation in easyequations:
