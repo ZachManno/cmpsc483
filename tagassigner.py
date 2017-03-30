@@ -12,7 +12,7 @@ class Equation(object):
         """
 
         self.originalequation = equation
-        self.terms = []
+        terms = []
 
         # Initial split into terms.
         strterms = self.additiontermsplit(equation)
@@ -28,14 +28,15 @@ class Equation(object):
                 oldsign = tempterm[0]
                 tempterm = tempterm[1:]
 
-
-
             postorder = builder.create_expression_tree(tempterm).get_postorder_result()
 
             if oldsign != "":
                 postorder[0] = oldsign + postorder[0]
 
-            self.terms.append(Term(strterm, postorder[:len(postorder)-1], postorder[len(postorder)-1]))
+
+            terms.append(Term(strterm, postorder[:len(postorder)-1], postorder[len(postorder)-1]))
+
+        self.terms = [Term(terms, "+")]
 
     def additiontermsplit(self, input):
         # Split the input into terms, based on addition and subtraction
@@ -61,86 +62,96 @@ class Equation(object):
 
 
 class Term(object):
-    def __init__(self, valueinput, postorder, attribute):
-        """
-        Construct a term, with a stored sign.
-        Terms may have a tag, which better describes the term in the context of the problem.
-
-        :param valueinput: String representation of an equation. Can contain macros. (TODO: OUTDATED)
-        :param postorder: post order representation of an equation.
-        :param attribute: Representation of "Value" of a term. * or / for mul and div, variable or integer for base
-        value.
-        """
-        self.originalvalue = valueinput
-        self.postorder = postorder
+    def __init__giventerms(self, terms, attribute):
+        self.terms = terms
         self.attribute = attribute
-        self.terms = []
-        self.tag = ""
 
-        self.determine_macro(attribute)
+    def __init__(self, valueinput, postorder, attribute=None):
+        if attribute is None:
+            self.__init__giventerms(valueinput, postorder)
+        else:
 
-        # Attempt to determine if value is digit
-        is_dig = True
-        try:
-            int (self.attribute)
-        except:
-            is_dig = False
+            """
+            Construct a term, with a stored sign.
+            Terms may have a tag, which better describes the term in the context of the problem.
 
-        # Determine if an "attribute" is a char or a num.
-        if self.attribute[len(self.attribute) - 1].isalpha() or is_dig:
-            stripvalue = "".join(attribute.split())
+            :param valueinput: String representation of an equation. Can contain macros. (TODO: OUTDATED)
+            :param postorder: post order representation of an equation.
+            :param attribute: Representation of "Value" of a term. * or / for mul and div, variable or integer for base
+            value.
+            """
+            self.originalvalue = valueinput
+            self.postorder = postorder
+            self.attribute = attribute
+            self.terms = []
+            self.tag = ""
+            self.determine_macro(attribute)
 
-            # Determine Sign
-            if stripvalue[0] == "-" or stripvalue[0] == "+":
-                self.sign = stripvalue[0]
-                self.attribute = stripvalue[1:]
-            else:
-                self.sign = "+"
-                self.attribute = stripvalue
+            possibleattributes = ["+", "/", "-", "*"]
 
-            if len(self.attribute) != 1:
-                raise SystemError("Error! " + valueinput + " not valid input!")
+            # Attempt to determine if value is digit
+            is_dig = True
+            try:
+                int (self.attribute)
+            except:
+                is_dig = False
 
-        elif self.attribute == '*' or self.attribute == '/':
-            # Multiplication / Division Term. Break apart using postorder result.
-            oppositeattribute = "/"
-            if self.attribute == "/":
-                oppositeattribute = "*"
+            # Determine if an "attribute" is a char or a num.
+            if self.attribute[len(self.attribute) - 1].isalpha() or is_dig:
+                stripvalue = "".join(attribute.split())
 
-            postorderidx = len(postorder) - 1
-            if self.attribute == '*' or self.attribute == '/':
-                for postorderval in reversed(postorder):
-                    if postorderval == self.attribute:
+                # Determine Sign
+                if stripvalue[0] == "-" or stripvalue[0] == "+":
+                    self.sign = stripvalue[0]
+                    self.attribute = stripvalue[1:]
+                else:
+                    self.sign = "+"
+                    self.attribute = stripvalue
+
+                if len(self.attribute) != 1:
+                    raise SystemError("Error! " + valueinput + " not valid input!")
+
+            elif self.attribute == '*' or self.attribute == '/':
+                # Multiplication / Division Term. Break apart using postorder result.
+                oppositeattribute = "/"
+                if self.attribute == "/":
+                    oppositeattribute = "*"
+
+                postorderidx = len(postorder) - 1
+                if self.attribute == '*' or self.attribute == '/':
+                    for postorderval in reversed(self.postorder):
+                        if postorderval == self.attribute:
+                            postorderidx -= 1
+                            continue
+
+                        self.terms.insert(0, Term("", self.postorder[:postorderidx], self.postorder[postorderidx]))
+
+                        if postorderval != self.attribute and postorderval in possibleattributes:
+                            break
+
+                        postorderidx -= 1
+
+                    self.sign = "+"
+                else:
+                    sys.exit("Invalid attribute!")
+            elif self.attribute == '+':
+                postorderidx = len(postorder) - 1
+
+                for postorderval in reversed(self.postorder):
+                    if self.attribute == postorderval:
                         postorderidx -= 1
                         continue
 
-                    self.terms.insert(0, Term("", postorder[:postorderidx], postorder[postorderidx]))
+                    self.terms.insert(0, (Term("", "", self.postorder[postorderidx])))
 
-                    if postorderval == oppositeattribute:
+                    if postorderval == '*' or postorderval == '/':
                         break
-                    postorderidx -= 1
-
+                    else:
+                        postorderidx -= 1
                 self.sign = "+"
+
             else:
-                sys.exit("Invalid attribute!")
-        elif self.attribute == '+':
-            postorderidx = len(postorder) - 1
-
-            for postorderval in reversed(postorder):
-                if self.attribute == postorderval:
-                    postorderidx -= 1
-                    continue
-
-                self.terms.append(Term("", "", postorder[postorderidx]))
-
-                if postorderval == '*' or postorderval == '/':
-                    break
-                else:
-                    postorderidx -= 1
-            self.sign = "+"
-
-        else:
-            raise SystemError("Invalid attribute '" + attribute + "' provided!")
+                raise SystemError("Invalid attribute '" + attribute + "' provided!")
 
     def determine_macro(self, attribute):
         # Check for macro
@@ -191,13 +202,35 @@ class Term(object):
     def __str__(self):
         # Generate string representation of term.
         strrep = ""
+        addconnector = False
+
         if len(self.terms) > 0:
+            if self.attribute == "+" or self.attribute == "-":
+                strrep += "("
+                addconnector = True
             for term in self.terms:
+                if addconnector and term.sign == "+":
+                    strrep += term.sign
+
                 strrep += str(term)
-                strrep += self.attribute
-            strrep = strrep[:len(strrep) - 1]
+
+                if not addconnector:
+                    strrep += self.attribute
+
+            if self.attribute == "+" or self.attribute == "-":
+                strrep += ")"
+            else:
+                strrep = strrep[:len(strrep) - 1]
+
         else:
-            strrep = "(" + str(self.sign) + str(self.attribute) + ")"
+            # Printing an individual variable or number.
+            sign = ""
+            possibleattributes = ["+", "-", "*", "/"]
+            if self.sign == "-":
+                sign = "-"
+
+            # if self.attribute not in possibleattributes:
+            strrep = sign + str(self.attribute)
 
         return strrep
 
@@ -214,23 +247,28 @@ def run_tests():
     ]
 
     easyequations = [
-        # "1 + 2",
-        # "1 + 3 - c - 1* 5",
-        # "a * b",
+        "1 + 2",
+        "1 + 3 - c - 1* 5",
+        "a * b",
         "a * b + a*c",
-        #"a + b + c*b + d + e * g * h",
-        # "a * b * c + 5 + c * b * a",
-        # "-1",
-        # "(1+2)/(3)",
-        # "(1)/(2 + 3)",
-        # "AVG[1,2,3]"
+        "a + b + c*b + d + e * g * h",
+        "a * b * c + 5 + c * b * a",
+        "-1-4",
+        "(1+2)/(3)",
+        "(1)/(2 + 3)",
+        "AVG[1,AVG[1,2,3],3]"
     ]
 
     for equation in easyequations:
         formatequation = Equation(equation)
         print("------")
         print(equation)
+
+        equation = ""
+
         for term in formatequation.terms:
-            print(term)
+            equation += str(term) + " "
+
+        print(equation)
 
 run_tests()
