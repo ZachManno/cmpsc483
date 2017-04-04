@@ -162,6 +162,34 @@ class Theme(object):
             return self.names[0]
 
 
+
+
+
+
+
+
+
+
+# Step 1: Give the black box the ability to perform simple_fact: for example, a*b or a/b
+def simple_fact(tuple, theme, base_ratio):
+    sentence = "a " + theme.get_random_name() + " "
+
+    # case 1: a * b
+    if tuple[2] == '*':
+        sentence += "has " + tuple[0] + " " + base_ratio[0].get_name() + " per " + base_ratio[1].get_name() + " "
+        sentence += "and " + tuple[1] + " " + base_ratio[1].get_name() + ". "
+    # case 2: a / b
+    elif tuple[2] == '/':
+        sentence += "has " + tuple[0] + " " + base_ratio[0].get_name() + " "
+        sentence += "and " + tuple[1] + " " + base_ratio[0].get_name() + " per " + base_ratio[1].get_name() + ". "
+
+    return sentence
+
+# Step 2: Give the black box the ability to combine several different simple facts
+
+
+
+
 ### Sample run ###
 # generate a theme class
 car_names = ["automobile", "car", "sedan", "truck"]
@@ -170,6 +198,45 @@ car_ratios = [ Ratio("speed", Length(), Time()), Ratio("cost per time", Money(),
 car_theme = Theme(car_names, car_shape, car_ratios)
 
 
+# company_names =
+
+base_ratio = car_theme.get_random_ratio()
+
+
+
+# sample parse input
+input = "a*b+c*d+e"
+tree = []
+
+last_op = ""
+last_term = ""
+
+# basic parser found below, takes input and puts it into the 'tree'
+for i in range(0, len(input)):
+    term = input[i]
+
+    # if we receieve a term
+    if term >= 'a' and term <= 'z':
+        if last_term == '' and last_op == '':
+            last_term = term
+        elif last_term != '' and last_op != '':
+            tree.append((last_term, term, last_op))
+            last_term = ''
+            last_op = ''
+        else:
+            print("ERROR LINE 170?")
+    # if we receive an op
+    else:
+        if last_term == '' and last_op == '':
+            tree.append(term)
+        elif last_term != '' and last_op == '':
+            last_op = term
+        else:
+            print("ERROR LINE 178?")
+if last_term != "":
+    tree.append((last_term))
+
+print(tree)
 
 
 
