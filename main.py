@@ -12,7 +12,6 @@ operator_precedence = {
 # Term for each num and sign
 result = []
 
-
 class Node(object):
     def __init__(self, value):
         self.value = value
@@ -242,4 +241,4 @@ Area triangle
 Multiple terms multiplied together / 2
 """
 
-wells_tests()
+# wells_tests()

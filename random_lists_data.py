@@ -1,10 +1,15 @@
 NAMES = [
 'Rodrigo',
 'Miles',
-'Kathe',
+'Marisa',
+'Zach',
+'Rodney',
+'Steve',
+'Josh',
+'Kathy',
 'Daren',
 'Rubye',
-'See',
+'Sean',
 'Delcie',
 'Carley',
 'Lenard',
@@ -28,7 +33,7 @@ NAMES = [
 'Jeremiah',
 'June',
 'Belva',
-'Yuonne'
+'Yuonne',
 'Mauricio',
 'Chae',
 'Serafina' ,
@@ -48,10 +53,35 @@ NAMES = [
 'Azzie',
 'Erlene',
 'Candy',
-'Tashia',
-'Google',
-'Microsoft',
-'Facebook',
-'Toys R Us',
-'Ford',
-'General Motors']
+'Tashia'
+]
+
+VERBS = [
+    'has',
+    'have',
+    'goes',
+    'performs',
+    'does',
+    'are'
+]
+
+NOUNS = [
+    'dog',
+    'cat',
+    'ball',
+    'dress',
+    'pencil',
+    'apple',
+    'football',
+    'shoe',
+    'computer'
+]
+
+UNITS = [
+    'dollar',
+    'cent',
+    'gallon',
+    'cup',
+    'meter'
+]
+
