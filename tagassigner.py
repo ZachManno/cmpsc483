@@ -280,10 +280,10 @@ easyequations = [
     # "AVG[1,AVG[1,2,3],3]",
     # "AVG[1,9,90,40,50] + AVG[1,9,90,40,50]",
     # "SQR[10]",
-    # "SQR[RAND[10]]",
-    # "RAND[100] * RAND[50] + AVG[RAND[20], RAND[20], RAND[20]]",
-    # "1 * (2/3)",
-    # "1 * 2 / 3",
+    "SQR[RAND[10]]",
+    "RAND[100] * RAND[50] + AVG[RAND[20], RAND[20], RAND[20]]",
+    "1 * (2/3)",
+    "1 * 2 / 3",
     "1 * 2 * 3",
     "1 * 2 * 3/4 * 5",
     "1 * 2 * (3/4 + 5) * 6"
@@ -320,5 +320,5 @@ def postorder_tests():
         exprtree = builder.create_expression_tree(equation)
         print(equation + "      " + str(exprtree.get_postorder_result()))
 
-# run_tests()
-postorder_tests()
+run_tests()
+# postorder_tests()
