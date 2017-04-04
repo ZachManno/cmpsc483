@@ -85,3 +85,17 @@ UNITS = [
     'meter'
 ]
 
+CONVERSIONS = [
+    ['mile','yards',1760],
+    ['mile','feet',5280],
+    ['mile','inches',63360],
+    ['yard','feet',3],
+    ['foot','inches',12],
+    ['year','days',365],
+    ['year','months',12],
+    ['day','hours',24],
+    ['hour','minutes',60],
+    ['gallon','quarts',4]
+]
+
+
