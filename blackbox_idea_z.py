@@ -67,6 +67,7 @@ class Option(object):
         nouns = []
         units = []
         outputstr = ""
+        outputList
         for item in self.templateList:
             if isinstance(item, str):
                 pass
@@ -293,6 +294,16 @@ class NounVar(object):
 
     def __str__(self):
         return "Noun Var: id = " + self.id + " value = " + self.value
+
+class HandleInput(object):
+    """
+    Class that will handle taking in the term and calling the appropriate classes and methods
+    :param termInput: the term
+    """
+
+    def __init__(self,termInput):
+        self.term = termInput
+        print("Term input: " + str(self.term))
 
 
 def test():
