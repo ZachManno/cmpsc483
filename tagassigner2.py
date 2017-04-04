@@ -28,9 +28,10 @@ class Equation(object):
 
         # Convert each term, split by addition, to a term object, save to formatted equation.
         strterms = self.additiontermsplit(equation)
-        for strterm
+        for strterm in strterms:
+            builder = main.ExpressionTreeBuilder()
             oldsign = tempterm[0]
-                tempterm = tempterm[1:]
+            tempterm = tempterm[1:]
             postorder = builder.create_expression_tree(tempterm).get_postorder_result()
 
             # Add back old sign.
