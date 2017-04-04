@@ -2,6 +2,18 @@ import sys
 import main
 import random
 
+def parenthesize_postorder_equation(postorder):
+    representation = [")"]
+    sincelastsign = -1
+    for postorderval in reversed(postorder):
+        if sincelastsign == 0 and is_sign(postorderval):
+            representation.append(")")
+            representation.append(postorderval)
+            sincelastsign = 0
+
+def is_sign(self, char):
+        return char == '/' or char == '*' or char == '+' or char == '-'
+
 class Equation(object):
 
     def __init__(self, equation):
@@ -16,14 +28,8 @@ class Equation(object):
 
         # Convert each term, split by addition, to a term object, save to formatted equation.
         strterms = self.additiontermsplit(equation)
-        for strterm in strterms:
-            builder = main.ExpressionTreeBuilder()
-
-            # Remove math from front of term temporarily (necessary workaround for postorder).
-            tempterm = strterm
-            oldsign = ""
-            if tempterm[0] == '+' or tempterm[0] == '-':
-                oldsign = tempterm[0]
+        for strterm
+            oldsign = tempterm[0]
                 tempterm = tempterm[1:]
             postorder = builder.create_expression_tree(tempterm).get_postorder_result()
 
@@ -125,31 +131,22 @@ class Term(object):
                     raise SystemError("Error! " + valueinput + " not valid input!")
 
             elif self.attribute == '*' or self.attribute == '/':
-                # Multiplication / Division relation. Break apart using postorder result.
-
-                # Determine cancelling opposite attribute.
-                oppositeattribute = "/"
-                if self.attribute == "/":
-                    oppositeattribute = "*"
-
-                # Iterate through result, createing subterms.
+                #  Iterate to find all of the terms that belong in this Mul/Div Term.
                 postorderidx = len(postorder) - 1
+
+                termcount = 0
+
+
                 for postorderval in reversed(self.postorder):
-                    if postorderval == self.attribute:
-                        postorderidx -= 1
+                    if not self.is_sign(postorderval):
+                        # It's not a sign. Add to terms.
+                        self.terms.insert(0, Term(postorderval, "", postorderval))
+                    elif postorderval == self.attribute:
+                        # It's another chained term. Continue.
                         continue
-
-                    # Create subterm.
-                    self.terms.insert(0, Term("", self.postorder[:postorderidx], self.postorder[postorderidx]))
-
-                    # Check if new relation type is detected.
-                    if postorderval != self.attribute and self.is_sign(postorderval):
-                        break
-
-                    postorderidx -= 1
-
-                self.sign = "+"
-
+                    else:
+                        # We have another term in the mix. We need to check to see if this is a simple term
+                        pass #TODO REMOVE
             elif self.attribute == '+':
                 postorderidx = len(postorder) - 1
 
@@ -280,13 +277,13 @@ easyequations = [
     # "AVG[1,AVG[1,2,3],3]",
     # "AVG[1,9,90,40,50] + AVG[1,9,90,40,50]",
     # "SQR[10]",
-    "SQR[RAND[10]]",
-    "RAND[100] * RAND[50] + AVG[RAND[20], RAND[20], RAND[20]]",
-    "1 * (2/3)",
-    "1 * 2 / 3",
+    # "SQR[RAND[10]]",
+    # "RAND[100] * RAND[50] + AVG[RAND[20], RAND[20], RAND[20]]",
+    # "1 * (2/3)",
+    # "1 * 2 / 3",
     "1 * 2 * 3",
     "1 * 2 * 3/4 * 5",
-    "1 * 2 * (3/4 + 5) * 6"
+    "1 * 2 * (3/4) * 5"
 ]
 
 def run_tests():
@@ -297,8 +294,7 @@ def run_tests():
     equations = [
         "5x+20",
         "ax - 5b + c + d + 2005 + 20b",
-        "5 + (1+2+3)/3 - (4+5+6)/(1+2+3)",
-
+        "5 + (1+2+3)/3 - (4+5+6)/(1+2+3)"
     ]
 
     for equation in easyequations:
@@ -320,5 +316,5 @@ def postorder_tests():
         exprtree = builder.create_expression_tree(equation)
         print(equation + "      " + str(exprtree.get_postorder_result()))
 
-run_tests()
-# postorder_tests()
+# run_tests()
+postorder_tests()
