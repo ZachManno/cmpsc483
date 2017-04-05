@@ -12,6 +12,7 @@ class Equation(object):
 
         self.originalequation = equation
         self.tag = "ANS"
+        self.attribute = "+"
         terms = []
 
         # Convert each term, split by addition, to a term object, save to formatted equation.
@@ -35,7 +36,7 @@ class Equation(object):
             terms.append(Term(strterm, postorder[:len(postorder)-1], postorder[len(postorder)-1]))
 
         # Save terms list as official term object split by addition.
-        self.terms = [Term(terms, "+")]
+        self.terms = terms
 
     def additiontermsplit(self, input):
         # Split the input into terms, based on addition and subtraction
@@ -119,6 +120,8 @@ class Term(object):
                 else:
                     self.sign = "+"
                     self.attribute = stripvalue
+
+                self.tag = "SMALLTERM"
 
                 # Assert valid input
                 if not is_dig and len(self.attribute) != 1:
@@ -280,13 +283,15 @@ easyequations = [
     # "AVG[1,AVG[1,2,3],3]",
     # "AVG[1,9,90,40,50] + AVG[1,9,90,40,50]",
     # "SQR[10]",
-    "SQR[RAND[10]]",
-    "RAND[100] * RAND[50] + AVG[RAND[20], RAND[20], RAND[20]]",
-    "1 * (2/3)",
-    "1 * 2 / 3",
-    "1 * 2 * 3",
-    "1 * 2 * 3/4 * 5",
-    "1 * 2 * (3/4 + 5) * 6"
+    # "SQR[RAND[10]]",
+    # "RAND[100] * RAND[50] + AVG[RAND[20], RAND[20], RAND[20]]",
+    # "1 * (2/3)",
+    # "1 * 2 / 3",
+    # "1 * 2 * 3",
+    # "1 * 2 * 3/4 * 5",
+    # "1 * 2 * (3/4 + 5) * 6"
+    "a + b"
+
 ]
 
 def run_tests():

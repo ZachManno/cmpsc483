@@ -72,6 +72,7 @@ class STREETS(object):
         self.objectTitlePlural = "STREETS"
         self.down_relations = {
             'has': ['people', 'signs', 'cars', 'buildings', 'trash', 'lights', 'sidewalk']
+
         }
         self.up_relations = {
 
