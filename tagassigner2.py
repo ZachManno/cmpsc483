@@ -65,7 +65,6 @@ class Equation(object):
         terms.append(input[curridx:])
         return terms
 
-
 class Term(object):
     def __init__giventerms(self, terms, attribute):
         self.terms = terms

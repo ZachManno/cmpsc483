@@ -352,4 +352,41 @@ def test():
 test()
 
 #IDEA: maybe do all random item getting inside the Option class init
+"""
+- a b
+There are a dogs. There are b cats. Take away b cats. How many animals are there
+(There are a dogs and cats. Take away b cats. How many animals are there)
+
+(option)There are a dogs. Take away b dogs. How many dogs are there
+
+(option)Jim has b dogs. Sally has a dogs. How many more dogs does Sally have than Jim
+
++ a b
+There are a dogs. There are b cats. How many animals are there (together).
+
+(option) There are a dogs. There are b extra dogs. How many dogs are there
+
+(option) Jim has a dogs. Sally has b dogs. How many dogs are there
+
++ a b -c
+There are a dogs. There are b cats. Take away c birds. How many animals are there (together).
+
++ a b -c d e -f g
+There are a dogs. There are b cats. Take away c birds. There are d roosters. There are e hens. Take away f cows. There are g ants.
+How many animals are there (together).
+(maybe preface that sentence with: There are dogs cats birds rooster hens cows ants.
+
++ a b -c*-d e -f*g - ISSUE - NEGATIVE TIMES NEGATIVE = POSITIVE
+There are a dogs. There are b cats. Take away there are c farms each with d roosters.
+There are e hens. Take away there are f pastures each with g cows. How many animals are there (together).
+(pastures have animals farms have animals)
+"""
+
+
+"""
+Recurse to left side of tree
+Find largest and smallest object
+
+
+"""
 
