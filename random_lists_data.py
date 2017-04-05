@@ -1,3 +1,5 @@
+import random
+
 NAMES_list = [
 'Rodrigo',
 'Miles',
@@ -113,6 +115,10 @@ CONVERSIONS_list = [
 #City has all of these things in it
 #Topic to discuss: Cities can have animals, but also dogs and cats. But animals cant have dogs and cats, they are dogs and cats
 #Just like a shop is a kind of building
+
+
+
+
 CITY_list = [
     'zip codes'
     'streets',
@@ -245,6 +251,27 @@ DOORS_list = [
 
 FLOOR_MATS_list = [
     'ridges'
+]
+
+ultimate_type_list = [
+    "NAMES",
+    "UNITS",
+    "CONVERSIONS",
+    "CITY",
+    "ZIP_CODES",
+    "STREETS",
+    "BUILDINGS",
+    "CARS",
+    "PEOPLE",
+    "PLANTS",
+    "PARKS",
+    "AIR",
+    "LIGHTS",
+    "ANIMALS",
+    "WINDOWS",
+    "SEATS",
+    "DOORS",
+    "FLOOR_MATS"
 ]
 
 
