@@ -71,7 +71,7 @@ def combine_subprob(begin, node, entity, end):
 def generate_problem_for_equation(equation):
     ultimatefinalproblem = ""
 
-    # Formate equation
+    # Format equation
     formatequation = tagassigner.Equation(equation)
 
     # Generate dict tree representation.
@@ -86,7 +86,11 @@ def generate_problem_for_equation(equation):
     ultimatefinalproblem += introdata.generate_intro()
     initialproblemtype = newthemeclass.get_random_type()
 
+    # initialproblemtype = "ANIMALS"
+    print("The topic is "  + initialproblemtype)
+
     # Chose "big type" for problem.
+
     initialobject = newthemeclass.str_to_class("newthemeclass", initialproblemtype)
 
     # ultimatefinalproblem += " "
@@ -97,6 +101,8 @@ def generate_problem_for_equation(equation):
         ultimatefinalproblem += initialobject.getInstanceTitle(0)
     else:
         ultimatefinalproblem += initialobject.getInstanceTitle(1)
+
+    ultimatefinalproblem += ". "
 
     # Keep building the problem based on what we see.
     previousobjecttype = initialproblemtype
@@ -118,11 +124,13 @@ def generate_problem_for_equation(equation):
             mulchain = True
             previousobjecttype = initialproblemtype
 
+        ultimatefinalproblem += " "
+
         nodeid += 1
 
     # TODO Assuming counting for now.
 
-    ultimatefinalproblem += " " + introdata.generate_conclusion(initialproblemtype)
+    ultimatefinalproblem += introdata.generate_conclusion(initialproblemtype)
 
     return ultimatefinalproblem
 
@@ -133,8 +141,8 @@ def run_tests():
 
     equations = [
         # "a + b",
-        "a + b + c + d + e + f",
-        "1 + 1 + b",
+        "a + b + c",
+        # "1 + 1 + b",
         # "a * b * c",
         # "a + b * c",
         # "a / b + c",
@@ -154,5 +162,5 @@ def run_tests():
         print()
         print()
 
-for dummy_idx in range(10):
+for dummy_idx in range(3):
     run_tests()

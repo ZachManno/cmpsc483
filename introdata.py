@@ -4,9 +4,9 @@ introductions = [
     "There is",
     "There are",
     "There exists",
-    "We have",
+    "We've got",
     "Once upon a time, there were",
-    "In this problem, we have"
+    "In this problem, there exists"
 ]
 
 and_connectors = [
@@ -15,16 +15,18 @@ and_connectors = [
     "Furthermore,",
     "Don't forget that",
     "In addition",
+    "To add,",
     "Plus,",
     "It's also worth mentioning that",
 ]
 
 counting_solutions_intro = [
-    "What is the total amount of",
-    "What is the total count of",
-    "Give the final total count of",
-    "Provide the final total count of",
-    "How many "
+    "What is the amount of",
+    "What is the count of",
+    "Give the final count of",
+    "Provide the final count of",
+    "How many",
+    "Count the number of"
 ]
 
 counting_solutions_conclusion = [
@@ -42,8 +44,8 @@ def get_and_connector():
 def generate_conclusion(objecttype):
     conclusion = random.choice(counting_solutions_intro)
     conclusion += " "
-    conclusion += objecttype
-
+    conclusion += objecttype.lower()
+    conclusion += " "
     if (bool(random.getrandbits(1))):
         conclusion += random.choice(counting_solutions_conclusion)
 
