@@ -19,6 +19,11 @@ def str_to_class(module_name, class_name):
         logging.error('Module does not exist')
     return class_ or None
 
+def get_random_type():
+    return random.choice(random_lists_data.ultimate_type_list)
+
+
+
 # Specify How many of a class you need.
 # On each, specify
 
@@ -72,6 +77,7 @@ class STREETS(object):
         self.objectTitlePlural = "STREETS"
         self.down_relations = {
             'has': ['people', 'signs', 'cars', 'buildings', 'trash', 'lights', 'sidewalk']
+
         }
         self.up_relations = {
 
