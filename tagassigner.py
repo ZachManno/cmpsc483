@@ -290,7 +290,9 @@ easyequations = [
     # "1 * 2 * 3",
     # "1 * 2 * 3/4 * 5",
     # "1 * 2 * (3/4 + 5) * 6"
-    "a + b"
+    "a + b",
+    "(a * b)/(c * d) ",
+
 
 ]
 
@@ -298,13 +300,6 @@ def run_tests():
     """
     Run a series of tests to confirm valid token parsing from input.
     """
-
-    equations = [
-        "5x+20",
-        "ax - 5b + c + d + 2005 + 20b",
-        "5 + (1+2+3)/3 - (4+5+6)/(1+2+3)",
-
-    ]
 
     for equation in easyequations:
         formatequation = Equation(equation)

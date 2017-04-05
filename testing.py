@@ -3,12 +3,19 @@ import tagassigner
 import introdata
 
 
-myclass = "CITY"
-myclassobject = newthemeclass.str_to_class("newthemeclass", myclass)
-print(type(myclassobject))
-print(myclassobject.instanceTitle)
+
+def debug_type_test():
+    myclass = "CITY"
+    myclassobject = newthemeclass.str_to_class("newthemeclass", myclass)
+    print(type(myclassobject))
+    print(myclassobject.instanceTitle)
+
+def debug_display_contents(equationdict):
+    for entry in equationdict:
+        print(str(entry) + ": " + str(equationdict[entry][0].attribute) + " " + str(equationdict[entry][1]) + " " + str(equationdict[entry][2]))
 
 
+# PROBLEM GENERATOR METHODS
 def generate_dict_tree(node, myid, parent=None):
     """
     Recursively generate the tree reference structure.
@@ -47,6 +54,75 @@ def get_parent_id(nodeid, equationdict):
 def get_children(nodeid, equationdict):
     return equationdict[nodeid][2]
 
+def combine_subprob(begin, node, entity, end):
+    subproblem = begin
+    subproblem += node.attribute
+
+    # Get subproblem title based on plurality.
+    subproblem += " " + entity.getInstanceTitle(node.attribute != 1)
+
+    subproblem += end
+
+    if subproblem[len(subproblem) - 1] != ".":
+        subproblem += "."
+
+    return subproblem
+
+def generate_problem_for_equation(equation):
+    ultimatefinalproblem = ""
+
+    # Formate equation
+    formatequation = tagassigner.Equation(equation)
+
+    # Generate dict tree representation.
+    equationdict = generate_dict_tree(formatequation, 0, None)
+
+    # Find the leftmost node.
+    nodeid = 0
+    while len(equationdict[nodeid][2]) > 0:
+        nodeid = equationdict[nodeid][2][0]
+
+    # Generate a humble introduction.
+    ultimatefinalproblem += introdata.generate_intro()
+    initialproblemtype = newthemeclass.get_random_type()
+
+    # Chose "big type" for problem.
+    initialobject = newthemeclass.str_to_class("newthemeclass", initialproblemtype)
+
+    # ultimatefinalproblem += " "
+    ultimatefinalproblem += get_term(nodeid, equationdict).attribute
+    ultimatefinalproblem += " "
+
+    if get_term(nodeid, equationdict).attribute == 1:
+        ultimatefinalproblem += initialobject.objectTitleSingular
+    else:
+        ultimatefinalproblem += initialobject.objectTitlePlural
+
+    # Keep building the problem based on what we see.
+    previousobjecttype = initialproblemtype
+    previousobject = initialobject
+    mulchain = False
+    while nodeid < max(equationdict):
+        if equationdict[get_parent_id(nodeid)] == "+":
+            # Plus chain.
+            newobject = newthemeclass.str_to_class("newthemeclass", initialproblemtype)
+            attribute = get_term(nodeid, equationdict).attribute
+
+            intro = introdata.and_connectors + introdata.generate_intro().lower()
+            ultimatefinalproblem += combine_subprob(intro, attribute, newobject, "")
+
+        if equationdict[get_parent_id(nodeid)] == "*":
+            # Mulchain
+            mulchain = True
+            previousobjecttype = initialproblemtype
+
+        nodeid += 1
+
+    # TODO Assuming counting for now.
+
+    ultimatefinalproblem += " " + introdata.generate_conclusion(initialproblemtype)
+
+    return ultimatefinalproblem
 
 def run_tests():
     """
@@ -58,51 +134,18 @@ def run_tests():
         "a * b",
         "a * b * c",
         "a + b * c",
-        "a / b + c"
+        "a / b + c",
+        "c * g"
     ]
 
     for equation in equations:
         print("Original equation:")
         print(equation)
-        ultimatefinalproblem = ""
 
-        # Formate equation
-        formatequation = tagassigner.Equation(equation)
+        print()
+        print("Generated Problem:")
+        print(generate_problem_for_equation(equation))
 
-        # Generate dict tree representation.
-        equationdict = generate_dict_tree(formatequation, 0, None)
-
-        # Find the leftmost node.
-        nodeid = 0
-        while len(equationdict[nodeid][2]) > 0:
-            nodeid = equationdict[nodeid][2][0]
-
-        # Generate a humble introduction.
-        ultimatefinalproblem += introdata.generate_intro()
-
-        # Chose "big type" for problem.
-        initialobject = newthemeclass.str_to_class("newthemeclass", newthemeclass.get_random_type())
-        if get_term(nodeid, equationdict).attribute == 1:
-            ultimatefinalproblem += initialobject.objectTitlePlural
-        else:
-            ultimatefinalproblem += initialobject.objectTitleSingular
-
-
-
-        # Keep building the problem based on what we see.
-        while nodeid < max(equationdict):
-            if
-
-        for entry in equationdict:
-            print(str(entry) + ": " + str(equationdict[entry][0].attribute) + " " + str(equationdict[entry][1]) + " " + str(equationdict[entry][2]))
-
-        # Iterate through formated equation.
-
-
-        # equation = ""
-        #
-        # for term in formatequation.terms:
-        #     equation += str(term) + " "
 
         print("=============")
         print()
