@@ -59,7 +59,7 @@ def combine_subprob(begin, node, entity, end):
     subproblem += node.attribute
 
     # Get subproblem title based on plurality.
-    subproblem += " " + entity.getInstanceTitle(node.attribute != 1)
+    subproblem += " " + entity.getInstanceTitle(int(node.attribute != "1"))
 
     subproblem += end
 
@@ -93,25 +93,27 @@ def generate_problem_for_equation(equation):
     ultimatefinalproblem += get_term(nodeid, equationdict).attribute
     ultimatefinalproblem += " "
 
-    if get_term(nodeid, equationdict).attribute == 1:
-        ultimatefinalproblem += initialobject.objectTitleSingular
+    if get_term(nodeid, equationdict).attribute == "1":
+        ultimatefinalproblem += initialobject.getInstanceTitle(0)
     else:
-        ultimatefinalproblem += initialobject.objectTitlePlural
+        ultimatefinalproblem += initialobject.getInstanceTitle(1)
 
     # Keep building the problem based on what we see.
     previousobjecttype = initialproblemtype
     previousobject = initialobject
     mulchain = False
-    while nodeid < max(equationdict):
-        if equationdict[get_parent_id(nodeid)] == "+":
+
+    nodeid += 1
+    while nodeid < max(equationdict) + 1:
+        if equationdict[get_parent_id(nodeid,equationdict)][0].attribute == "+":
             # Plus chain.
             newobject = newthemeclass.str_to_class("newthemeclass", initialproblemtype)
             attribute = get_term(nodeid, equationdict).attribute
 
-            intro = introdata.and_connectors + introdata.generate_intro().lower()
-            ultimatefinalproblem += combine_subprob(intro, attribute, newobject, "")
+            intro = introdata.get_and_connector() + introdata.generate_intro().lower()
+            ultimatefinalproblem += combine_subprob(intro, get_term(nodeid, equationdict), newobject, "")
 
-        if equationdict[get_parent_id(nodeid)] == "*":
+        if equationdict[get_parent_id(nodeid,equationdict)][0].attribute == "*":
             # Mulchain
             mulchain = True
             previousobjecttype = initialproblemtype
@@ -130,12 +132,13 @@ def run_tests():
     """
 
     equations = [
-        "a + b",
-        "a * b",
-        "a * b * c",
-        "a + b * c",
-        "a / b + c",
-        "c * g"
+        # "a + b",
+        "a + b + c + d + e + f",
+        "1 + 1 + b",
+        # "a * b * c",
+        # "a + b * c",
+        # "a / b + c",
+        # "c * g"
     ]
 
     for equation in equations:
@@ -151,4 +154,5 @@ def run_tests():
         print()
         print()
 
-run_tests()
+for dummy_idx in range(10):
+    run_tests()
