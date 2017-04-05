@@ -68,38 +68,6 @@ VERBS_list = [
     'are'
 ]
 
-NOUNS_list = [
-    'dog',
-    'cat',
-    'ball',
-    'dress',
-    'pencil',
-    'apple',
-    'football',
-    'shoe',
-    'computer'
-]
-
-UNITS_list = [
-    'dollar',
-    'cent',
-    'gallon',
-    'cup',
-    'meter'
-]
-
-CONVERSIONS_list = [
-    ['mile','yards',1760],
-    ['mile','feet',5280],
-    ['mile','inches',63360],
-    ['yard','feet',3],
-    ['foot','inches',12],
-    ['year','days',365],
-    ['year','months',12],
-    ['day','hours',24],
-    ['hour','minutes',60],
-    ['gallon','quarts',4]
-]
 
 
 ###############################################################################################
@@ -120,106 +88,85 @@ CONVERSIONS_list = [
 
 
 CITY_list = [
-    'zip codes'
-    'streets',
-    'buildings',
-    'cars',
-    'people',
-    'plants',
-    'parks',
-    'air',
-    'lights',
-    'animals',
-]
-
-ZIP_CODES_list = [
-    'burrows'
-    'buildings'
+    ['utopia'],
+    ['metropolis','metropoli'],
+    ['village'],
+    ['town']
 ]
 
 #A lot of these things loop in circles. when searching need to make sure we dont use something already used
 #City has streets and buildings and people. Streets and buildings both have people. Streets have buildings.
 STREETS_list = [
-    'people',
-    'signs',
-    'cars',
-    'buildings',
-    'trash',
-    'lights',
-    'sidewalk'
+    ['avenue'],
+    ['boulevard'],
+    ['alley'],
+    ['cul-de-sac'],
+    ['highway']
+
 ]
 
 BUILDINGS_list = [
-    'floors',
-    'rooms',
-    'stairs',
-    'people',
-    'lights',
-    'computers',
-    'doors',
-    'windows'
+    ['shop'],
+    ['hotel'],
+    ['mall'],
+    ['skyscraper'],
+    ['hospital'],
+    ['apartment'],
+    ['townhouse'],
+    ['library','libraries']
+
 ]
 
 CARS_list = [
-    'people',
-    'windows',
-    'seats',
-    'doors',
-    'lights',
-    'floor mats'
+    ['sedan'],
+    ['truck'],
+    ['convertable'],
+    ['minivan'],
+    ['station wagon'],
+    ['recreational vehicle']
 ]
 
 #People can have clothes on them but that is different
 PEOPLE_list = [
-    'organs'
-    'eyes'
-    'skin'
-    'limbs'
-    'fingers'
-    'toes'
-    'bones'
-    'teeth'
+    ['computer scientist'],
+    ['body builder'],
+    ['homewrecker'],
+    ['plumber'],
+    ['janitor']
 ]
 
 PLANTS_list = [
-    'leaves',
-    'petals',
-    'seeds',
-    'roots',
-    'branches'
+    ['orchid'],
+    ['daffodil'],
+    ['geranium'],
+    ['mum']
 ]
 
 
 PARKS_list = [
-    'plants'
-    'animals'
-    'people'
-    'lights'
-    'jungle gyms'
+    ['national park'],
+    ['playground'],
+    ['amusement park'],
+    ['skate park']
 ]
 
-#might want to just eliminate air (kind of weird)
-#wouldnt make sense to say air has animals, but air does have birds. Maybe use alternative name for animal here
-AIR_list = [
-    'birds'
-    'oxygen'
-    'nitrogen'
-    'dust'
-]
 
 
 LIGHTS_list = [
-    'batteries'
-    'wires'
+    ['LED light'],
+    ['CFL light']
 ]
 
 #people are animals but differnt. Can be a "has" relationship and an "are" relationship. Or maybe "are" relationship doesnt
 #even help the problem at all
 ANIMALS_list = [
-    'claws'
-    'fur'
-    'tails'
-    'paws'
+    ['monkey'],
+    ['cat'],
+    ['dog'],
+    ['bear'],
+    ['rhino'],
+    ['snake']
+
 ]
 
 
@@ -229,20 +176,21 @@ ANIMALS_list = [
 #Example for second level:
 #CAR HAS:
 WINDOWS_list = [
-    'glass',
-    'dust'
+    #building window list
+    ['bay window'],
+    ['awning window'],
+    ['sliding window']
+    #car window list
 
 ]
 
 SEATS_list = [
-    'dust'
+
 ]
 
 DOORS_list = [
-    'handles',
-    'speakers',
-    'windows',
-    'locks',
+    ['sliding door'],
+    ['framed door']
 ]
 
 ##ALREADY HAVE LIGHTS
@@ -250,13 +198,23 @@ DOORS_list = [
 ##ALREADY HAVE PEOPLE
 
 FLOOR_MATS_list = [
-    'ridges'
+    ['carpet floor mat'],
+    ['plastic floor mat']
+]
+
+SIGNS_list = [
+    ['stop sign'],
+    ['yield sign'],
+    ['speed limit sign']
+]
+
+TRASH_list = [
+    ['wrapper'],
+    ['soda can'],
+    ['crumbled paper']
 ]
 
 ultimate_type_list = [
-    "NAMES",
-    "UNITS",
-    "CONVERSIONS",
     "CITY",
     "ZIP_CODES",
     "STREETS",
@@ -265,13 +223,15 @@ ultimate_type_list = [
     "PEOPLE",
     "PLANTS",
     "PARKS",
-    "AIR",
     "LIGHTS",
     "ANIMALS",
     "WINDOWS",
     "SEATS",
     "DOORS",
-    "FLOOR_MATS"
+    "FLOOR_MATS",
+    "SIGNS",
+    "TRASH",
+    "SIDEWALKS"
 ]
 
 

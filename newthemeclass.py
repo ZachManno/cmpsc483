@@ -3,6 +3,7 @@ import random
 import importlib
 import logging
 
+
 class Name(object):
     def __init__(self):
         pass
@@ -19,9 +20,9 @@ def str_to_class(module_name, class_name):
         logging.error('Module does not exist')
     return class_ or None
 
+
 def get_random_type():
     return random.choice(random_lists_data.ultimate_type_list)
-
 
 
 # Specify How many of a class you need.
@@ -34,39 +35,40 @@ class MulVerb(object):
         self.wrappedstatement = []
 
 
-
-#For down relations:
-#They are reasonable items to contain ie A city has buildings. A city would not have atoms
+# For down relations:
+# They are reasonable items to contain ie A city has buildings. A city would not have atoms
 class CITY(object):
     def __init__(self):
         self.instanceTitle = random.choice(random_lists_data.CITY_list)
         self.objectTitleSingular = "CITY"
         self.objectTitlePlural = "CITIES"
         self.down_relations = {
-            'has': [    'ZIP_CODES', 'STREETS', 'BUILDINGS', 'CARS','PEOPLE', 'PLANTS', 'PARKS', 'AIR', 'LIGHTS', 'ANIMALS']
+            'has':
+                [
+                    'STREETS',
+                    'BUILDINGS',
+                    'CARS',
+                    'PEOPLE',
+                    'PLANTS',
+                    'PARKS',
+                    'LIGHTS',
+                    'ANIMALS'
+                ]
         }
         self.up_relations = {
 
         }
 
-
-
-
-
-
-
-
-class ZIP_CODES(object):
-    def __init__(self):
-        self.instanceTitle = random.choice(random_lists_data.ZIP_CODES_list)
-        self.objectTitleSingular = "ZIP_CODE"
-        self.objectTitlePlural = "ZIP_CODES"
-        self.down_relations = {
-            'has': ['burrows']
-        }
-        self.up_relations = {
-
-        }
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 
@@ -76,13 +78,32 @@ class STREETS(object):
         self.objectTitleSingular = "STREET"
         self.objectTitlePlural = "STREETS"
         self.down_relations = {
-            'has': ['people', 'signs', 'cars', 'buildings', 'trash', 'lights', 'sidewalk']
+            'has':
+                [
+                    'PEOPLE',
+                    'SIGNS',
+                    'CARS',
+                    'BUILDINGS',
+                    'TRASH',
+                    'LIGHTS',
+                    'SIDEWALK'
+                ]
 
         }
         self.up_relations = {
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class BUILDINGS(object):
@@ -91,11 +112,32 @@ class BUILDINGS(object):
         self.objectTitleSingular = "BUILDING"
         self.objectTitlePlural = "BUILDINGS"
         self.down_relations = {
+            'has':
+                [
+                    'FLOORS',
+                    'ROOMS',
+                    'STAIRS',
+                    'PEOPLE',
+                    'LIGHTS',
+                    #'COMPUTERS',
+                    'DOORS',
+                    'WINDOWS'
+                ]
         }
         self.up_relations = {
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class CARS(object):
@@ -104,11 +146,30 @@ class CARS(object):
         self.objectTitleSingular = "CAR"
         self.objectTitlePlural = "CARS"
         self.down_relations = {
+            'has':
+                [
+                    'PEOPLE',
+                    'WINDOWS',
+                    'SEATS',
+                    'DOORS',
+                    'LIGHTS',
+                    'FLOOR MATS'
+                ]
         }
         self.up_relations = {
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class PEOPLE(object):
@@ -117,11 +178,40 @@ class PEOPLE(object):
         self.objectTitleSingular = "PEOPLE"
         self.objectTitlePlural = "PEOPLE"
         self.down_relations = {
+            'has':
+                [
+                    'ANIMALS',
+                    #'ORGANS',
+                    #'EYES',
+                    #'LIMBS',
+                    #'FINGERS',
+                    #'TOES',
+                    #'BONES',
+                    #'TEETH'
+
+                ]
+            #,
+            #'holds':
+             #   [
+              #      'CANDY',
+               #     'MONEY',
+                #    'FRUIT'
+                #]
         }
         self.up_relations = {
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class PLANTS(object):
@@ -130,11 +220,28 @@ class PLANTS(object):
         self.objectTitleSingular = "PLANT"
         self.objectTitlePlural = "PLANTS"
         self.down_relations = {
+            #'has':
+             #   [
+                    #'LEAVES',
+                    #'SEEDS',
+                    #'BRANCHES'
+
+             #   ]
         }
         self.up_relations = {
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class PARKS(object):
@@ -143,24 +250,29 @@ class PARKS(object):
         self.objectTitleSingular = "PARK"
         self.objectTitlePlural = "PARKS"
         self.down_relations = {
+            'has':
+                [
+                    'PEOPLE',
+                    'ANIMALS',
+                    'PLANTS',
+                    'LIGHTS'
+
+                ]
         }
         self.up_relations = {
 
         }
 
-
-
-class AIR(object):
-    def __init__(self):
-        self.instanceTitle = random.choice(random_lists_data.AIR_list)
-        self.objectTitleSingular = "AIR"
-        self.objectTitlePlural = "AIR"
-        self.down_relations = {
-        }
-        self.up_relations = {
-
-        }
-
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class LIGHTS(object):
@@ -169,11 +281,27 @@ class LIGHTS(object):
         self.objectTitleSingular = "LIGHT"
         self.objectTitlePlural = "LIGHTS"
         self.down_relations = {
+            #'has':
+            #    [
+                    #'BULBS'
+                    #'BATTERIES',
+                    #'WIRES'
+             #   ]
         }
         self.up_relations = {
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class ANIMALS(object):
@@ -182,11 +310,28 @@ class ANIMALS(object):
         self.objectTitleSingular = "ANIMAL"
         self.objectTitlePlural = "ANIMALS"
         self.down_relations = {
+            #'has':
+             #   [
+                    #'CLAWS',
+                    #'FUR',
+                    #'TAILS',
+                    #'PAWS'
+              #  ]
         }
         self.up_relations = {
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class WINDOWS(object):
@@ -195,11 +340,26 @@ class WINDOWS(object):
         self.objectTitleSingular = "WINDOW"
         self.objectTitlePlural = "WINDOWS"
         self.down_relations = {
+            #'has':
+             #   [
+                    #'PARTICLES_OF_DUST'
+#
+              #  ]
         }
         self.up_relations = {
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class SEATS(object):
@@ -213,6 +373,16 @@ class SEATS(object):
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class DOORS(object):
@@ -221,11 +391,28 @@ class DOORS(object):
         self.objectTitleSingular = "DOOR"
         self.objectTitlePlural = "DOORS"
         self.down_relations = {
+            #'has':
+            #    [
+                    #'HANDLES',
+                    #'LOCKS',
+                    #'SPEAKERS'
+
+             #   ]
         }
         self.up_relations = {
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
 class FLOOR_MATS(object):
@@ -234,17 +421,112 @@ class FLOOR_MATS(object):
         self.objectTitleSingular = "FLOOR_MAT"
         self.objectTitlePlural = "FLOOR_MATS"
         self.down_relations = {
+            #'has':
+             #   [
+              #      #'RIDGES'
+#
+              #  ]
         }
         self.up_relations = {
 
         }
 
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
+class SIGNS(object):
+    def __init__(self):
+        self.instanceTitle = random.choice(random_lists_data.SIGNS_list)
+        self.objectTitleSingular = "SIGN"
+        self.objectTitlePlural = "SIGNS"
+        self.down_relations = {
+            #'has':
+            #    [
+            #
+             #   ]
+        }
+        self.up_relations = {
+
+        }
+
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
+class TRASH(object):
+    def __init__(self):
+        self.instanceTitle = random.choice(random_lists_data.TRASH_list)
+        self.objectTitleSingular = "TRASH"
+        self.objectTitlePlural = "TRASH"
+        self.down_relations = {
+            #'has':
+             #   [
+
+             #   ]
+        }
+        self.up_relations = {
+
+        }
+
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
+class SIDEWALKS(object):
+    def __init__(self):
+        self.instanceTitle = random.choice(random_lists_data.SIDEWALKS_list)
+        self.objectTitleSingular = "SIDEWALK"
+        self.objectTitlePlural = "SIDEWALKS"
+        self.down_relations = {
+            'has':
+                [
+                    'PEOPLE',
+                    'TRASH',
+                    'ANIMALS'
+                ]
+        }
+        self.up_relations = {
+
+        }
+
+    def getInstanceTitle(self, plurality):
+        if (plurality != 0 and plurality != 1):
+            raise Exception("Invalid plurality!")
+        else:
+            if len(self.instanceTitle) > 1:
+                return self.instanceTitle[plurality]
+            elif plurality:
+                return self.instanceTitle[0] + "s"
+            else:
+                return self.instanceTitle[0]
 
 
+def run():
+    print('yo')
 
+run()
