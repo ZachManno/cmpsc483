@@ -1,8 +1,12 @@
+
+### THIS IS THE OLD READIN FILE
+
+
 ### test input from the command line instead of using tests written into the code
 
 import sys
 import getopt
-from string import whitespace
+
 
 ### get the options to only come up once all code has been input; until then, just read input code until first blank
 ### output should be a single string, each line separated by \n
@@ -15,7 +19,6 @@ def readin():
     lines = []
 
     intro = input("Enter the first line of code, or hit ENTER to quit:\n")
-    intro = intro.replace(" ","")
     if len(intro) == 0:
         return
     lines.append(intro)
@@ -23,7 +26,6 @@ def readin():
     newline = 1;
     while newline > 0:
         next = input("Enter the next line of code followed by ENTER, or hit ENTER to finish:\n")
-        next = next.replace(" ","")
         newline = len(next)
         if len(next) != 0:
             lines.append(next)
@@ -35,8 +37,7 @@ def readin():
     while i < len(lines):
         print(str(i) + ".\t" + lines[i])
         i = i + 1
-
-    return condense(lines)
+    return lines
 
 
 def options(lines):
@@ -58,7 +59,6 @@ def options(lines):
 
 def doread(lines):
     next = input("Input next line of code:\n")
-    next = next.replace(" ","")
     lines.append(next)
     i = 0
     while i < len(lines):
@@ -102,7 +102,6 @@ def modify(lines):
 
     elif x < len(lines):
         mod = input("Re-enter line " + next + " as you see fit.\n")
-        mod = mod.replace(" ","")
         lines.remove(lines[x])
         if len(mod) != 0:
             lines.insert(x, mod)
@@ -114,36 +113,5 @@ def modify(lines):
         print(next + " is not an option.\n")
         modify(lines)
 
-###each code segment must have an ANS variable on the lefthand side
-###the last line of code must end with declaration of variable ANS
-def condense(lines):
-    final = "ANS="
-    vars = []
-    equations = []
-
-    i = 0
-    while i < (len(lines)-1):
-        j = 0
-        while lines[i][j] != "\0" and lines[i][j] != "=":
-            j = j+1
-        if lines[i][j] == "=":
-            newvar = lines[i][:j]
-            print("yes " + newvar)
-            vars.append(newvar)
-            neweq = lines[i][j+1:]
-            equations.append(neweq)
-        i = i+1
-
-    i = 0
-    while i < len(lines[-1]) and lines[-1][i] != "=":
-        i = i+1
-
-    j = i
-    while j != "\0":
-        if j == ""
-
-    print(vars)
-    print(equations)
-    return final
 
 readin()
