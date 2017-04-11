@@ -1,5 +1,8 @@
 import random
 
+### NOTE: look into online libraries that deal with plurals
+### taxonomy for animals?
+
 introductions = [
     "There is",
     "There are",
@@ -45,8 +48,9 @@ def generate_conclusion(objecttype):
     conclusion = random.choice(counting_solutions_intro)
     conclusion += " "
     conclusion += objecttype.lower()
-    conclusion += " "
+    #conclusion += " "
     if (bool(random.getrandbits(1))):
+        conclusion += " "
         conclusion += random.choice(counting_solutions_conclusion)
 
     conclusion += "?"
