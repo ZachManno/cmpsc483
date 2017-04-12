@@ -108,6 +108,3 @@ def modify(lines):
     else:
         print(next + " is not an option.\n")
         modify(lines)
-
-
-readin()

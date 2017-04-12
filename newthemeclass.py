@@ -91,6 +91,10 @@ class STREETS(object):
 
         }
         self.up_relations = {
+            'in':
+                [
+                    'CITY'
+                ]
 
         }
 
