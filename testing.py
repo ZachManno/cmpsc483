@@ -3,16 +3,17 @@ import tagassigner
 import introdata
 
 
-
 def debug_type_test():
     myclass = "CITY"
     myclassobject = newthemeclass.str_to_class("newthemeclass", myclass)
     print(type(myclassobject))
     print(myclassobject.instanceTitle)
 
+
 def debug_display_contents(equationdict):
     for entry in equationdict:
-        print(str(entry) + ": " + str(equationdict[entry][0].attribute) + " " + str(equationdict[entry][1]) + " " + str(equationdict[entry][2]))
+        print(str(entry) + ": " + str(equationdict[entry][0].attribute) + " " + str(equationdict[entry][1]) + " " +
+              str(equationdict[entry][2]))
 
 
 # PROBLEM GENERATOR METHODS
@@ -44,15 +45,19 @@ def generate_dict_tree(node, myid, parent=None):
     # Pass up dict tree to parent.
     return dict_tree
 
+
 def get_term(nodeid, equationdict):
     return equationdict[nodeid][0]
+
 
 def get_parent_id(nodeid, equationdict):
     # Node id: Node, Parentid, child list
     return equationdict[nodeid][1]
 
+
 def get_children(nodeid, equationdict):
     return equationdict[nodeid][2]
+
 
 def combine_subprob(begin, node, entity, end):
     subproblem = begin
@@ -67,6 +72,7 @@ def combine_subprob(begin, node, entity, end):
         subproblem += "."
 
     return subproblem
+
 
 def generate_problem_for_equation(equation):
     ultimatefinalproblem = ""
@@ -87,7 +93,7 @@ def generate_problem_for_equation(equation):
     initialproblemtype = newthemeclass.get_random_type()
 
     # initialproblemtype = "ANIMALS"
-    print("The topic is "  + initialproblemtype)
+    print("The topic is " + initialproblemtype)
 
     # Chose "big type" for problem.
 
@@ -111,7 +117,7 @@ def generate_problem_for_equation(equation):
 
     nodeid += 1
     while nodeid < max(equationdict) + 1:
-        if equationdict[get_parent_id(nodeid,equationdict)][0].attribute == "+":
+        if equationdict[get_parent_id(nodeid, equationdict)][0].attribute == "+":
             # Plus chain.
             newobject = newthemeclass.str_to_class("newthemeclass", initialproblemtype)
             attribute = get_term(nodeid, equationdict).attribute
@@ -133,6 +139,7 @@ def generate_problem_for_equation(equation):
     ultimatefinalproblem += introdata.generate_conclusion(initialproblemtype)
 
     return ultimatefinalproblem
+
 
 def run_tests():
     """
@@ -156,7 +163,6 @@ def run_tests():
         print()
         print("Generated Problem:")
         print(generate_problem_for_equation(equation))
-
 
         print("=============")
         print()
