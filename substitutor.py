@@ -41,5 +41,4 @@ class Substitutor(object):
         return equations[len(equations)-1]
 
 
-
-print(Substitutor().finalEquation)
+#print(Substitutor().finalEquation)
