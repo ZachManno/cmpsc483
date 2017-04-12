@@ -40,6 +40,13 @@ class MulVerb(object):
 class CITY(object):
     def __init__(self):
         self.instanceTitle = random.choice(random_lists_data.CITY_list)
+        self.adjectives = [
+            'Gleaming',
+            'Dirty',
+            'Clean',
+            'Crowded',
+            'Developed',
+        ]
         self.objectTitleSingular = "CITY"
         self.objectTitlePlural = "CITIES"
         self.down_relations = {
@@ -75,6 +82,12 @@ class CITY(object):
 class STREETS(object):
     def __init__(self):
         self.instanceTitle = random.choice(random_lists_data.STREETS_list)
+        self.adjectives = [
+            'Dirty',
+            'Clean',
+            'Crowded',
+            'Packed',
+        ]
         self.objectTitleSingular = "STREET"
         self.objectTitlePlural = "STREETS"
         self.down_relations = {
@@ -311,6 +324,17 @@ class LIGHTS(object):
 class ANIMALS(object):
     def __init__(self):
         self.instanceTitle = random.choice(random_lists_data.ANIMALS_list)
+        self.adjectives = [
+            "fluffy",
+            "furry",
+            "silky",
+            "loud",
+            "lumbering",
+            "hibernating",
+            "shaggy",
+            "tired",
+        ]
+
         self.objectTitleSingular = "ANIMAL"
         self.objectTitlePlural = "ANIMALS"
         self.down_relations = {
@@ -330,12 +354,17 @@ class ANIMALS(object):
         if (plurality != 0 and plurality != 1):
             raise Exception("Invalid plurality!")
         else:
+            # Random chance for adjective.
+            modifier = ""
+            if (bool(random.getrandbits(1))):
+                modifier = random.choice(self.adjectives) + " "
+
             if len(self.instanceTitle) > 1:
-                return self.instanceTitle[plurality]
+                return modifier + self.instanceTitle[plurality]
             elif plurality:
-                return self.instanceTitle[0] + "s"
+                return modifier + self.instanceTitle[0] + "s"
             else:
-                return self.instanceTitle[0]
+                return modifier + self.instanceTitle[0]
 
 
 class WINDOWS(object):

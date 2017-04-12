@@ -3,16 +3,17 @@ import tagassigner
 import introdata
 
 
-
 def debug_type_test():
     myclass = "CITY"
     myclassobject = newthemeclass.str_to_class("newthemeclass", myclass)
     print(type(myclassobject))
     print(myclassobject.instanceTitle)
 
+
 def debug_display_contents(equationdict):
     for entry in equationdict:
-        print(str(entry) + ": " + str(equationdict[entry][0].attribute) + " " + str(equationdict[entry][1]) + " " + str(equationdict[entry][2]))
+        print(str(entry) + ": " + str(equationdict[entry][0].attribute) + " " + str(equationdict[entry][1]) + " " +
+              str(equationdict[entry][2]))
 
 
 # PROBLEM GENERATOR METHODS
@@ -44,15 +45,19 @@ def generate_dict_tree(node, myid, parent=None):
     # Pass up dict tree to parent.
     return dict_tree
 
+
 def get_term(nodeid, equationdict):
     return equationdict[nodeid][0]
+
 
 def get_parent_id(nodeid, equationdict):
     # Node id: Node, Parentid, child list
     return equationdict[nodeid][1]
 
+
 def get_children(nodeid, equationdict):
     return equationdict[nodeid][2]
+
 
 def combine_subprob(begin, node, entity, end):
     subproblem = begin
@@ -68,10 +73,11 @@ def combine_subprob(begin, node, entity, end):
 
     return subproblem
 
+
 def generate_problem_for_equation(equation):
     ultimatefinalproblem = ""
 
-    # Formate equation
+    # Format equation
     formatequation = tagassigner.Equation(equation)
 
     # Generate dict tree representation.
@@ -86,7 +92,11 @@ def generate_problem_for_equation(equation):
     ultimatefinalproblem += introdata.generate_intro()
     initialproblemtype = newthemeclass.get_random_type()
 
+    # initialproblemtype = "ANIMALS"
+    print("The topic is " + initialproblemtype)
+
     # Chose "big type" for problem.
+
     initialobject = newthemeclass.str_to_class("newthemeclass", initialproblemtype)
 
     # ultimatefinalproblem += " "
@@ -98,6 +108,8 @@ def generate_problem_for_equation(equation):
     else:
         ultimatefinalproblem += initialobject.getInstanceTitle(1)
 
+    ultimatefinalproblem += ". "
+
     # Keep building the problem based on what we see.
     previousobjecttype = initialproblemtype
     previousobject = initialobject
@@ -105,7 +117,7 @@ def generate_problem_for_equation(equation):
 
     nodeid += 1
     while nodeid < max(equationdict) + 1:
-        if equationdict[get_parent_id(nodeid,equationdict)][0].attribute == "+":
+        if equationdict[get_parent_id(nodeid, equationdict)][0].attribute == "+":
             # Plus chain.
             newobject = newthemeclass.str_to_class("newthemeclass", initialproblemtype)
             attribute = get_term(nodeid, equationdict).attribute
@@ -118,13 +130,16 @@ def generate_problem_for_equation(equation):
             mulchain = True
             previousobjecttype = initialproblemtype
 
+        ultimatefinalproblem += " "
+
         nodeid += 1
 
     # TODO Assuming counting for now.
 
-    ultimatefinalproblem += " " + introdata.generate_conclusion(initialproblemtype)
+    ultimatefinalproblem += introdata.generate_conclusion(initialproblemtype)
 
     return ultimatefinalproblem
+
 
 def run_tests():
     """
@@ -133,8 +148,8 @@ def run_tests():
 
     equations = [
         # "a + b",
-        "a + b + c + d + e + f",
-        "1 + 1 + b",
+        "a + b + c",
+        # "1 + 1 + b",
         # "a * b * c",
         # "a + b * c",
         # "a / b + c",
@@ -149,10 +164,9 @@ def run_tests():
         print("Generated Problem:")
         print(generate_problem_for_equation(equation))
 
-
         print("=============")
         print()
         print()
 
-for dummy_idx in range(10):
+for dummy_idx in range(3):
     run_tests()
