@@ -6,7 +6,7 @@ class Substitutor(object):
         #lines = ['x=AVG(y,     z,w)','p=b*    g/4','   ANS  =  x/p    ']     #testing
         lines = readin.readin()
         #strip white space
-        for i,equation in enumerate(lines):
+        for i, equation in enumerate(lines):
             equation = equation.replace(" ", "")
             equation = equation.replace("\t", "")
             lines[i] = equation
@@ -40,6 +40,3 @@ class Substitutor(object):
         #print(equations)
         return equations[len(equations)-1]
 
-
-
-print(Substitutor().finalEquation)

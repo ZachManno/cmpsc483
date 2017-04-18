@@ -136,7 +136,6 @@ class Term(object):
 
                 termcount = 0
 
-
                 for postorderval in reversed(self.postorder):
                     if not self.is_sign(postorderval):
                         # It's not a sign. Add to terms.

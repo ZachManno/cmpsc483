@@ -320,5 +320,5 @@ def postorder_tests():
         exprtree = builder.create_expression_tree(equation)
         print(equation + "      " + str(exprtree.get_postorder_result()))
 
-run_tests()
+# run_tests()
 # postorder_tests()
