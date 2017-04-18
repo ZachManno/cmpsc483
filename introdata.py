@@ -7,7 +7,7 @@ introductions = [
     "There is",
     "There are",
     "There exists",
-    "We've got",
+    "We have",
     "Once upon a time, there were",
     "In this problem, there exists"
 ]

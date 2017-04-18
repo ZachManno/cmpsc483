@@ -1,7 +1,9 @@
 import newthemeclass
 import tagassigner
 import introdata
+import inflect
 
+p = inflect.engine() #get inflect engine
 
 def debug_type_test():
     myclass = "CITY"
@@ -64,7 +66,14 @@ def combine_subprob(begin, node, entity, end):
     subproblem += node.attribute
 
     # Get subproblem title based on plurality.
-    subproblem += " " + entity.getInstanceTitle(int(node.attribute != "1"))
+    # subproblem += " " + entity.getInstanceTitle(int(node.attribute != "1"))
+    #if node attribute != 1, return 1 = plural
+    #if node attr == 1, return 0, singular
+    if(int(node.attribute != 1)):
+        subproblem += " " + p.plural(entity.getInstanceTitle())
+    else:
+        subproblem += " " + entity.getInstanceTitle()
+
 
     subproblem += end
 
@@ -104,9 +113,11 @@ def generate_problem_for_equation(equation):
     ultimatefinalproblem += " "
 
     if get_term(nodeid, equationdict).attribute == "1":
-        ultimatefinalproblem += initialobject.getInstanceTitle(0)
+        #singular
+        ultimatefinalproblem += initialobject.getInstanceTitle()
     else:
-        ultimatefinalproblem += initialobject.getInstanceTitle(1)
+        #plural
+        ultimatefinalproblem += p.plural(initialobject.getInstanceTitle())
 
     ultimatefinalproblem += ". "
 

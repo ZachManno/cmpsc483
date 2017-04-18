@@ -38,6 +38,8 @@ class MulVerb(object):
 class Noun_object(object):
     def __init__(self, instanceList):
         self.instanceTitle = random.choice(instanceList)
+    def getInstanceTitle(self):
+        return self.instanceTitle
 
 
 # For down relations:
@@ -76,7 +78,7 @@ class CITY(Noun_object):
         #
 
 
-class STREETS(object):
+class STREETS(Noun_object):
     def __init__(self):
         super(STREETS, self).__init__(random_lists_data.STREETS_list)
         self.adjectives = [
@@ -109,7 +111,7 @@ class STREETS(object):
         }
 
 
-class BUILDINGS(object):
+class BUILDINGS(Noun_object):
     def __init__(self):
         super(BUILDINGS, self).__init__(random_lists_data.BUILDINGS_list)
         self.objectTitleSingular = "BUILDING"
@@ -132,7 +134,7 @@ class BUILDINGS(object):
         }
 
 
-class CARS(object):
+class CARS(Noun_object):
     def __init__(self):
         super(CARS, self).__init__(random_lists_data.CARS_list)
         self.objectTitleSingular = "CAR"
@@ -153,7 +155,7 @@ class CARS(object):
         }
 
 
-class PEOPLE(object):
+class PEOPLE(Noun_object):
     def __init__(self):
         super(PEOPLE, self).__init__(random_lists_data.PEOPLE_list)
         self.objectTitleSingular = "PEOPLE"
@@ -184,7 +186,7 @@ class PEOPLE(object):
         }
 
 
-class PLANTS(object):
+class PLANTS(Noun_object):
     def __init__(self):
         super(PLANTS, self).__init__(random_lists_data.PLANTS_list)
         self.objectTitleSingular = "PLANT"
@@ -203,7 +205,7 @@ class PLANTS(object):
         }
 
 
-class PARKS(object):
+class PARKS(Noun_object):
     def __init__(self):
         super(PARKS, self).__init__(random_lists_data.PARKS_list)
         self.objectTitleSingular = "PARK"
@@ -223,7 +225,7 @@ class PARKS(object):
         }
 
 
-class LIGHTS(object):
+class LIGHTS(Noun_object):
     def __init__(self):
         super(LIGHTS, self).__init__(random_lists_data.LIGHTS_list)
         self.objectTitleSingular = "LIGHT"
@@ -241,7 +243,7 @@ class LIGHTS(object):
         }
 
 
-class ANIMALS(object):
+class ANIMALS(Noun_object):
     def __init__(self):
         super(ANIMALS, self).__init__(random_lists_data.ANIMALS_list)
         self.adjectives = [
@@ -271,7 +273,7 @@ class ANIMALS(object):
         }
 
 
-class WINDOWS(object):
+class WINDOWS(Noun_object):
     def __init__(self):
         super(WINDOWS, self).__init__(random_lists_data.WINDOWS_list)
         self.objectTitleSingular = "WINDOW"
@@ -288,7 +290,7 @@ class WINDOWS(object):
         }
 
 
-class SEATS(object):
+class SEATS(Noun_object):
     def __init__(self):
         super(SEATS, self).__init__(random_lists_data.SEATS_list)
         self.objectTitleSingular = "SEAT"
@@ -300,7 +302,7 @@ class SEATS(object):
         }
 
 
-class DOORS(object):
+class DOORS(Noun_object):
     def __init__(self):
         super(DOORS, self).__init__(random_lists_data.DOORS_list)
         self.objectTitleSingular = "DOOR"
@@ -319,7 +321,7 @@ class DOORS(object):
         }
 
 
-class FLOOR_MATS(object):
+class FLOOR_MATS(Noun_object):
     def __init__(self):
         super(FLOOR_MATS, self).__init__(random_lists_data.FLOOR_MATS_list)
         self.objectTitleSingular = "FLOOR_MAT"
@@ -336,7 +338,7 @@ class FLOOR_MATS(object):
         }
 
 
-class SIGNS(object):
+class SIGNS(Noun_object):
     def __init__(self):
         self.instanceTitle = random.choice(random_lists_data.SIGNS_list)
         self.objectTitleSingular = "SIGN"
@@ -352,7 +354,7 @@ class SIGNS(object):
         }
 
 
-class TRASH(object):
+class TRASH(Noun_object):
     def __init__(self):
         self.instanceTitle = random.choice(random_lists_data.TRASH_list)
         self.objectTitleSingular = "TRASH"
@@ -368,7 +370,7 @@ class TRASH(object):
         }
 
 
-class SIDEWALKS(object):
+class SIDEWALKS(Noun_object):
     def __init__(self):
         self.instanceTitle = random.choice(random_lists_data.SIDEWALKS_list)
         self.objectTitleSingular = "SIDEWALK"
@@ -385,7 +387,3 @@ class SIDEWALKS(object):
 
         }
 
-
-def run():
-    c1 = CITY()
-    print(c1.instanceTitle)
