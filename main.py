@@ -29,6 +29,7 @@ class ExpressionTree(object):
         self.postorder_result = []
         self.preorder_result = []
         self.inorder_result = []
+
         self.node_list = []
 
     """
