@@ -40,3 +40,4 @@ class Substitutor(object):
         #print(equations)
         return equations[len(equations)-1]
 
+
