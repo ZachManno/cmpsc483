@@ -1,6 +1,9 @@
 import newthemeclass
 import tagassigner
 import introdata
+import inflect
+
+p = inflect.engine()
 
 class EnglishProblemGenerator(object):
 
@@ -78,7 +81,10 @@ class EnglishProblemGenerator(object):
         subproblem += node.attribute
 
         # Get subproblem title based on plurality.
-        subproblem += " " + entity.getInstanceTitle(int(node.attribute != "1"))
+        if (int(node.attribute != 1)):
+            subproblem += " " + p.plural(entity.getInstanceTitle())
+        else:
+            subproblem += " " + entity.getInstanceTitle()
         subproblem += end
 
         if subproblem[len(subproblem) - 1] != ".":
@@ -110,9 +116,11 @@ class EnglishProblemGenerator(object):
 
         rootattribute = self.get_term(nodeid, self.equationdict).attribute
         if rootattribute == "1":
-            self.ultimatefinalproblem += self.problemobject.getInstanceTitle(0)
+            #singluar
+            self.ultimatefinalproblem += self.problemobject.getInstanceTitle()
         else:
-            self.ultimatefinalproblem += self.problemobject.getInstanceTitle(1)
+            #plural
+            self.ultimatefinalproblem += p.plural(self.problemobject.getInstanceTitle())
         self.ultimatefinalproblem += ". "
 
         # Initiate recursion to generate problem.
