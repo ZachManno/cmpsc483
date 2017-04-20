@@ -8,11 +8,14 @@ import testing
 # mysubstitutedinput = substitutor.Substitutor().finalEquation
 
 mysubstitutedinput = "a + b + c"
-print("Lessgooo")
-generator = testing.EnglishProblemGenerator();
-print(generator.generate_problem_for_equation(mysubstitutedinput))
+mysubstitutedinput = "a * b * c + d * RAND[100]"
+# print("Lessgooo")
+generator = testing.EnglishProblemGenerator(mysubstitutedinput);
+print(generator.generate_problem_for_equation())
 # print(testing.generate_problem_for_equation(mysubstitutedinput))
 
+
+# a * (b + c) * d
 
 def run_tests():
     """
@@ -20,14 +23,16 @@ def run_tests():
     """
 
     equations = [
-        # "a + b",
+        "a + b",
         "a + b + c",
-        # "1 + 1 + b",
-        # "a * b * c",
-        # "a + b * c",
+        "1 + 1 + b",
+        "a * b * c",
+        "a + b * c",
         # "a / b + c",
         # "c * g"
     ]
+
+
 
     for equation in equations:
         print("Original equation:")
@@ -35,11 +40,13 @@ def run_tests():
 
         print()
         print("Generated Problem:")
+        generator = testing.EnglishProblemGenerator(equation);
+        print(generator.generate_problem_for_equation())
         # print(generate_problem_for_equation(equation))
 
         print("=============")
         print()
         print()
 
-# for dummy_idx in range(3):
-#     run_tests()
+
+run_tests()
