@@ -1,5 +1,5 @@
 import newthemeclass
-import tagassigner
+import tagassigner2
 import introdata
 import inflect
 
@@ -15,11 +15,12 @@ class EnglishProblemGenerator(object):
 
         # Save strrep of equation for later.
         self.strequation = equation
-        if type(equation) != "str":
-            raise TypeError("Expected string for equation, received " + type(equation))
+        # print(type(equation))
+        # if type(equation) != type(str):
+        #     raise TypeError("Expected string for equation, received " + type(equation))
 
         # Format equation
-        self.formatequation = tagassigner.Equation(self.strequation)
+        self.formatequation = tagassigner2.compileequation(self.strequation)
 
         # Generate dict tree representation.
         self.equationdict = self.generate_dict_tree(self.formatequation, 0, None)
@@ -100,31 +101,14 @@ class EnglishProblemGenerator(object):
         self.ultimatefinalproblem = ""
         self.problemtype = newthemeclass.get_random_type()
         self.problemobject = newthemeclass.str_to_class("newthemeclass", self.initialproblemtype)
-
-
-        # Find the leftmost node.
         nodeid = 0
-        while len(self.equationdict[nodeid][2]) > 0:
-            nodeid = self.equationdict[nodeid][2][0]
 
         # Generate a humble introduction.
         self.ultimatefinalproblem += introdata.generate_intro()
-        print("The topic is " + self.initialproblemtype)
-
-        self.ultimatefinalproblem += self.get_term(nodeid, self.equationdict).attribute
-        self.ultimatefinalproblem += " "
-
-        rootattribute = self.get_term(nodeid, self.equationdict).attribute
-        if rootattribute == "1":
-            #singluar
-            self.ultimatefinalproblem += self.problemobject.getInstanceTitle()
-        else:
-            #plural
-            self.ultimatefinalproblem += p.plural(self.problemobject.getInstanceTitle())
-        self.ultimatefinalproblem += ". "
+        print("The topic is " + self.problemtype)
 
         # Initiate recursion to generate problem.
-        self.gen_on_datatype(rootattribute, 0)
+        self.gen_on_datatype(self.get_term(nodeid, self.equationdict).attribute, 0)
 
         # Conclude problem.
         self.ultimatefinalproblem += introdata.generate_conclusion(self.problemtype)
@@ -140,10 +124,12 @@ class EnglishProblemGenerator(object):
         elif attribute == "/":
             self.gen_div_helper(childid)
 
-    def gen_addition_helper(self, parentid):
+    def gen_addition_helper(self, parentid, problemtype = "", quick=False):
         """Generate addition type subproblem based on parentid"""
-        for childid in self.equationdict[parentid][2]:
+        first = True
 
+
+        for childid in self.equationdict[parentid][2]:
             # Check attribute for sign, to determine path.
             attribute = self.equationdict[childid][0].attribute
             if self.issign(attribute):
@@ -152,8 +138,13 @@ class EnglishProblemGenerator(object):
                 # Attribute is a variable. Update problem text based on addition connectors.
                 themeobject = newthemeclass.str_to_class("newthemeclass", self.problemtype)
 
-                intro = introdata.get_and_connector() + introdata.generate_intro().lower()
-                self.ultimatefinalproblem += self.combine_subprob(intro, self.get_term(childid, self.equationdict),
+                message = introdata.generate_intro().lower()
+                if not first:
+                    message = introdata.get_and_connector() + message
+                else:
+                    first = False
+
+                self.ultimatefinalproblem += self.combine_subprob(message, self.get_term(childid, self.equationdict),
                                                                   themeobject, "")
 
                 self.ultimatefinalproblem += " "
@@ -165,23 +156,47 @@ class EnglishProblemGenerator(object):
         containerlist = []
         mulproblemtype = self.problemtype
         mulsubproblemstring = ""
-        for dummy_idx in self.equationdict[parentid][0][2]:
+        for dummy_idx in self.equationdict[parentid][2]:
             # Generate new theme object based on mulproblemtype
             themeobject = newthemeclass.str_to_class("newthemeclass", mulproblemtype)
 
             # Fetch a containing theme type for next object
             # mulproblemtype = get_up_relation(themeobject) #TODO: ????
 
-            containerlist.insert(0, mulproblemtype)
-
+            containerlist.insert(0, themeobject)
 
         # Using container list, generate problem definition.
-        for idx in range(len(self.equationdict[parentid][0][2])):
-            multermid = self.equationdict[parentid][0][2][idx]
+        prevproblem = None
+        subproblem = False
+        for idx in range(len(self.equationdict[parentid][2])):
+            multermid = self.equationdict[parentid][2][idx]
             problemtypeobject = containerlist[idx]
 
-        self.ultimatefinalproblem += mulsubproblemstring
-        pass #TODO Continue working
+            message = ""
+            if prevproblem == None:
+                message = introdata.get_and_connector() + message
+            elif not subproblem:
+                message = "For each " + prevproblem.getInstanceTitle() + ", there are "
+            else:
+                # We want the container type, not the instance type.
+                # message = "For each " + prevproblem.get
+                message = "For each " + prevproblem.objectTitleSingular + ", there are"
+
+            # Todo THIS SHOULD SPLIT ON ATTR
+            if self.equationdict[multermid][0].attribute == "+":
+                self.ultimatefinalproblem += message
+                subproblem = True
+                self.gen_addition_helper(multermid)
+                prevproblem = problemtypeobject
+
+            else:
+                subproblem = False
+                prevproblem = problemtypeobject
+                message += self.equationdict[multermid][0].attribute + " " + prevproblem.getInstanceTitle() + ". "
+                self.ultimatefinalproblem += message
+
+            # self.ultimatefinalproblem += message
+
 
     def gen_div_helper(self, parentid):
         """Generate division type subproblem based on parentid"""
