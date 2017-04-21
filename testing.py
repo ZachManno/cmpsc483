@@ -1,5 +1,5 @@
 import newthemeclass
-import tagassigner
+import tagassigner2
 import introdata
 import inflect
 
@@ -20,7 +20,7 @@ class EnglishProblemGenerator(object):
         #     raise TypeError("Expected string for equation, received " + type(equation))
 
         # Format equation
-        self.formatequation = tagassigner.Equation(self.strequation)
+        self.formatequation = tagassigner2.compileequation(self.strequation)
 
         # Generate dict tree representation.
         self.equationdict = self.generate_dict_tree(self.formatequation, 0, None)
@@ -110,7 +110,7 @@ class EnglishProblemGenerator(object):
 
         # Generate a humble introduction.
         self.ultimatefinalproblem += introdata.generate_intro()
-        print("The topic is " + self.initialproblemtype)
+        print("The topic is " + self.problemtype)
 
         # self.ultimatefinalproblem += self.get_term(nodeid, self.equationdict).attribute
         # self.ultimatefinalproblem += " "
@@ -193,12 +193,15 @@ class EnglishProblemGenerator(object):
             else:
                 message = "For each " + prevproblem.getInstanceTitle() + ", there are "
 
-            prevproblem = problemtypeobject
-            message += self.equationdict[multermid][0].attribute + " " + prevproblem.getInstanceTitle() + ". "
-            # self.ultimatefinalproblem += self.combine_subprob(message, self.get_term(multermid, self.equationdict),
-            #                                                   problemtypeobject, "")
+            if self.equationdict[multermid][0].attribute == "+":
+                self.ultimatefinalproblem += message
+                self.gen_addition_helper(multermid)
+            else:
+                prevproblem = problemtypeobject
+                message += self.equationdict[multermid][0].attribute + " " + prevproblem.getInstanceTitle() + ". "
+                self.ultimatefinalproblem += message
 
-            self.ultimatefinalproblem += message
+            # self.ultimatefinalproblem += message
 
 
     def gen_div_helper(self, parentid):

@@ -11,8 +11,13 @@ def parenthesize_postorder_equation(postorder):
             representation.append(postorderval)
             sincelastsign = 0
 
-def is_sign(self, char):
+    return representation
+
+
+
+def is_sign(char):
         return char == '/' or char == '*' or char == '+' or char == '-'
+
 
 class Equation(object):
 
@@ -41,35 +46,20 @@ class Equation(object):
             # Save term to list.
             terms.append(Term(strterm, postorder[:len(postorder)-1], postorder[len(postorder)-1]))
 
-        # Save terms list as official term object split by addition.
-        self.terms = [Term(terms, "+")]
+        # Save terms as term object.
+        if len(terms) > 1:
+            self.terms = [Term(terms, "+")]
+        else:
+            self.terms = [Term(terms, terms[0].attribute)]
 
-    def additiontermsplit(self, input):
-        # Split the input into terms, based on addition and subtraction
-        curridx = 0
-        terms = []
-        parencount = 0
-
-        # Append to terms, counting parenthesis as 1 term.
-        for idx in range(len(input)):
-            # Identify parenthesis
-            if input[idx] == '(':
-                parencount += 1
-            if input[idx] == ')':
-                parencount -= 1
-            if parencount == 0 and (input[idx] == '+' or input[idx] == '-'):
-                if curridx != idx:
-                    terms.append("".join(input[curridx:idx].split()))
-                    curridx = idx
-
-        # Append ending term
-        terms.append(input[curridx:])
-        return terms
 
 class Term(object):
     def __init__giventerms(self, terms, attribute):
         self.terms = terms
         self.attribute = attribute
+        self.tag = None
+        self.sign = "+"  # Todo this has to be fixed.
+        self.identify_and_deconstruct_macro(attribute)
 
     def __init__(self, valueinput, postorder, attribute=None):
         """
@@ -92,78 +82,6 @@ class Term(object):
             self.tag = None
             self.identify_and_deconstruct_macro(attribute)
 
-            """
-            A term consists of several sub terms, as well as an 'attribute' which describes
-            the relationship of all subterms.
-
-            EX: "*" attribute means all values are multiplied together.
-
-            An attribute will be a number or a char, if the term is simply a variable/number.
-
-            Terms may also have a "tag" which further describes the relationship, such as "AVG", "SQ",
-            etc.
-
-            To construct the term object
-
-            """
-            # Attempt to determine if value is digit
-            is_dig = True
-            try:
-                int (self.attribute)
-            except:
-                is_dig = False
-
-            # Determine if an "attribute" is a char or a num.
-            if self.attribute[len(self.attribute) - 1].isalpha() or is_dig:
-                # The term is not a relation. It is a variable or digit, the simplest form of a term.
-
-                # Determine Sign
-                stripvalue = "".join(self.attribute.split())
-                if stripvalue[0] == "-" or stripvalue[0] == "+":
-                    self.sign = stripvalue[0]
-                    self.attribute = stripvalue[1:]
-                else:
-                    self.sign = "+"
-                    self.attribute = stripvalue
-
-                # Assert valid input
-                if not is_dig and len(self.attribute) != 1:
-                    raise SystemError("Error! " + valueinput + " not valid input!")
-
-            elif self.attribute == '*' or self.attribute == '/':
-                #  Iterate to find all of the terms that belong in this Mul/Div Term.
-                postorderidx = len(postorder) - 1
-
-                termcount = 0
-
-                for postorderval in reversed(self.postorder):
-                    if not self.is_sign(postorderval):
-                        # It's not a sign. Add to terms.
-                        self.terms.insert(0, Term(postorderval, "", postorderval))
-                    elif postorderval == self.attribute:
-                        # It's another chained term. Continue.
-                        continue
-                    else:
-                        # We have another term in the mix. We need to check to see if this is a simple term
-                        pass #TODO REMOVE
-            elif self.attribute == '+':
-                postorderidx = len(postorder) - 1
-
-                for postorderval in reversed(self.postorder):
-                    if self.attribute == postorderval:
-                        postorderidx -= 1
-                        continue
-
-                    self.terms.insert(0, (Term("", "", self.postorder[postorderidx])))
-
-                    if postorderval == '*' or postorderval == '/':
-                        break
-                    else:
-                        postorderidx -= 1
-                self.sign = "+"
-
-            else:
-                raise SystemError("Invalid attribute '" + attribute + "' provided!")
 
     def identify_and_deconstruct_macro(self, attribute):
         """
@@ -262,17 +180,58 @@ class Term(object):
 
         return strrep
 
+
+def compileequation(equation):
+    builder = main.ExpressionTreeBuilder()
+    exprtree = builder.create_expression_tree(equation)
+    postorder = exprtree.get_postorder_result()
+    while len(postorder) > 1:
+        # Compile down postorder into terms. Establish relationships based on "Wells Master Algorithm"
+        idx = 0
+        while idx < len(postorder) - 1:
+            # Collect 3 terms based on the window
+            window = postorder[idx:idx+3]
+            readytocombine = True
+
+            # Can the window be combined into a subproblem?
+            for entry in window[:2]:
+                if is_sign(entry):
+                    readytocombine = False
+            readytocombine = readytocombine and is_sign(window[2])
+
+            if readytocombine:
+                # Creating relation with two children.
+                t1 = window[0]
+                if not isinstance(window[0], Term):
+                    t1 = Term([], window[0])
+
+                t2 = window[1]
+                if not isinstance(window[1], Term):
+                    t2 = Term([], window[1])
+
+                # One special case: if window[0] a term, window[1] not a term, window[2] same attr as window[0]: Combine
+                if isinstance(window[0], Term) and isinstance(window[1], str) and window[2] == window[0].attribute:
+                    window[0].terms.append(Term([], window[1]))
+                else:
+                    parent = Term([t1, t2], window[2])
+                postorder = postorder[:idx] + [parent] + postorder[idx + 3:]
+
+            idx += 1
+
+    return postorder[0]
+
 easyequations = [
-    # "1 + 2",
-    # "1 + 3 - c - 1* 5",
-    # "a * b",
-    # "a * b + a*c",
-    # "1 + 2 + 3 + 4*5",
+    "1 + 2",
+    "1 + 3 + c + 5",
+    "a * b",
+    "a * b + c*d",
+    "a * (b + c) * d",
+    "1 + 2 + 3 + 4*5",
     # "a + b + c*b + d + e * g * h",
     # "a * b * c + 5 + c * b * a",
     # "-1-4",
-    # "(1+2)/(3)",
-    # "(1)/(2 + 3)",
+    "(1+2)/(3)",
+    "(1)/(2 + 3)",
     # "AVG[1,AVG[1,2,3],3]",
     # "AVG[1,9,90,40,50] + AVG[1,9,90,40,50]",
     # "SQR[10]",
@@ -280,9 +239,9 @@ easyequations = [
     # "RAND[100] * RAND[50] + AVG[RAND[20], RAND[20], RAND[20]]",
     # "1 * (2/3)",
     # "1 * 2 / 3",
-    "1 * 2 * 3",
-    "1 * 2 * 3/4 * 5",
-    "1 * 2 * (3/4) * 5"
+    # "1 * 2 * 3",
+    # "1 * 2 * 3/4 * 5",
+    # "1 * 2 * (3/4) * 5"
 ]
 
 def run_tests():
@@ -313,7 +272,28 @@ def postorder_tests():
 
     for equation in easyequations:
         exprtree = builder.create_expression_tree(equation)
-        print(equation + "      " + str(exprtree.get_postorder_result()))
+        print(equation)
+        postorder = str(exprtree.get_postorder_result())
+        print(postorder)
+        print(parenthesize_postorder_equation(postorder))
+        print("===========")
 
+def nextleveltests():
+    builder = main.ExpressionTreeBuilder()
+
+    for equation in easyequations:
+        exprtree = builder.create_expression_tree(equation)
+        postorder = exprtree.get_postorder_result()
+        print(equation)
+        print(str(postorder))
+        formatequation = compileequation(postorder)
+        print(formatequation)
+        print("===========")
+
+
+
+# postorder_tests(
+# nextleveltests()
+# print()
+# print()
 # run_tests()
-postorder_tests()
