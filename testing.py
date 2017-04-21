@@ -101,28 +101,11 @@ class EnglishProblemGenerator(object):
         self.ultimatefinalproblem = ""
         self.problemtype = newthemeclass.get_random_type()
         self.problemobject = newthemeclass.str_to_class("newthemeclass", self.initialproblemtype)
-
-
-        # Find the leftmost node.
         nodeid = 0
-        # while len(self.equationdict[nodeid][2]) > 0:
-        #     nodeid = self.equationdict[nodeid][2][0]
 
         # Generate a humble introduction.
         self.ultimatefinalproblem += introdata.generate_intro()
         print("The topic is " + self.problemtype)
-
-        # self.ultimatefinalproblem += self.get_term(nodeid, self.equationdict).attribute
-        # self.ultimatefinalproblem += " "
-        #
-        # rootattribute = self.get_term(nodeid, self.equationdict).attribute
-        # if rootattribute == "1":
-        #     #singluar
-        #     self.ultimatefinalproblem += self.problemobject.getInstanceTitle()
-        # else:
-        #     #plural
-        #     self.ultimatefinalproblem += p.plural(self.problemobject.getInstanceTitle())
-        # self.ultimatefinalproblem += ". "
 
         # Initiate recursion to generate problem.
         self.gen_on_datatype(self.get_term(nodeid, self.equationdict).attribute, 0)
@@ -141,9 +124,10 @@ class EnglishProblemGenerator(object):
         elif attribute == "/":
             self.gen_div_helper(childid)
 
-    def gen_addition_helper(self, parentid):
+    def gen_addition_helper(self, parentid, problemtype = "", quick=False):
         """Generate addition type subproblem based on parentid"""
         first = True
+
 
         for childid in self.equationdict[parentid][2]:
             # Check attribute for sign, to determine path.
@@ -183,6 +167,7 @@ class EnglishProblemGenerator(object):
 
         # Using container list, generate problem definition.
         prevproblem = None
+        subproblem = False
         for idx in range(len(self.equationdict[parentid][2])):
             multermid = self.equationdict[parentid][2][idx]
             problemtypeobject = containerlist[idx]
@@ -190,13 +175,22 @@ class EnglishProblemGenerator(object):
             message = ""
             if prevproblem == None:
                 message = introdata.get_and_connector() + message
-            else:
+            elif not subproblem:
                 message = "For each " + prevproblem.getInstanceTitle() + ", there are "
+            else:
+                # We want the container type, not the instance type.
+                # message = "For each " + prevproblem.get
+                message = "For each " + prevproblem.objectTitleSingular + ", there are"
 
+            # Todo THIS SHOULD SPLIT ON ATTR
             if self.equationdict[multermid][0].attribute == "+":
                 self.ultimatefinalproblem += message
+                subproblem = True
                 self.gen_addition_helper(multermid)
+                prevproblem = problemtypeobject
+
             else:
+                subproblem = False
                 prevproblem = problemtypeobject
                 message += self.equationdict[multermid][0].attribute + " " + prevproblem.getInstanceTitle() + ". "
                 self.ultimatefinalproblem += message

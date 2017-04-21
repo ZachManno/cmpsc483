@@ -2,56 +2,9 @@ import sys
 import main
 import random
 
-def parenthesize_postorder_equation(postorder):
-    representation = [")"]
-    sincelastsign = -1
-    for postorderval in reversed(postorder):
-        if sincelastsign == 0 and is_sign(postorderval):
-            representation.append(")")
-            representation.append(postorderval)
-            sincelastsign = 0
-
-    return representation
-
-
-
 def is_sign(char):
+
         return char == '/' or char == '*' or char == '+' or char == '-'
-
-
-class Equation(object):
-
-    def __init__(self, equation):
-        """
-        Generate a list of terms in self.terms that represents the equation split by addition/subtraction.
-        :param equation: String representation of an equation. Can contain macros.
-        """
-
-        self.originalequation = equation
-        self.tag = "ANS"
-        terms = []
-
-        # Convert each term, split by addition, to a term object, save to formatted equation.
-        strterms = self.additiontermsplit(equation)
-        for strterm in strterms:
-            builder = main.ExpressionTreeBuilder()
-            oldsign = tempterm[0]
-            tempterm = tempterm[1:]
-            postorder = builder.create_expression_tree(tempterm).get_postorder_result()
-
-            # Add back old sign.
-            if oldsign != "":
-                postorder[0] = oldsign + postorder[0]
-
-            # Save term to list.
-            terms.append(Term(strterm, postorder[:len(postorder)-1], postorder[len(postorder)-1]))
-
-        # Save terms as term object.
-        if len(terms) > 1:
-            self.terms = [Term(terms, "+")]
-        else:
-            self.terms = [Term(terms, terms[0].attribute)]
-
 
 class Term(object):
     def __init__giventerms(self, terms, attribute):
@@ -215,14 +168,13 @@ def compileequation(equation):
                 else:
                     parent = Term([t1, t2], window[2])
                 postorder = postorder[:idx] + [parent] + postorder[idx + 3:]
-
-            idx += 1
+            else:
+                idx += 1
 
     return postorder[0]
 
 easyequations = [
     "1 + 2",
-    "1 + 3 + c + 5",
     "a * b",
     "a * b + c*d",
     "a * (b + c) * d",
@@ -244,40 +196,6 @@ easyequations = [
     # "1 * 2 * (3/4) * 5"
 ]
 
-def run_tests():
-    """
-    Run a series of tests to confirm valid token parsing from input.
-    """
-
-    equations = [
-        "5x+20",
-        "ax - 5b + c + d + 2005 + 20b",
-        "5 + (1+2+3)/3 - (4+5+6)/(1+2+3)"
-    ]
-
-    for equation in easyequations:
-        formatequation = Equation(equation)
-        print("------")
-        print(equation)
-
-        equation = ""
-
-        for term in formatequation.terms:
-            equation += str(term) + " "
-
-        print(equation)
-
-def postorder_tests():
-    builder = main.ExpressionTreeBuilder()
-
-    for equation in easyequations:
-        exprtree = builder.create_expression_tree(equation)
-        print(equation)
-        postorder = str(exprtree.get_postorder_result())
-        print(postorder)
-        print(parenthesize_postorder_equation(postorder))
-        print("===========")
-
 def nextleveltests():
     builder = main.ExpressionTreeBuilder()
 
@@ -286,14 +204,14 @@ def nextleveltests():
         postorder = exprtree.get_postorder_result()
         print(equation)
         print(str(postorder))
-        formatequation = compileequation(postorder)
+        formatequation = compileequation(equation)
         print(formatequation)
         print("===========")
 
 
 
 # postorder_tests(
-# nextleveltests()
+nextleveltests()
 # print()
 # print()
 # run_tests()
