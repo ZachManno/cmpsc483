@@ -1,3 +1,8 @@
+import inflect
+import newthemeclass
+
+
+
 #Examples
 print("DEMO OF LIBRARY\n----------------------")
 targets = ["cat", "woman", "exam", "sneaker", "thief", "tesla coil", "printer", "goose", "geese"]
@@ -44,3 +49,15 @@ print(p.plural_adj("This"), p.plural_noun(" error"), p.plural_verb(" was"), "fat
 print(p.num(3), p.plural_noun(" error"), p.plural_verb(" was"), " detected.")
 p.num(1)
 print(p.plural_adj("This"), p.plural_noun(" error"), p.plural_verb(" was"), "fatal.")
+
+print("------------")
+print("Parent relation demo:")
+b1 = newthemeclass.BUILDINGS()
+parentRelation1 = b1.getParentRelation()
+#parentRelation1 has:
+#       parentNoun object (parentRelation1.parent)
+#       childNoun object  (parentRelation1.child)
+#       downVerb string   (parentRelation1.downVerb)
+#       upVerb string     (parentRelation1.upVerb)
+print(parentRelation1.upVerb)
+print(parentRelation1.parent.objectTitleSingular)

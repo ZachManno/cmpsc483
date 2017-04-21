@@ -2,7 +2,7 @@ import random_lists_data
 import random
 import importlib
 import logging
-
+import sys
 
 class Name(object):
     def __init__(self):
@@ -20,6 +20,11 @@ def str_to_class(module_name, class_name):
         logging.error('Module does not exist')
     return class_ or None
 
+def local_str_to_class(class_name):
+    try:
+        return getattr(sys.modules[__name__], class_name)()
+    except AttributeError:
+        logging.error("Class does not exist")
 
 def get_random_type():
     return random.choice(random_lists_data.ultimate_type_list)
@@ -27,23 +32,160 @@ def get_random_type():
 
 # Specify How many of a class you need.
 # On each, specify
+class Parent_relation(object):
+    def __init__(self, parentIn, childIn,downVerbIn,upVerbIn):
+        self.parent = parentIn
+        self.child = childIn
+        self.downVerb = downVerbIn
+        self.upVerb = upVerbIn
+
+"""
+BUILDING
+IN
+CITY
+HAS
+BUILDING
+"""
 
 
 
-class MulVerb(object):
-    def __init__(self):
-        self.wrappedstatement = []
+
 
 
 class Noun_object(object):
     def __init__(self, instanceList):
         self.instanceTitle = random.choice(instanceList)
+        self.down_relations = {
+
+        }
+        self.up_relations = {
+
+        }
     def getInstanceTitle(self):
         return self.instanceTitle
+    def getParentRelation(self):
+        upVerb = random.choice(list(self.up_relations.keys()))
+        parentNoun = random.choice(self.up_relations[upVerb])
+        #print("parent noun = " + parentNoun)
+        downVerb = ""
+
+
+        myclassobject = local_str_to_class(parentNoun)
+        #print("bruh = " + str(myclassobject.down_relations))
+        #print("yo = " + str(myclassobject.down_relations['has']))
+
+        #get key ('has' or 'carries' or etc)
+        for key in myclassobject.down_relations:
+            #print(key, 'corresponds to', str(myclassobject.down_relations[key]))
+            #The dictionary has a key of the type of down relation ('has' or etc)
+            #And a value of a list of all Noun_objects corresponding to said type of down relation
+            #Example. key = 'has', myclassobject.down_relations[key] = ['ROOMS','PLANTS','PEOPLE'].
+            for item in myclassobject.down_relations[key]:
+                #print('item = ' + item)
+                if item == self.__class__.__name__:
+                    # print("found self = "+ self.__class__.__name__)
+                    # print("key = " + key)
+                    # print("parent noun = "+parentNoun)
+                    downVerb = key
+
+
+        p1 =  Parent_relation(local_str_to_class(parentNoun),self,downVerb,upVerb)
+        #print("parent relation test:")
+        #print(p1.parent,p1.downVerb,p1.child)
+        #print(p1.child,p1.upVerb,p1.parent)
+        return p1
+
+
 
 
 # For down relations:
 # They are reasonable items to contain ie A city has buildings. A city would not have atoms
+class CONTINENTS(Noun_object):
+    def __init__(self):
+        super(CONTINENTS, self).__init__(random_lists_data.CONTINENTS_list)
+        # Noun_object.__init__(random_lists_data.CITY_list)
+        # self.instanceTitle = random.choice(random_lists_data.CITY_list)
+        self.adjectives = [
+            'Cold',
+            'Warm',
+        ]
+        self.objectTitleSingular = "CONTINENT"
+        self.objectTitlePlural = "CONTINENTS"
+        self.down_relations = {
+            'has':
+                [
+                    'COUNTRIES',
+                    'PEOPLE'
+                ]
+        }
+        self.up_relations = {
+
+        }
+
+class COUNTRIES(Noun_object):
+    def __init__(self):
+        super(COUNTRIES, self).__init__(random_lists_data.COUNTRIES_list)
+        # Noun_object.__init__(random_lists_data.CITY_list)
+        # self.instanceTitle = random.choice(random_lists_data.CITY_list)
+        self.adjectives = [
+            'Crowded',
+            'Developed',
+        ]
+        self.objectTitleSingular = "COUNTRY"
+        self.objectTitlePlural = "COUNTRIES"
+        self.down_relations = {
+            'has':
+                [
+                    'STATES',
+                    'STREETS',
+                    'BUILDINGS',
+                    'CARS',
+                    'PEOPLE'
+                ]
+        }
+        self.up_relations = {
+            'in':
+                [
+                    'CONTINENTS'
+
+                ]
+
+        }
+
+
+class STATES(Noun_object):
+    def __init__(self):
+        super(STATES, self).__init__(random_lists_data.STATES_list)
+        # Noun_object.__init__(random_lists_data.CITY_list)
+        # self.instanceTitle = random.choice(random_lists_data.CITY_list)
+        self.adjectives = [
+            'Crowded',
+            'Developed',
+        ]
+        self.objectTitleSingular = "STATE"
+        self.objectTitlePlural = "STATES"
+        self.down_relations = {
+            'has':
+                [
+                    'CITY',
+                    'STREETS',
+                    'BUILDINGS',
+                    'CARS',
+                    'PEOPLE'
+                ]
+        }
+        self.up_relations = {
+            'in':
+                [
+                    'COUNTRIES',
+                    'CONTINENTS'
+
+                ]
+
+        }
+
+
+
 class CITY(Noun_object):
     def __init__(self):
         super(CITY, self).__init__(random_lists_data.CITY_list)
@@ -72,6 +214,13 @@ class CITY(Noun_object):
                 ]
         }
         self.up_relations = {
+            'in':
+                [
+                    'STATES',
+                    'COUNTRIES',
+                    'CONTINENTS'
+
+                ]
 
         }
 
@@ -105,7 +254,9 @@ class STREETS(Noun_object):
         self.up_relations = {
             'in':
                 [
-                    'CITY'
+                    'CITY',
+                    'STATES',
+                    'COUNTRIES'
                 ]
 
         }
@@ -130,6 +281,17 @@ class BUILDINGS(Noun_object):
                 ]
         }
         self.up_relations = {
+            'on':
+                [
+                    'STREETS'
+                ]
+            ,
+            'in':
+                [
+                    'CITY',
+                    'STATES',
+                    'COUNTRIES'
+                ]
 
         }
 
@@ -151,6 +313,17 @@ class CARS(Noun_object):
                 ]
         }
         self.up_relations = {
+            'on':
+                [
+                    'STREETS'
+                ]
+            ,
+            'in':
+                [
+                    'CITY',
+                    'STATES',
+                    'COUNTRIES'
+                ]
 
         }
 
@@ -182,27 +355,18 @@ class PEOPLE(Noun_object):
             # ]
         }
         self.up_relations = {
+            'in':
+                [
+                    'BUILDINGS',
+                    'STREETS',
+                    'CITY',
+                    'STATES',
+                    'COUNTRIES'
+                ]
 
         }
 
 
-class PLANTS(Noun_object):
-    def __init__(self):
-        super(PLANTS, self).__init__(random_lists_data.PLANTS_list)
-        self.objectTitleSingular = "PLANT"
-        self.objectTitlePlural = "PLANTS"
-        self.down_relations = {
-            # 'has':
-            #   [
-            # 'LEAVES',
-            # 'SEEDS',
-            # 'BRANCHES'
-
-            #   ]
-        }
-        self.up_relations = {
-
-        }
 
 
 class PARKS(Noun_object):
@@ -221,6 +385,44 @@ class PARKS(Noun_object):
                 ]
         }
         self.up_relations = {
+            'on':
+                [
+                    'STREETS'
+                ]
+            ,
+            'in':
+                [
+                    'CITY',
+                    'STATES',
+                    'COUNTRIES'
+                ]
+
+        }
+
+class PLANTS(Noun_object):
+    def __init__(self):
+        super(PLANTS, self).__init__(random_lists_data.PLANTS_list)
+        self.objectTitleSingular = "PLANT"
+        self.objectTitlePlural = "PLANTS"
+        self.down_relations = {
+            # 'has':
+            #   [
+            # 'LEAVES',
+            # 'SEEDS',
+            # 'BRANCHES'
+
+            #   ]
+        }
+        self.up_relations = {
+            'in':
+                [
+                    'PARKS',
+                    'CARS',
+                    'BUILDINGS',
+                    'CITY',
+                    'STATES',
+                    'COUNTRIES'
+                ]
 
         }
 
@@ -239,6 +441,19 @@ class LIGHTS(Noun_object):
             #   ]
         }
         self.up_relations = {
+            'in':
+                [
+                    'PARKS',
+                    'BUILDINGS',
+                    'CITY',
+                    'STATES',
+                    'COUNTRIES'
+                ]
+            ,
+            'on':
+                [
+                    'STREETS'
+                ]
 
         }
 
@@ -269,6 +484,20 @@ class ANIMALS(Noun_object):
             #  ]
         }
         self.up_relations = {
+            'in':
+                [
+                    'PARKS',
+                    'CARS',
+                    'BUILDINGS',
+                    'CITY',
+                    'STATES',
+                    'COUNTRIES'
+                ]
+            ,
+            'on':
+                [
+                    'STREETS'
+                ]
 
         }
 
@@ -286,6 +515,13 @@ class WINDOWS(Noun_object):
             #  ]
         }
         self.up_relations = {
+            'in':
+                [
+                    'CARS',
+                    'BUILDINGS',
+                    'CITY',
+                    'STATES'
+                ]
 
         }
 
@@ -298,6 +534,12 @@ class SEATS(Noun_object):
         self.down_relations = {
         }
         self.up_relations = {
+            'in':
+                [
+                    'PARKS',
+                    'CARS',
+                    'BUILDINGS'
+                ]
 
         }
 
@@ -317,6 +559,16 @@ class DOORS(Noun_object):
             #   ]
         }
         self.up_relations = {
+            'in':
+                [
+                    'BUILDINGS'
+                ]
+            ,
+            'on':
+                [
+                    'CARS',
+                    'STREETS'
+                ]
 
         }
 
@@ -334,6 +586,11 @@ class FLOOR_MATS(Noun_object):
             #  ]
         }
         self.up_relations = {
+            'in':
+                [
+                    'CARS',
+                    'BUILDINGS'
+                ]
 
         }
 
@@ -350,6 +607,16 @@ class SIGNS(Noun_object):
             #   ]
         }
         self.up_relations = {
+            'in':
+                [
+                    'PARKS',
+                    'BUILDINGS'
+                ]
+            ,
+            'on':
+                [
+                    'STREETS'
+                ]
 
         }
 
@@ -366,6 +633,17 @@ class TRASH(Noun_object):
             #   ]
         }
         self.up_relations = {
+            'on':
+                [
+                    'STREETS'
+                ]
+            ,
+            'in':
+                [
+                    'PARKS',
+                    'CARS',
+                    'BUILDINGS'
+                ]
 
         }
 
@@ -384,6 +662,20 @@ class SIDEWALKS(Noun_object):
                 ]
         }
         self.up_relations = {
+            'on':
+                [
+                    'PARKS',
+                    'STREETS'
+                ]
 
         }
 
+
+
+#There are b streets. All streets have c cars. How many cars?
+
+
+
+#There are c cages. Each cage has f animals. How many animals?
+
+#STREET/ROAD/TYPE OF

@@ -1,5 +1,4 @@
 import random
-import inflect
 
 NAMES_list = [
 'Rodrigo',
@@ -84,9 +83,21 @@ VERBS_list = [
 #City has all of these things in it
 #Topic to discuss: Cities can have animals, but also dogs and cats. But animals cant have dogs and cats, they are dogs and cats
 #Just like a shop is a kind of building
+CONTINENTS_list = [
+    'Eastern Hemisphere',
+    'Western Hemisphere'
+]
 
+COUNTRIES_list = [
+    'First-world countries',
+    'Third-world countries'
+]
 
-
+STATES_list = [
+    'Breadbasket states',
+    'Northeastern states',
+    'coastal states'
+]
 
 CITY_list = [
     'utopia',
