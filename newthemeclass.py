@@ -30,10 +30,17 @@ def get_random_type():
     return random.choice(random_lists_data.ultimate_type_list)
 
 
-# Specify How many of a class you need.
-# On each, specify
+
 class Parent_relation(object):
     def __init__(self, parentIn, childIn,downVerbIn,upVerbIn):
+        """
+        Class to wrap the Parent Relation data and send to other modules
+
+        :param parentIn:
+        :param childIn:
+        :param downVerbIn:
+        :param upVerbIn:
+        """
         self.parent = parentIn
         self.child = childIn
         self.downVerb = downVerbIn
@@ -71,15 +78,16 @@ class Noun_object(object):
 
 
         myclassobject = local_str_to_class(parentNoun)
-        #print("bruh = " + str(myclassobject.down_relations))
-        #print("yo = " + str(myclassobject.down_relations['has']))
+        #print("dict = " + str(myclassobject.down_relations))
+        #print("dict with key = " + str(myclassobject.down_relations['has']))
 
         #get key ('has' or 'carries' or etc)
         for key in myclassobject.down_relations:
-            #print(key, 'corresponds to', str(myclassobject.down_relations[key]))
-            #The dictionary has a key of the type of down relation ('has' or etc)
-            #And a value of a list of all Noun_objects corresponding to said type of down relation
-            #Example. key = 'has', myclassobject.down_relations[key] = ['ROOMS','PLANTS','PEOPLE'].
+            # print(key, 'corresponds to', str(myclassobject.down_relations[key]))
+            #
+            # The dictionary has a key of the type of down relation ('has' or etc)
+            # And a value of a list of all Noun_objects corresponding to said type of down relation
+            # Example. key = 'has', myclassobject.down_relations[key] = ['ROOMS','PLANTS','PEOPLE'].
             for item in myclassobject.down_relations[key]:
                 #print('item = ' + item)
                 if item == self.__class__.__name__:
