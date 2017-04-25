@@ -149,7 +149,7 @@ class COUNTRIES(Noun_object):
         self.down_relations = {
             'has':
                 [
-                    'CITY'
+                    'CITY',
                     'STATES',
                     'STREETS',
                     'BUILDINGS',
@@ -360,7 +360,7 @@ class PEOPLE(Noun_object):
         self.down_relations = {
             'has':
                 [
-                    'ANIMALS',
+                    'ANIMALS'
                     # 'ORGANS',
                     # 'EYES',
                     # 'LIMBS',
