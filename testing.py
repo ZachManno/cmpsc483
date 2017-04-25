@@ -100,6 +100,7 @@ class EnglishProblemGenerator(object):
         """Generate initial statements. Determine type."""
         self.ultimatefinalproblem = ""
         self.problemtype = newthemeclass.get_random_type()
+        print(self.initialproblemtype)
         self.problemobject = newthemeclass.str_to_class("newthemeclass", self.initialproblemtype)
         nodeid = 0
 
@@ -157,10 +158,12 @@ class EnglishProblemGenerator(object):
         tempobjectlist = []
         mulproblemtype = self.problemtype
         mulsubproblemstring = ""
+        print("Ruhroh: " + self.problemtype)
         tempobjectlist.append(newthemeclass.str_to_class("newthemeclass", mulproblemtype))
         for idx in range(len(self.equationdict[parentid][2])):
             # Generate new theme object based on mulproblemtype
             prevobject = tempobjectlist[idx]
+            print("Here: " + prevobject.objectTitleSingular)
             parentRelation = prevobject.getParentRelation()
 
             # Fetch a containing theme type for next object
