@@ -137,6 +137,19 @@ class Term(object):
 
         return strrep
 
+def attributeequivalence(attr1, attr2):
+    if attr1 == attr2:
+        return True
+    if attr1 == "+" and attr2 == "-" or attr1 == "-" and attr2 == "+":
+        return True
+
+    return False
+
+def convertsign(attr):
+    if attr == "-":
+        return "+"
+
+    return attr
 
 def compileequation(equation):
     builder = main.ExpressionTreeBuilder()
@@ -167,10 +180,17 @@ def compileequation(equation):
                     t2 = Term([], window[1])
 
                 # One special case: if window[0] a term, window[1] not a term, window[2] same attr as window[0]: Combine
-                if isinstance(window[0], Term) and isinstance(window[1], str) and window[2] == window[0].attribute:
-                    window[0].terms.append(Term([], window[1]))
+                if isinstance(window[0], Term) and isinstance(window[1], str) and attributeequivalence(window[2], window[0].attribute):
+                    term = Term([], window[1])
+                    if window[2] == "-":
+                        term.sign = "-"
+                    window[0].terms.append(term)
                 else:
-                    parent = Term([t1, t2], window[2])
+                    parent = Term([t1, t2], convertsign(window[2]))
+                    if window[2] == "-":
+                        t2.sign = "-"
+
+
                 postorder = postorder[:idx] + [parent] + postorder[idx + 3:]
             else:
                 idx += 1
@@ -178,18 +198,18 @@ def compileequation(equation):
     return postorder[0]
 
 easyequations = [
-    "1 + 2",
-    "a * b",
-    "a * b + c*d",
-    "a * (b + c) * d",
-    "1 + 2 + 3 + 4*5",
+    # "1 + 2",
+    # "a * b",
+    # "a * b + c*d",
+    # "a * (b + c) * d",
+    # "1 + 2 + 3 + 4*5",
     # "a + b + c*b + d + e * g * h",
     # "a * b * c + 5 + c * b * a",
     # "-1-4",
-    "(1+2)/(3)",
-    "(1)/(2 + 3)",
-    "b * c + d * e * f",
-    "a + b - c + d"
+    # "(1+2)/(3)",
+    # "(1)/(2 + 3)",
+    # "b * c + d * e * f",
+    "RAND[150] * (b - f + g) * d"
     # "AVG[1,AVG[1,2,3],3]",
     # "AVG[1,9,90,40,50] + AVG[1,9,90,40,50]",
     # "SQR[10]",
