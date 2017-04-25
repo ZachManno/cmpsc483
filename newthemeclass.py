@@ -204,9 +204,9 @@ class STATES(Noun_object):
 
 
 
-class CITY(Noun_object):
+class CITIES(Noun_object):
     def __init__(self):
-        super(CITY, self).__init__(random_lists_data.CITY_list)
+        super(CITIES, self).__init__(random_lists_data.CITIES_list)
         # Noun_object.__init__(random_lists_data.CITY_list)
         # self.instanceTitle = random.choice(random_lists_data.CITY_list)
         self.adjectives = [
@@ -266,7 +266,8 @@ class STREETS(Noun_object):
                     'ANIMALS',
                     'TRASH',
                     'LIGHTS',
-                    'SIDEWALK'
+                    'SIDEWALKS',
+                    'SIGNS'
                 ]
 
         }
@@ -297,7 +298,8 @@ class BUILDINGS(Noun_object):
                     'LIGHTS',
                     # 'COMPUTERS',
                     'DOORS',
-                    'WINDOWS'
+                    'WINDOWS',
+                    'TRASH'
                 ]
         }
         self.up_relations = {
@@ -330,7 +332,8 @@ class CARS(Noun_object):
                     'SEATS',
                     'DOORS',
                     'LIGHTS',
-                    'FLOOR MATS'
+                    'FLOOR MATS',
+                    'TRASH'
                 ]
         }
         self.up_relations = {
@@ -401,7 +404,9 @@ class PARKS(Noun_object):
                     'PEOPLE',
                     'ANIMALS',
                     'PLANTS',
-                    'LIGHTS'
+                    'SIDEWALKS',
+                    'LIGHTS',
+                    'TRASH'
 
                 ]
         }
@@ -440,9 +445,8 @@ class PLANTS(Noun_object):
                     'PARKS',
                     'CARS',
                     'BUILDINGS',
-                    'CITY',
-                    'STATES',
-                    'COUNTRIES'
+                    'CITIES',
+                    'STATES'
                 ]
 
         }
@@ -466,7 +470,7 @@ class LIGHTS(Noun_object):
                 [
                     'PARKS',
                     'BUILDINGS',
-                    'CITY',
+                    'CITIES',
                     'STATES',
                     'COUNTRIES'
                 ]
@@ -510,7 +514,7 @@ class ANIMALS(Noun_object):
                     'PARKS',
                     'CARS',
                     'BUILDINGS',
-                    'CITY',
+                    'CITIES',
                     'STATES',
                     'COUNTRIES'
                 ]
@@ -540,7 +544,7 @@ class WINDOWS(Noun_object):
                 [
                     'CARS',
                     'BUILDINGS',
-                    'CITY',
+                    'CITIES',
                     'STATES'
                 ]
 
