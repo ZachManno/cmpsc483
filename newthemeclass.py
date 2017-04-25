@@ -243,6 +243,30 @@ class CITIES(Noun_object):
                     'ANIMALS',
                     'WINDOWS'
                 ]
+            ,
+            'develops':
+                [
+                    'BUILDINGS',
+                    'PARKS'
+                ]
+            ,
+            'houses':
+                [
+                    'PEOPLE',
+                    'ANIMALS'
+                ]
+            ,
+            'is illuminated by':
+                [
+                    'LIGHTS'
+                ]
+            ,
+            'is overrun by':
+                [
+                    'ANIMALS'
+                ]
+
+
         }
         self.up_relations = {
             'in':
@@ -341,6 +365,13 @@ class BUILDINGS(Noun_object):
                     'DOORS',
                     'WINDOWS'
                 ]
+            ,
+            'houses':
+                [
+                    'PEOPLE',
+                    'ANIMALS',
+                    'PLANTS'
+                ]
         }
         self.up_relations = {
             'on':
@@ -354,6 +385,11 @@ class BUILDINGS(Noun_object):
                     'STATES',
                     'COUNTRIES'
                 ]
+            ,
+            'illuminated by':
+            [
+                'LIGHTS'
+            ]
 
         }
 
@@ -388,6 +424,12 @@ class CARS(Noun_object):
                     'ANIMALS',
                     'FLOOR_MATS',
                     'TRASH'
+                ]
+            ,
+            'transports':
+                [
+                    'PEOPLE',
+                    'ANIMALS',
                 ]
         }
         self.up_relations = {
@@ -439,12 +481,13 @@ class PEOPLE(Noun_object):
             'holds':
                 [
                     'BASKETS',
-                    'FRUITS'
+                    'FRUITS',
                 ]
             ,
             'eats':
                 [
-                    'FRUITS'
+                    'FRUITS',
+                    'ANIMALS',
                 ]
         }
         self.up_relations = {
@@ -467,6 +510,11 @@ class PEOPLE(Noun_object):
             'occupies':
                 [
                     'SIDEWALKS'
+                ]
+            ,
+            'held by':
+                [
+                    'SEATS'
                 ]
 
         }
@@ -567,6 +615,11 @@ class LIGHTS(Noun_object):
             # 'BATTERIES',
             # 'WIRES'
             #   ]
+            'illuminates':
+                [
+                    "BUILDINGS",
+                    "SIDEWALKS"
+                ]
         }
         self.up_relations = {
             'in':
@@ -629,6 +682,11 @@ class ANIMALS(Noun_object):
                 [
                     'PEOPLE'
                 ]
+            ,
+            'held by':
+                [
+                    'SEATS'
+                ]
 
         }
 
@@ -678,6 +736,11 @@ class SEATS(Noun_object):
         self.objectTitleSingular = "SEAT"
         self.objectTitlePlural = "SEATS"
         self.down_relations = {
+            'holds':
+                [
+                    "PEOPLE",
+                    "ANIMALS"
+                ]
         }
         self.up_relations = {
             'in':
@@ -857,6 +920,11 @@ class SIDEWALKS(Noun_object):
                 [
                     'PARKS',
                     'STREETS'
+                ]
+            ,
+            'illuminated by':
+                [
+                    "LIGHTS",
                 ]
 
         }
