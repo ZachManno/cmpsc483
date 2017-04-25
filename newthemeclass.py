@@ -129,6 +129,7 @@ class CONTINENTS(Noun_object):
                 [
                     'COUNTRIES',
                     'STATES',
+                    'CITIES',
                     'PEOPLE'
                 ]
         }
@@ -266,6 +267,7 @@ class STREETS(Noun_object):
                     'CARS',
                     'BUILDINGS',
                     'ANIMALS',
+                    'PARKS',
                     'TRASH',
                     'LIGHTS',
                     'SIDEWALKS',
@@ -336,7 +338,7 @@ class CARS(Noun_object):
                     'SEATS',
                     'DOORS',
                     'LIGHTS',
-                    'FLOOR MATS',
+                    'FLOOR_MATS',
                     'TRASH'
                 ]
         }
@@ -547,8 +549,7 @@ class WINDOWS(Noun_object):
                 [
                     'CARS',
                     'BUILDINGS',
-                    'CITIES',
-                    'STATES'
+                    'CITIES'
                 ]
 
         }
