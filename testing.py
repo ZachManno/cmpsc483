@@ -154,45 +154,62 @@ class EnglishProblemGenerator(object):
 
         # Generate encapsulating terms for each mul piece.
         containerlist = []
+        tempobjectlist = []
         mulproblemtype = self.problemtype
         mulsubproblemstring = ""
-        for dummy_idx in self.equationdict[parentid][2]:
+        tempobjectlist.append(newthemeclass.str_to_class("newthemeclass", mulproblemtype))
+        for idx in range(len(self.equationdict[parentid][2])):
             # Generate new theme object based on mulproblemtype
-            themeobject = newthemeclass.str_to_class("newthemeclass", mulproblemtype)
+            prevobject = tempobjectlist[idx]
+            parentRelation = prevobject.getParentRelation()
 
             # Fetch a containing theme type for next object
-            # mulproblemtype = get_up_relation(themeobject) #TODO: ????
+            #parentRelation1 has:
+            #       parentNoun object (parentRelation1.parent)
+            #       childNoun object  (parentRelation1.child)
+            #       downVerb string   (parentRelation1.downVerb)
+            #       upVerb string     (parentRelation1.upVerb)
 
-            containerlist.insert(0, themeobject)
+            containerlist.insert(0, parentRelation)
+            tempobjectlist.append(parentRelation.parent)
 
         # Using container list, generate problem definition.
         prevproblem = None
         subproblem = False
         for idx in range(len(self.equationdict[parentid][2])):
             multermid = self.equationdict[parentid][2][idx]
-            problemtypeobject = containerlist[idx]
+            parentrelation = containerlist[idx]
 
             message = ""
             if prevproblem == None:
-                message = introdata.get_and_connector() + message
+                test = True
+                # message = introdata.get_and_connector() + message
             elif not subproblem:
-                message = "For each " + prevproblem.getInstanceTitle() + ", there are "
+                downverb = parentrelation.downVerb
+                if parentrelation.downVerb == "":
+                    downverb = "(MISSING)"
+
+                # p.num(1)
+                message = "Each " + str(p.singular_noun(prevproblem.getInstanceTitle())) + " " + downverb + " "
             else:
                 # We want the container type, not the instance type.
                 # message = "For each " + prevproblem.get
-                message = "For each " + prevproblem.objectTitleSingular + ", there are"
+                # p.num(1)
+                message = "For each " + p.singular_noun(prevproblem.objectTitleSingular) + ", there are"
 
             # Todo THIS SHOULD SPLIT ON ATTR
             if self.equationdict[multermid][0].attribute == "+":
                 self.ultimatefinalproblem += message
                 subproblem = True
                 self.gen_addition_helper(multermid)
-                prevproblem = problemtypeobject
+                prevproblem = parentrelation.parent
 
             else:
                 subproblem = False
-                prevproblem = problemtypeobject
-                message += self.equationdict[multermid][0].attribute + " " + prevproblem.getInstanceTitle() + ". "
+                prevproblem = parentrelation.child
+                # p.num(2)
+
+                message += self.equationdict[multermid][0].attribute + " " + p.plural_noun(prevproblem.getInstanceTitle()) + ". "
                 self.ultimatefinalproblem += message
 
             # self.ultimatefinalproblem += message
