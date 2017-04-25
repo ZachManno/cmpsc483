@@ -162,7 +162,7 @@ class EnglishProblemGenerator(object):
                 if not quick:
                     title = themeobject.getInstanceTitle()
                     if self.equationdict[childid][0].sign == "-":
-                        title = themeobject.objectTitleSingular
+                        title = themeobject.objectTitleSingular.lower()
 
                     self.ultimatefinalproblem += self.combine_subprob(message, self.get_term(childid, self.equationdict),
                                                                   title, "")
@@ -178,7 +178,8 @@ class EnglishProblemGenerator(object):
                     if idx < len(self.equationdict[parentid][2]) - 1 and len(self.equationdict[parentid][2]) > 2:
                         # Comma separate
                         coremessage += ","
-                    else:
+
+                    elif idx != 0:
                         # Final term of list (no comma!)
                         coremessage = "and " + coremessage + "."
 

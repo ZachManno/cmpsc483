@@ -206,7 +206,10 @@ PLANTS_list = [
     'orchid',
     'daffodil',
     'geranium',
-    'mum'
+    'mum',
+    'rose',
+    'daisy',
+    'violet'
 ]
 
 
@@ -360,6 +363,7 @@ SIGNS_list = [
     'yield sign',
     'speed limit sign',
     'ped walking sign',
+    'school zone sign',
 ]
 
 TRASH_list = [
@@ -379,8 +383,9 @@ TRASH_list = [
 
 BASKETS_list = [
     'shopping basket',
-    'all purpose basket'
-
+    'all purpose basket',
+    'wooden basket',
+    'handwoven basket',
 ]
 
 FRUITS_list = [
@@ -448,11 +453,17 @@ FRUITS_list = [
 ]
 
 SIDEWALKS_list = [
-    'concrete'
+    'concrete sidewalk',
+    'boardwalk',
 ]
 
 SEATS_list = [
-    'chair'
+    'chair',
+    'cushion',
+    'seat',
+    'studio chair',
+    'desk seat',
+    'egg chair',
 ]
 
 ultimate_type_list = [

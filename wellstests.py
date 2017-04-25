@@ -23,18 +23,20 @@ def run_tests():
     """
 
     equations = [
-        # "a - b + c - d",
-        # "a * b * c",
-        # "a + b * c",
-        # "RAND[100] + RAND[50] * f"
+        "a - b + c - d",
+        # "RAND[20] * RAND[20]",
+        # "RAND[20] * RAND[20]",
+        # "RAND[20] * RAND[20]",
+        # "RAND[20] * RAND[20]",
+        # "RAND[20] * RAND[20]",
+        # "RAND[20] * RAND[20]",
+        # "RAND[100] + RAND[50] * f",
         # "a * b + c",
-        # "(a * b) + (e * f * g)"
-        "RAND[150] * (b - f + g) * d",
-        # "a + b * c + d * e * f",
+        # "(a * b) + (e * f * g)",
+        "RAND[150] * (b + f * (1 + 2) + g) * d",
+        # "a + b * c + (d * e * f)",
         # "b * c + d * e * f"
     ]
-
-
 
     for equation in equations:
         print("Original equation:")
