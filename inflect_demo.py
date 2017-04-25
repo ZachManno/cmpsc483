@@ -52,12 +52,18 @@ print(p.plural_adj("This"), p.plural_noun(" error"), p.plural_verb(" was"), "fat
 
 print("------------")
 print("Parent relation demo:")
-b1 = newthemeclass.BUILDINGS()
+b1 = newthemeclass.ANIMALS()
 parentRelation1 = b1.getParentRelation()
 #parentRelation1 has:
-#       parentNoun object (parentRelation1.parent)
-#       childNoun object  (parentRelation1.child)
+#       parent object (parentRelation1.parent)
+#       child object  (parentRelation1.child)
 #       downVerb string   (parentRelation1.downVerb)
 #       upVerb string     (parentRelation1.upVerb)
-print(parentRelation1.upVerb)
 print(parentRelation1.parent.objectTitleSingular)
+print(parentRelation1.downVerb)
+print(parentRelation1.upVerb)
+print(parentRelation1.child.objectTitleSingular)
+print(parentRelation1.parent.instanceTitle)
+
+t1 = newthemeclass.ANIMALS()
+parentRelation1 = t1.getParentRelation()

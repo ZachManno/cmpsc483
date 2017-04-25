@@ -75,6 +75,7 @@ class Noun_object(object):
         parentNoun = random.choice(self.up_relations[upVerb])
         #print("parent noun = " + parentNoun)
         downVerb = ""
+        foundFlag = False
 
 
         myclassobject = local_str_to_class(parentNoun)
@@ -95,13 +96,17 @@ class Noun_object(object):
                     # print("key = " + key)
                     # print("parent noun = "+parentNoun)
                     downVerb = key
+                    foundFlag = True
 
 
         p1 =  Parent_relation(local_str_to_class(parentNoun),self,downVerb,upVerb)
         #print("parent relation test:")
         #print(p1.parent,p1.downVerb,p1.child)
         #print(p1.child,p1.upVerb,p1.parent)
-        return p1
+        if foundFlag:
+            return p1
+        else:
+            raise SystemError("No down relation found!\n Parent = " + parentNoun)
 
 
 
@@ -144,11 +149,14 @@ class COUNTRIES(Noun_object):
         self.down_relations = {
             'has':
                 [
+                    'CITY'
                     'STATES',
                     'STREETS',
                     'BUILDINGS',
                     'CARS',
-                    'PEOPLE'
+                    'PEOPLE',
+                    'ANIMALS',
+                    'PARKS'
                 ]
         }
         self.up_relations = {
@@ -179,7 +187,9 @@ class STATES(Noun_object):
                     'STREETS',
                     'BUILDINGS',
                     'CARS',
-                    'PEOPLE'
+                    'PEOPLE',
+                    'ANIMALS',
+                    'PARKS'
                 ]
         }
         self.up_relations = {
@@ -253,6 +263,7 @@ class STREETS(Noun_object):
                     'SIGNS',
                     'CARS',
                     'BUILDINGS',
+                    'ANIMALS',
                     'TRASH',
                     'LIGHTS',
                     'SIDEWALK'
@@ -273,6 +284,7 @@ class STREETS(Noun_object):
 class BUILDINGS(Noun_object):
     def __init__(self):
         super(BUILDINGS, self).__init__(random_lists_data.BUILDINGS_list)
+
         self.objectTitleSingular = "BUILDING"
         self.objectTitlePlural = "BUILDINGS"
         self.down_relations = {
@@ -313,6 +325,7 @@ class CARS(Noun_object):
             'has':
                 [
                     'PEOPLE',
+                    'ANIMALS',
                     'WINDOWS',
                     'SEATS',
                     'DOORS',
