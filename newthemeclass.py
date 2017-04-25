@@ -49,7 +49,7 @@ class Parent_relation(object):
 """
 BUILDING
 IN
-CITY
+CITIES
 HAS
 BUILDING
 """
@@ -112,12 +112,12 @@ class Noun_object(object):
 
 
 # For down relations:
-# They are reasonable items to contain ie A city has buildings. A city would not have atoms
+# They are reasonable items to contain ie A CITIES has buildings. A CITIES would not have atoms
 class CONTINENTS(Noun_object):
     def __init__(self):
         super(CONTINENTS, self).__init__(random_lists_data.CONTINENTS_list)
-        # Noun_object.__init__(random_lists_data.CITY_list)
-        # self.instanceTitle = random.choice(random_lists_data.CITY_list)
+        # Noun_object.__init__(random_lists_data.CITIES_list)
+        # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.adjectives = [
             'Cold',
             'Warm',
@@ -139,8 +139,8 @@ class CONTINENTS(Noun_object):
 class COUNTRIES(Noun_object):
     def __init__(self):
         super(COUNTRIES, self).__init__(random_lists_data.COUNTRIES_list)
-        # Noun_object.__init__(random_lists_data.CITY_list)
-        # self.instanceTitle = random.choice(random_lists_data.CITY_list)
+        # Noun_object.__init__(random_lists_data.CITIES_list)
+        # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.adjectives = [
             'Crowded',
             'Developed',
@@ -150,7 +150,7 @@ class COUNTRIES(Noun_object):
         self.down_relations = {
             'has':
                 [
-                    'CITY',
+                    'CITIES',
                     'STATES',
                     'STREETS',
                     'BUILDINGS',
@@ -173,8 +173,8 @@ class COUNTRIES(Noun_object):
 class STATES(Noun_object):
     def __init__(self):
         super(STATES, self).__init__(random_lists_data.STATES_list)
-        # Noun_object.__init__(random_lists_data.CITY_list)
-        # self.instanceTitle = random.choice(random_lists_data.CITY_list)
+        # Noun_object.__init__(random_lists_data.CITIES_list)
+        # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.adjectives = [
             'Crowded',
             'Developed',
@@ -184,7 +184,7 @@ class STATES(Noun_object):
         self.down_relations = {
             'has':
                 [
-                    'CITY',
+                    'CITIES',
                     'STREETS',
                     'BUILDINGS',
                     'CARS',
@@ -209,8 +209,8 @@ class STATES(Noun_object):
 class CITIES(Noun_object):
     def __init__(self):
         super(CITIES, self).__init__(random_lists_data.CITIES_list)
-        # Noun_object.__init__(random_lists_data.CITY_list)
-        # self.instanceTitle = random.choice(random_lists_data.CITY_list)
+        # Noun_object.__init__(random_lists_data.CITIES_list)
+        # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.adjectives = [
             'Gleaming',
             'Dirty',
@@ -218,7 +218,7 @@ class CITIES(Noun_object):
             'Crowded',
             'Developed',
         ]
-        self.objectTitleSingular = "CITY"
+        self.objectTitleSingular = "CITIES"
         self.objectTitlePlural = "CITIES"
         self.down_relations = {
             'has':
@@ -277,7 +277,7 @@ class STREETS(Noun_object):
         self.up_relations = {
             'in':
                 [
-                    'CITY',
+                    'CITIES',
                     'STATES',
                     'COUNTRIES'
                 ]
@@ -302,6 +302,7 @@ class BUILDINGS(Noun_object):
                     # 'COMPUTERS',
                     'DOORS',
                     'WINDOWS',
+                    'FLOOR_MATS',
                     'TRASH'
                 ]
         }
@@ -313,7 +314,7 @@ class BUILDINGS(Noun_object):
             ,
             'in':
                 [
-                    'CITY',
+                    'CITIES',
                     'STATES',
                     'COUNTRIES'
                 ]
@@ -347,7 +348,7 @@ class CARS(Noun_object):
             ,
             'in':
                 [
-                    'CITY',
+                    'CITIES',
                     'STATES',
                     'COUNTRIES'
                 ]
@@ -386,7 +387,7 @@ class PEOPLE(Noun_object):
                 [
                     'BUILDINGS',
                     'STREETS',
-                    'CITY',
+                    'CITIES',
                     'STATES',
                     'COUNTRIES'
                 ]
@@ -421,7 +422,7 @@ class PARKS(Noun_object):
             ,
             'in':
                 [
-                    'CITY',
+                    'CITIES',
                     'STATES',
                     'COUNTRIES'
                 ]
@@ -446,7 +447,6 @@ class PLANTS(Noun_object):
             'in':
                 [
                     'PARKS',
-                    'CARS',
                     'BUILDINGS',
                     'CITIES',
                     'STATES'
@@ -604,8 +604,8 @@ class DOORS(Noun_object):
 class FLOOR_MATS(Noun_object):
     def __init__(self):
         super(FLOOR_MATS, self).__init__(random_lists_data.FLOOR_MATS_list)
-        self.objectTitleSingular = "FLOOR_MAT"
-        self.objectTitlePlural = "FLOOR_MATS"
+        self.objectTitleSingular = "FLOOR MAT"
+        self.objectTitlePlural = "FLOOR MATS"
         self.down_relations = {
             # 'has':
             #   [
