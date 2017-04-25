@@ -78,15 +78,16 @@ class EnglishProblemGenerator(object):
     def get_children(self, nodeid, equationdict):
         return equationdict[nodeid][2]
 
-    def combine_subprob(self, begin, node, entity, end):
+    def combine_subprob(self, begin, node, objecttitle, end):
         subproblem = begin
         subproblem += node.attribute
 
         # Get subproblem title based on plurality.
+
         if (int(node.attribute != 1)):
-            subproblem += " " + p.plural(entity.getInstanceTitle())
+            subproblem += " " + p.plural(objecttitle)
         else:
-            subproblem += " " + entity.getInstanceTitle()
+            subproblem += " " + objecttitle
         subproblem += end
 
         if subproblem[len(subproblem) - 1] != ".":
@@ -119,7 +120,7 @@ class EnglishProblemGenerator(object):
 
     def gen_on_datatype(self, attribute, childid):
         """Fork in problem generation based on subproblem attribute type."""
-        if attribute == "+":
+        if attribute == "+" or attribute == "-":
             self.gen_addition_helper(childid)
         elif attribute == "*":
             self.gen_mul_helper(childid)
@@ -129,7 +130,6 @@ class EnglishProblemGenerator(object):
     def gen_addition_helper(self, parentid, problemtype = None, quick=False):
         """Generate addition type subproblem based on parentid"""
         first = True
-
 
         if problemtype == None:
             problemtype = self.problemtype
@@ -151,24 +151,38 @@ class EnglishProblemGenerator(object):
 
                 message = introdata.generate_intro().lower()
                 if not first:
-                    message = introdata.get_and_connector() + message
+                    if attribute == "+":
+                        message = introdata.get_and_connector() + message
+                    else:
+                        message = introdata.get_sub_connector()
                 else:
                     first = False
 
+                # Special output for "Quick addition" (basically a list)
                 if not quick:
+                    title = themeobject.getInstanceTitle()
+                    if attribute == "-":
+                        title = themeobject.objectTitleSingular
+
                     self.ultimatefinalproblem += self.combine_subprob(message, self.get_term(childid, self.equationdict),
-                                                                  themeobject, "")
-                elif idx < len(self.equationdict[parentid][2]) - 1:
-                    term = self.get_term(childid, self.equationdict)
-                    self.ultimatefinalproblem += term.attribute + " " + p.plural_noun(themeobject.getInstanceTitle())
-
-                    # Comma separate?
-                    if len(self.equationdict[parentid][2]) > 2:
-                        self.ultimatefinalproblem += ","
+                                                                  title, "")
                 else:
+                    coremessage = ""
                     term = self.get_term(childid, self.equationdict)
-                    self.ultimatefinalproblem += "and " + term.attribute + " " + p.plural_noun(themeobject.getInstanceTitle()) + "."
 
+                    # if attribute == "+":
+                    coremessage = term.attribute + " " + p.plural_noun(themeobject.getInstanceTitle())
+                    # else:
+                    #     coremessage = introdata.get_sub_connector() + " " + term.attribute + " " + p.plural_noun(themeobject.objectTitlePlural)
+
+                    if idx < len(self.equationdict[parentid][2]) - 1 and len(self.equationdict[parentid][2]) > 2:
+                        # Comma separate
+                        coremessage += ","
+                    else:
+                        # Final term of list (no comma!)
+                        coremessage = "and " + coremessage + "."
+
+                    self.ultimatefinalproblem += coremessage
 
                 self.ultimatefinalproblem += " "
 

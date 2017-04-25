@@ -23,6 +23,13 @@ and_connectors = [
     "It's also worth mentioning that",
 ]
 
+subtract_connectors = [
+    "Remove ",
+    "Take away ",
+    "Delete ",
+    "Destroy ",
+]
+
 counting_solutions_intro = [
     "What is the amount of",
     "What is the count of",
@@ -43,6 +50,9 @@ def generate_intro():
 
 def get_and_connector():
     return random.choice(and_connectors) + " "
+
+def get_sub_connector():
+    return random.choice(subtract_connectors) + " "
 
 def generate_conclusion(objecttype):
     conclusion = random.choice(counting_solutions_intro)

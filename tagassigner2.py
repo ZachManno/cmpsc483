@@ -189,6 +189,7 @@ easyequations = [
     "(1+2)/(3)",
     "(1)/(2 + 3)",
     "b * c + d * e * f",
+    "a + b - c + d"
     # "AVG[1,AVG[1,2,3],3]",
     # "AVG[1,9,90,40,50] + AVG[1,9,90,40,50]",
     # "SQR[10]",
@@ -216,7 +217,7 @@ def nextleveltests():
 
 
 # postorder_tests(
-# nextleveltests()
+nextleveltests()
 # print()
 # print()
 # run_tests()
