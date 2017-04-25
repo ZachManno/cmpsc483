@@ -151,7 +151,7 @@ class EnglishProblemGenerator(object):
 
                 message = introdata.generate_intro().lower()
                 if not first:
-                    if attribute == "+":
+                    if self.equationdict[childid][0].sign == "+":
                         message = introdata.get_and_connector() + message
                     else:
                         message = introdata.get_sub_connector()
@@ -161,7 +161,7 @@ class EnglishProblemGenerator(object):
                 # Special output for "Quick addition" (basically a list)
                 if not quick:
                     title = themeobject.getInstanceTitle()
-                    if attribute == "-":
+                    if self.equationdict[childid][0].sign == "-":
                         title = themeobject.objectTitleSingular
 
                     self.ultimatefinalproblem += self.combine_subprob(message, self.get_term(childid, self.equationdict),
@@ -170,10 +170,10 @@ class EnglishProblemGenerator(object):
                     coremessage = ""
                     term = self.get_term(childid, self.equationdict)
 
-                    # if attribute == "+":
-                    coremessage = term.attribute + " " + p.plural_noun(themeobject.getInstanceTitle())
-                    # else:
-                    #     coremessage = introdata.get_sub_connector() + " " + term.attribute + " " + p.plural_noun(themeobject.objectTitlePlural)
+                    if self.equationdict[childid][0].sign == "+":
+                        coremessage = term.attribute + " " + p.plural_noun(themeobject.getInstanceTitle())
+                    else:
+                        coremessage = introdata.get_sub_connector() + term.attribute + " " + p.plural_noun(themeobject.objectTitleSingular.lower())
 
                     if idx < len(self.equationdict[parentid][2]) - 1 and len(self.equationdict[parentid][2]) > 2:
                         # Comma separate
@@ -232,7 +232,7 @@ class EnglishProblemGenerator(object):
                     if not p.singular_noun(prevproblem.objectTitleSingular):
                         message = "For each " + prevproblem.objectTitleSingular + ", there are "
                     else:
-                        message = "For each " + p.singular_noun(prevproblem.objectTitleSingular) + ", there are "
+                        message = "For each " + p.singular_noun(prevproblem.objectTitleSingular.lower()) + ", there are "
 
 
             # Finish displaying multerm. Recurse if necessary.

@@ -24,10 +24,10 @@ and_connectors = [
 ]
 
 subtract_connectors = [
-    "Remove ",
-    "Take away ",
-    "Delete ",
-    "Destroy ",
+    "Remove",
+    "Take away",
+    "Delete",
+    "Destroy",
 ]
 
 counting_solutions_intro = [
