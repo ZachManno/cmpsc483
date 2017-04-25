@@ -337,7 +337,10 @@ EATS_list = [
 
 DOORS_list = [
     'sliding door',
-   'framed door'
+    'framed door',
+    'garage door',
+    'bay door',
+    'falcon wing door',
 ]
 
 ##AREADY HAVE LIGHTS
@@ -345,13 +348,18 @@ DOORS_list = [
 ##ALREADY HAVE PEOPLE
 FLOOR_MATS_list = [
     'carpet floor mat',
-    'plastic floor mat'
+    'plastic floor mat',
+    'Anti-Fatigue Floor Mat',
+    'Entrance Floor Mat',
+    'Grease Resistant Mat',
+
 ]
 
 SIGNS_list = [
     'stop sign',
     'yield sign',
-    'speed limit sign'
+    'speed limit sign',
+    'ped walking sign',
 ]
 
 TRASH_list = [

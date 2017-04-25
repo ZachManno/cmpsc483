@@ -106,7 +106,7 @@ class Noun_object(object):
         if foundFlag:
             return p1
         else:
-            raise SystemError("No down relation found!\n Parent = " + parentNoun)
+            raise SystemError("No down relation found!\n Parent = " + parentNoun + " \n Child = " + self.objectTitleSingular)
 
 
 
