@@ -2,6 +2,7 @@ import newthemeclass
 import tagassigner2
 import introdata
 import inflect
+import random
 
 p = inflect.engine()
 
@@ -125,19 +126,27 @@ class EnglishProblemGenerator(object):
         elif attribute == "/":
             self.gen_div_helper(childid)
 
-    def gen_addition_helper(self, parentid, problemtype = "", quick=False):
+    def gen_addition_helper(self, parentid, problemtype = None, quick=False):
         """Generate addition type subproblem based on parentid"""
         first = True
 
 
-        for childid in self.equationdict[parentid][2]:
+        if problemtype == None:
+            problemtype = self.problemtype
+
+        # if quick:
+        #     self.ultimatefinalproblem += " there are "
+
+        for idx in range(len(self.equationdict[parentid][2])):
+            childid = self.equationdict[parentid][2][idx]
+
             # Check attribute for sign, to determine path.
             attribute = self.equationdict[childid][0].attribute
             if self.issign(attribute):
                 self.gen_on_datatype(attribute, childid)
             else:
                 # Attribute is a variable. Update problem text based on addition connectors.
-                themeobject = newthemeclass.str_to_class("newthemeclass", self.problemtype)
+                themeobject = newthemeclass.str_to_class("newthemeclass", problemtype)
 
                 message = introdata.generate_intro().lower()
                 if not first:
@@ -145,8 +154,16 @@ class EnglishProblemGenerator(object):
                 else:
                     first = False
 
-                self.ultimatefinalproblem += self.combine_subprob(message, self.get_term(childid, self.equationdict),
+                if not quick:
+                    self.ultimatefinalproblem += self.combine_subprob(message, self.get_term(childid, self.equationdict),
                                                                   themeobject, "")
+                elif idx < len(self.equationdict[parentid][2]) - 1:
+                    term = self.get_term(childid, self.equationdict)
+                    self.ultimatefinalproblem += term.attribute + " " + p.plural_noun(themeobject.getInstanceTitle())
+                else:
+                    term = self.get_term(childid, self.equationdict)
+                    self.ultimatefinalproblem += "and " + term.attribute + " " + p.plural_noun(themeobject.getInstanceTitle()) + "."
+
 
                 self.ultimatefinalproblem += " "
 
@@ -155,6 +172,7 @@ class EnglishProblemGenerator(object):
 
         # Generate encapsulating terms for each mul piece.
         containerlist = []
+
         tempobjectlist = []
         mulproblemtype = self.problemtype
         mulsubproblemstring = ""
@@ -195,20 +213,28 @@ class EnglishProblemGenerator(object):
                 if parentrelation.downVerb == "":
                     downverb = "(MISSING)"
 
-                # p.num(1)
                 message = "Each " + prevproblem.getInstanceTitle() + " " + downverb + " "
             else:
                 # We want the container type, not the instance type.
                 # message = "For each " + prevproblem.get
-                # p.num(1)
-                message = "For each " + p.singular_noun(prevproblem.objectTitleSingular) + ", there are"
+                if not p.singular_noun(prevproblem.objectTitleSingular):
+                    message = "For each " + prevproblem.objectTitleSingular + ", there are "
+                else:
+                    message = "For each " + p.singular_noun(prevproblem.objectTitleSingular) + ", there are "
+
+
+
+
 
             # Todo THIS SHOULD SPLIT ON ATTR
             if self.equationdict[multermid][0].attribute == "+":
                 self.ultimatefinalproblem += message
                 subproblem = True
-                self.gen_addition_helper(multermid)
-                prevproblem = parentrelation.parent
+
+                # Good chance of quick add. 80%.
+                quick = random.randrange(100) < 80
+                self.gen_addition_helper(multermid, parentrelation.child.objectTitlePlural, quick)
+                prevproblem = parentrelation.child
 
             else:
                 subproblem = False
