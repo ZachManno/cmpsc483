@@ -99,7 +99,7 @@ STATES_list = [
     'coastal state'
 ]
 
-CITY_list = [
+CITIES_list = [
     'utopia',
     'metropolis',
     'village',
@@ -378,7 +378,7 @@ TRASH_list = [
 ]
 
 ultimate_type_list = [
-    "CITY",
+    "CITIES",
     # "ZIP_CODES",
     "STREETS",
     "BUILDINGS",
