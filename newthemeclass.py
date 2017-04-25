@@ -190,6 +190,7 @@ class STATES(Noun_object):
                     'CARS',
                     'PEOPLE',
                     'ANIMALS',
+                    'PLANTS',
                     'PARKS'
                 ]
         }
