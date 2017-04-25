@@ -58,6 +58,4 @@ class Clause(object):
 #         else:
 #             print("ERROR LINE 178?")
 # if last_term != "":
-#     tree.append((last_term))
-
-\
+#     tree.append((last_term)

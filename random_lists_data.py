@@ -89,14 +89,14 @@ CONTINENTS_list = [
 ]
 
 COUNTRIES_list = [
-    'First-world countries',
-    'Third-world countries'
+    'First-world country',
+    'Third-world country'
 ]
 
 STATES_list = [
-    'Breadbasket states',
-    'Northeastern states',
-    'coastal states'
+    'Breadbasket state',
+    'Northeastern state',
+    'coastal state'
 ]
 
 CITY_list = [
