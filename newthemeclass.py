@@ -128,6 +128,7 @@ class CONTINENTS(Noun_object):
             'has':
                 [
                     'COUNTRIES',
+                    'STATES',
                     'PEOPLE'
                 ]
         }
@@ -189,6 +190,7 @@ class STATES(Noun_object):
                     'CARS',
                     'PEOPLE',
                     'ANIMALS',
+                    'PLANTS',
                     'PARKS'
                 ]
         }
@@ -267,6 +269,7 @@ class STREETS(Noun_object):
                     'TRASH',
                     'LIGHTS',
                     'SIDEWALKS',
+                    'DOORS',
                     'SIGNS'
                 ]
 
