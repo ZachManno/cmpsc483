@@ -176,6 +176,9 @@ class EnglishProblemGenerator(object):
         # Using container list, generate problem definition.
         prevproblem = None
         subproblem = False
+
+        quickchain = False
+
         for idx in range(len(self.equationdict[parentid][2])):
             multermid = self.equationdict[parentid][2][idx]
             parentrelation = containerlist[idx]
@@ -190,7 +193,7 @@ class EnglishProblemGenerator(object):
                     downverb = "(MISSING)"
 
                 # p.num(1)
-                message = "Each " + str(p.singular_noun(prevproblem.getInstanceTitle())) + " " + downverb + " "
+                message = "Each " + prevproblem.getInstanceTitle() + " " + downverb + " "
             else:
                 # We want the container type, not the instance type.
                 # message = "For each " + prevproblem.get
