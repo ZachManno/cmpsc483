@@ -23,12 +23,13 @@ def run_tests():
     """
 
     equations = [
-        "a + b",
-        "a * b * c",
+        "a - b",
+        # "a * b * c",
         # "a + b * c",
         # "RAND[100] + RAND[50] * f"
         # "a * b + c",
-        "a * (b + c + f + g) * d",
+        # "(a * b) + (e * f * g)"
+        # "a * (b + c + f + g) * d",
         # "a + b * c + d * e * f",
         # "b * c + d * e * f"
     ]
