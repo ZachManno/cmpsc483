@@ -192,7 +192,8 @@ class STATES(Noun_object):
                     'PEOPLE',
                     'ANIMALS',
                     'PLANTS',
-                    'PARKS'
+                    'PARKS',
+                    'LIGHTS'
                 ]
         }
         self.up_relations = {
@@ -300,10 +301,12 @@ class BUILDINGS(Noun_object):
                     'ROOMS',
                     'STAIRS',
                     'PEOPLE',
+                    'PLANTS',
                     'LIGHTS',
                     # 'COMPUTERS',
                     'DOORS',
                     'WINDOWS',
+                    'SEATS',
                     'FLOOR_MATS',
                     'TRASH'
                 ]
@@ -412,7 +415,8 @@ class PARKS(Noun_object):
                     'PLANTS',
                     'SIDEWALKS',
                     'LIGHTS',
-                    'TRASH'
+                    'TRASH',
+                    'SEATS'
 
                 ]
         }
