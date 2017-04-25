@@ -340,7 +340,7 @@ DOORS_list = [
     'framed door',
     'garage door',
     'bay door',
-    'falcon wing door',
+    'falcon wing door'
 ]
 
 ##AREADY HAVE LIGHTS
@@ -369,7 +369,7 @@ TRASH_list = [
     'diaper',
     'Potato chip bag',
     'Ziplock bag',
-    'Bubble wra',
+    'Bubble wrap',
     'Candy wrapper',
     'Food scrap',
     'Yard waste and leave',
@@ -377,9 +377,89 @@ TRASH_list = [
     'Hazardous material',
 ]
 
+BASKETS_list = [
+    'shopping basket',
+    'all purpose basket'
+
+]
+
+FRUITS_list = [
+    'Apple',
+    'Apricot',
+    'Avocado',
+    'Banana',
+    'Bilberry',
+    'Blackberry',
+    'Blueberry',
+    'Boysenberry',
+    'Cherry',
+    'Cloudberry',
+    'Coconut',
+    'Cranberry',
+    'Cucumber',
+    'Dragonfruit',
+    'Elderberry',
+    'Feijoa',
+    'Fig',
+    'Goji berry',
+    'Gooseberry',
+    'Grape',
+    'Raisin',
+    'Grapefruit',
+    'Guava',
+    'Honeyberry',
+    'Huckleberry',
+    'Jackfruit',
+    'Juniper berry',
+    'Kiwifruit',
+    'Kumquat',
+    'Lemon',
+    'Lime',
+    'Mango',
+    'Marionberry',
+    'Melon',
+    'Cantaloupe',
+    'Honeydew',
+    'Watermelon',
+    'Miracle fruit',
+    'Mulberry',
+    'Nectarine',
+    'Orange',
+    'Blood orange',
+    'Clementine',
+    'Mandarine',
+    'Tangerine',
+    'Papaya',
+    'Passionfruit',
+    'Peach',
+    'Pear',
+    'Plum',
+    'Prune',
+    'Pineapple',
+    'Pomegranate',
+    'Purple mangosteen',
+    'Quince',
+    'Raspberry',
+    'Salmonberry',
+    'Salal berry',
+    'Star fruit',
+    'Strawberry',
+
+]
+
+SIDEWALKS_list = [
+    'concrete'
+]
+
+SEATS_list = [
+    'chair'
+]
+
 ultimate_type_list = [
+    "CONTINENTS",
+    "COUNTRIES",
+    "STATES",
     "CITIES",
-    # "ZIP_CODES",
     "STREETS",
     "BUILDINGS",
     "CARS",
@@ -389,11 +469,12 @@ ultimate_type_list = [
     "LIGHTS",
     "ANIMALS",
     "WINDOWS",
-    # "SEATS",
+    "SEATS",
     "DOORS",
     "FLOOR_MATS",
     "SIGNS",
     "TRASH",
-    # "SIDEWALKS"
+    "BASKETS",
+    "FRUITS",
+    "SIDEWALKS"
 ]
-

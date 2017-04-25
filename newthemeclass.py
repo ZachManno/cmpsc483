@@ -12,10 +12,12 @@ class Name(object):
 def str_to_class(module_name, class_name):
     try:
         module_ = importlib.import_module(module_name)
+        class_ = ""
         try:
-            class_ = getattr(module_, class_name)()
+            class_ = getattr(module_, class_name)
+            class_ = class_()
         except AttributeError:
-            logging.error('Class does not exist')
+            logging.error('ERROR: Class ' + class_name + ' does not exist!!!\n\n')
     except ImportError:
         logging.error('Module does not exist')
     return class_ or None
@@ -61,7 +63,10 @@ BUILDING
 
 class Noun_object(object):
     def __init__(self, instanceList):
-        self.instanceTitle = random.choice(instanceList)
+        try:
+            self.instanceTitle = random.choice(instanceList)
+        except NotImplementedError:
+            logging.error("Instance list not implemented for " + self.objectTitlePlural + "!")
         self.down_relations = {
 
         }
@@ -75,6 +80,7 @@ class Noun_object(object):
         parentNoun = random.choice(self.up_relations[upVerb])
         #print("parent noun = " + parentNoun)
         downVerb = ""
+        downVerbList = []
         foundFlag = False
 
 
@@ -95,15 +101,17 @@ class Noun_object(object):
                     # print("found self = "+ self.__class__.__name__)
                     # print("key = " + key)
                     # print("parent noun = "+parentNoun)
-                    downVerb = key
+                    downVerbList.append(key)
                     foundFlag = True
 
 
-        p1 =  Parent_relation(local_str_to_class(parentNoun),self,downVerb,upVerb)
+
         #print("parent relation test:")
         #print(p1.parent,p1.downVerb,p1.child)
         #print(p1.child,p1.upVerb,p1.parent)
         if foundFlag:
+            downVerb = random.choice(downVerbList)
+            p1 = Parent_relation(local_str_to_class(parentNoun), self, downVerb, upVerb)
             return p1
         else:
             raise SystemError("No down relation found!\n Parent = " + parentNoun + " \n Child = " + self.objectTitleSingular)
@@ -199,8 +207,8 @@ class STATES(Noun_object):
         self.up_relations = {
             'in':
                 [
-                    'COUNTRIES',
-                    'CONTINENTS'
+                    'CONTINENTS',
+                    'COUNTRIES'
 
                 ]
 
@@ -273,8 +281,13 @@ class STREETS(Noun_object):
                     'TRASH',
                     'LIGHTS',
                     'SIDEWALKS',
-                    'DOORS',
-                    'SIGNS'
+                    'DOORS'
+                ]
+            ,
+            'houses':
+                [
+                    'PEOPLE',
+                    'ANIMALS',
                 ]
 
         }
@@ -303,18 +316,30 @@ class BUILDINGS(Noun_object):
         self.down_relations = {
             'has':
                 [
-                    'FLOORS',
-                    'ROOMS',
-                    'STAIRS',
+                    #'FLOORS',
+                    #'ROOMS',
+                    #'STAIRS',
                     'PEOPLE',
+                    'ANIMALS',
                     'PLANTS',
                     'LIGHTS',
                     # 'COMPUTERS',
                     'DOORS',
                     'WINDOWS',
-                    'SEATS',
+                    'SIGNS',
                     'FLOOR_MATS',
+                    'SEATS',
                     'TRASH'
+                ]
+            ,
+            'is constructed with':
+                [
+                    #'FLOORS',
+                    #'ROOMS',
+                    #'STAIRS',
+                    # 'COMPUTERS',
+                    'DOORS',
+                    'WINDOWS'
                 ]
         }
         self.up_relations = {
@@ -356,6 +381,14 @@ class CARS(Noun_object):
                     'FLOOR_MATS',
                     'TRASH'
                 ]
+            ,
+            'fits':
+                [
+                    'PEOPLE',
+                    'ANIMALS',
+                    'FLOOR_MATS',
+                    'TRASH'
+                ]
         }
         self.up_relations = {
             'on':
@@ -388,9 +421,11 @@ class PEOPLE(Noun_object):
         self.objectTitleSingular = "PEOPLE"
         self.objectTitlePlural = "PEOPLE"
         self.down_relations = {
-            'has':
+            'owns':
                 [
-                    'ANIMALS'
+                    'ANIMALS',
+                    'BASKETS',
+                    'FRUITS'
                     # 'ORGANS',
                     # 'EYES',
                     # 'LIMBS',
@@ -400,22 +435,38 @@ class PEOPLE(Noun_object):
                     # 'TEETH'
 
                 ]
-            # ,
-            # 'holds':
-            #   [
-            #      'CANDY',
-            #     'MONEY',
-            #    'FRUIT'
-            # ]
+            ,
+            'holds':
+                [
+                    'BASKETS',
+                    'FRUITS'
+                ]
+            ,
+            'eats':
+                [
+                    'FRUITS'
+                ]
         }
         self.up_relations = {
             'in':
                 [
                     'BUILDINGS',
                     'STREETS',
+                    'PARKS',
                     'CITIES',
                     'STATES',
-                    'COUNTRIES'
+                    'COUNTRIES',
+                    'CONTINENTS'
+                ]
+            ,
+            'drives':
+                [
+                    'CARS'
+                ]
+            ,
+            'occupies':
+                [
+                    'SIDEWALKS'
                 ]
 
         }
@@ -520,11 +571,11 @@ class LIGHTS(Noun_object):
         self.up_relations = {
             'in':
                 [
+                    'CARS',
                     'PARKS',
                     'BUILDINGS',
                     'CITIES',
-                    'STATES',
-                    'COUNTRIES'
+                    'STATES'
                 ]
             ,
             'on':
@@ -552,13 +603,10 @@ class ANIMALS(Noun_object):
         self.objectTitleSingular = "ANIMAL"
         self.objectTitlePlural = "ANIMALS"
         self.down_relations = {
-            # 'has':
-            #   [
-            # 'CLAWS',
-            # 'FUR',
-            # 'TAILS',
-            # 'PAWS'
-            #  ]
+            'eats':
+                [
+                    'FRUITS'
+                ]
         }
         self.up_relations = {
             'in':
@@ -573,7 +621,13 @@ class ANIMALS(Noun_object):
             ,
             'on':
                 [
-                    'STREETS'
+                    'STREETS',
+                    'SIDEWALKS'
+                ]
+            ,
+            'is owned by':
+                [
+                    'PEOPLE'
                 ]
 
         }
@@ -683,8 +737,8 @@ class FLOOR_MATS(Noun_object):
             'sparkly',
             'pristine'
         ]
-        self.objectTitleSingular = "FLOOR MAT"
-        self.objectTitlePlural = "FLOOR MATS"
+        self.objectTitleSingular = "FLOOR_MAT"
+        self.objectTitlePlural = "FLOOR_MATS"
         self.down_relations = {
             # 'has':
             #   [
@@ -757,7 +811,8 @@ class TRASH(Noun_object):
         self.up_relations = {
             'on':
                 [
-                    'STREETS'
+                    'STREETS',
+                    'SIDEWALKS'
                 ]
             ,
             'in':
@@ -806,7 +861,62 @@ class SIDEWALKS(Noun_object):
 
         }
 
+class BASKETS(Noun_object):
+    def __init__(self):
+        self.instanceTitle = random.choice(random_lists_data.BASKETS_list)
+        self.adjectives = [
+            'woven',
+            'fancy',
+            'expensive',
+            'cheap',
+            'clean',
+            'dirty'
+        ]
+        self.objectTitleSingular = "BASKET"
+        self.objectTitlePlural = "BASKETS"
+        self.down_relations = {
+            'has':
+                [
+                    'FRUITS'
+                ]
+        }
+        self.up_relations = {
+            'is owned by':
+                [
+                    'PEOPLE'
+                ]
 
+        }
+
+class FRUITS(Noun_object):
+    def __init__(self):
+        self.instanceTitle = random.choice(random_lists_data.FRUITS_list)
+        self.adjectives = [
+            'rotten',
+            'succulent',
+            'juicy',
+            'ripe',
+            'delicious'
+
+        ]
+        self.objectTitleSingular = "FRUIT"
+        self.objectTitlePlural = "FRUITS"
+        self.down_relations = {
+
+        }
+        self.up_relations = {
+            'is in':
+                [
+                    'BASKETS'
+                ]
+            ,
+            'eaten by':
+                [
+                    'ANIMALS',
+                    'PEOPLE'
+                ]
+
+        }
 
 #There are b streets. All streets have c cars. How many cars?
 
