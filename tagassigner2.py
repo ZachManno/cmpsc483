@@ -2,6 +2,10 @@ import sys
 import main
 import random
 
+"""
+New and improved!!!
+"""
+
 def is_sign(char):
 
         return char == '/' or char == '*' or char == '+' or char == '-'
@@ -184,6 +188,8 @@ easyequations = [
     # "-1-4",
     "(1+2)/(3)",
     "(1)/(2 + 3)",
+    "b * c + d * e * f",
+    "a + b - c + d"
     # "AVG[1,AVG[1,2,3],3]",
     # "AVG[1,9,90,40,50] + AVG[1,9,90,40,50]",
     # "SQR[10]",
