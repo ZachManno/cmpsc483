@@ -119,8 +119,8 @@ class CONTINENTS(Noun_object):
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.adjectives = [
-            'Cold',
-            'Warm',
+            'cold',
+            'warm',
         ]
         self.objectTitleSingular = "CONTINENT"
         self.objectTitlePlural = "CONTINENTS"
@@ -143,8 +143,8 @@ class COUNTRIES(Noun_object):
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.adjectives = [
-            'Crowded',
-            'Developed',
+            'crowded',
+            'developed',
         ]
         self.objectTitleSingular = "COUNTRY"
         self.objectTitlePlural = "COUNTRIES"
@@ -177,8 +177,8 @@ class STATES(Noun_object):
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.adjectives = [
-            'Crowded',
-            'Developed',
+            'industrial',
+            'farming'
         ]
         self.objectTitleSingular = "STATE"
         self.objectTitlePlural = "STATES"
@@ -214,11 +214,11 @@ class CITIES(Noun_object):
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.adjectives = [
-            'Gleaming',
-            'Dirty',
-            'Clean',
-            'Crowded',
-            'Developed',
+            'gleaming',
+            'dirty',
+            'clean',
+            'crowded',
+            'developed',
         ]
         self.objectTitleSingular = "CITIES"
         self.objectTitlePlural = "CITIES"
@@ -232,7 +232,8 @@ class CITIES(Noun_object):
                     'PLANTS',
                     'PARKS',
                     'LIGHTS',
-                    'ANIMALS'
+                    'ANIMALS',
+                    'WINDOWS'
                 ]
         }
         self.up_relations = {
@@ -253,10 +254,10 @@ class STREETS(Noun_object):
     def __init__(self):
         super(STREETS, self).__init__(random_lists_data.STREETS_list)
         self.adjectives = [
-            'Dirty',
-            'Clean',
-            'Crowded',
-            'Packed',
+            'dirty',
+            'clean',
+            'crowded',
+            'packed',
         ]
         self.objectTitleSingular = "STREET"
         self.objectTitlePlural = "STREETS"
@@ -291,7 +292,12 @@ class STREETS(Noun_object):
 class BUILDINGS(Noun_object):
     def __init__(self):
         super(BUILDINGS, self).__init__(random_lists_data.BUILDINGS_list)
-
+        self.adjectives = [
+            'modern',
+            'rustic',
+            'expensive',
+            'grandoise'
+        ]
         self.objectTitleSingular = "BUILDING"
         self.objectTitlePlural = "BUILDINGS"
         self.down_relations = {
@@ -330,6 +336,12 @@ class BUILDINGS(Noun_object):
 class CARS(Noun_object):
     def __init__(self):
         super(CARS, self).__init__(random_lists_data.CARS_list)
+        self.adjectives = [
+            'fast',
+            'slow',
+            'luxury',
+            'powerful'
+        ]
         self.objectTitleSingular = "CAR"
         self.objectTitlePlural = "CARS"
         self.down_relations = {
@@ -364,6 +376,15 @@ class CARS(Noun_object):
 class PEOPLE(Noun_object):
     def __init__(self):
         super(PEOPLE, self).__init__(random_lists_data.PEOPLE_list)
+        self.adjectives = [
+            'annoying',
+            'smart',
+            'arrogent',
+            'kind',
+            'pessimistic',
+            'broke',
+            'rich'
+        ]
         self.objectTitleSingular = "PEOPLE"
         self.objectTitlePlural = "PEOPLE"
         self.down_relations = {
@@ -405,6 +426,13 @@ class PEOPLE(Noun_object):
 class PARKS(Noun_object):
     def __init__(self):
         super(PARKS, self).__init__(random_lists_data.PARKS_list)
+        self.adjectives = [
+            'beautiful',
+            'green',
+            'popular',
+            'spacious',
+            'wooded'
+        ]
         self.objectTitleSingular = "PARK"
         self.objectTitlePlural = "PARKS"
         self.down_relations = {
@@ -416,7 +444,8 @@ class PARKS(Noun_object):
                     'SIDEWALKS',
                     'LIGHTS',
                     'TRASH',
-                    'SEATS'
+                    'SEATS',
+                    'SIGNS'
 
                 ]
         }
@@ -438,6 +467,14 @@ class PARKS(Noun_object):
 class PLANTS(Noun_object):
     def __init__(self):
         super(PLANTS, self).__init__(random_lists_data.PLANTS_list)
+        self.adjectives = [
+            'aquatic',
+            'infected',
+            'tall',
+            'hardy',
+            'rare',
+            'potted'
+        ]
         self.objectTitleSingular = "PLANT"
         self.objectTitlePlural = "PLANTS"
         self.down_relations = {
@@ -464,6 +501,12 @@ class PLANTS(Noun_object):
 class LIGHTS(Noun_object):
     def __init__(self):
         super(LIGHTS, self).__init__(random_lists_data.LIGHTS_list)
+        self.adjectives = [
+            'bright',
+            'shiny',
+            'luminous',
+            'dull'
+        ]
         self.objectTitleSingular = "LIGHT"
         self.objectTitlePlural = "LIGHTS"
         self.down_relations = {
@@ -539,6 +582,14 @@ class ANIMALS(Noun_object):
 class WINDOWS(Noun_object):
     def __init__(self):
         super(WINDOWS, self).__init__(random_lists_data.WINDOWS_list)
+        self.adjectives = [
+            'small',
+            'large',
+            'stained',
+            'dirty',
+            'shattered',
+            'latticed'
+        ]
         self.objectTitleSingular = "WINDOW"
         self.objectTitlePlural = "WINDOWS"
         self.down_relations = {
@@ -562,6 +613,14 @@ class WINDOWS(Noun_object):
 class SEATS(Noun_object):
     def __init__(self):
         super(SEATS, self).__init__(random_lists_data.SEATS_list)
+        self.adjectives = [
+            'comfortable',
+            'vacant',
+            'cheap',
+            'uncomfortable',
+            'cushioned',
+            'reserved'
+        ]
         self.objectTitleSingular = "SEAT"
         self.objectTitlePlural = "SEATS"
         self.down_relations = {
@@ -580,6 +639,15 @@ class SEATS(Noun_object):
 class DOORS(Noun_object):
     def __init__(self):
         super(DOORS, self).__init__(random_lists_data.DOORS_list)
+        self.adjectives = [
+            'closed',
+            'open',
+            'heavy',
+            'revolving',
+            'golden',
+            'hidden',
+            'panelled'
+        ]
         self.objectTitleSingular = "DOOR"
         self.objectTitlePlural = "DOORS"
         self.down_relations = {
@@ -609,6 +677,12 @@ class DOORS(Noun_object):
 class FLOOR_MATS(Noun_object):
     def __init__(self):
         super(FLOOR_MATS, self).__init__(random_lists_data.FLOOR_MATS_list)
+        self.adjectives = [
+            'dirty',
+            'clean',
+            'sparkly',
+            'pristine'
+        ]
         self.objectTitleSingular = "FLOOR MAT"
         self.objectTitlePlural = "FLOOR MATS"
         self.down_relations = {
@@ -631,6 +705,15 @@ class FLOOR_MATS(Noun_object):
 class SIGNS(Noun_object):
     def __init__(self):
         self.instanceTitle = random.choice(random_lists_data.SIGNS_list)
+        self.adjectives = [
+            'clean',
+            'obnoxious',
+            'informative',
+            'boring',
+            'funny',
+            'whimsical',
+            'enlightening'
+        ]
         self.objectTitleSingular = "SIGN"
         self.objectTitlePlural = "SIGNS"
         self.down_relations = {
@@ -657,6 +740,12 @@ class SIGNS(Noun_object):
 class TRASH(Noun_object):
     def __init__(self):
         self.instanceTitle = random.choice(random_lists_data.TRASH_list)
+        self.adjectives = [
+            'dirty',
+            'disgusting',
+            'horrid',
+            'wretched'
+        ]
         self.objectTitleSingular = "TRASH"
         self.objectTitlePlural = "TRASH"
         self.down_relations = {
@@ -684,6 +773,20 @@ class TRASH(Noun_object):
 class SIDEWALKS(Noun_object):
     def __init__(self):
         self.instanceTitle = random.choice(random_lists_data.SIDEWALKS_list)
+        self.adjectives = [
+            'concrete',
+            'icey',
+            'dirty',
+            'snowy',
+            'littered',
+            'grassy',
+            'muddy',
+            'wide',
+            'narrow',
+            'busy',
+            'slippery',
+            'unpaved'
+        ]
         self.objectTitleSingular = "SIDEWALK"
         self.objectTitlePlural = "SIDEWALKS"
         self.down_relations = {
