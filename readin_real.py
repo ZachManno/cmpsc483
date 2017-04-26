@@ -74,11 +74,6 @@ def readin_real():
 
     options(lines)
 
-    print("Your code input:\n")
-    i = 0
-    while i < len(lines):
-        print(str(i) + ".\t" + lines[i])
-        i = i + 1
     for line in lines:
         if 'ANS' in line:
             ansFlag = True
@@ -92,7 +87,7 @@ def readin_real():
         print(str(i) + ".\t" + lines[i])
         i = i + 1
 
-    print("lines = " + str(lines))
+
     return lines
 
 
