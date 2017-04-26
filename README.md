@@ -1,7 +1,7 @@
 
 ![We Are Penn State!](http://www.underconsideration.com/brandnew/archives/penn_state_logo_detail.png "We Are Penn State!")
 
-### *PSU CMPSC 483 - CSE Department - Generating Natural Language Specifications from Computer Code*
+## *PSU CMPSC 483 - CSE Department - Generating Natural Language Specifications from Computer Code*
 
 
 The ultimate goal of this project is to develop natural language expressions (word problems) from mathematic equations.  
@@ -13,7 +13,7 @@ Example:
 
 *** 
 
-#### Installation
+### Installation
 
 1. Pull the code from github. 
 2. Install [Inflect](https://pypi.python.org/pypi/inflect "Inflect Documentation"). 
@@ -47,17 +47,17 @@ Follow the prompts to finsh your equation input. The system will then prompt you
 *** 
 
 
-#### Use of Program
+### Use of Program
 *Coming Soon! 
 
 *** 
 
-#### Ideas for Future  
+### Ideas for Future  
 *Coming Soon!
 
 
 *** 
-#### Credits 
+### Credits 
 
 The project wouldn't have been possible without the following contributors: 
 - Rodney Wells - https://www.linkedin.com/in/rodneywells/
