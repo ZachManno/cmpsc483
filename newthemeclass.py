@@ -62,7 +62,7 @@ BUILDING
 
 
 class Noun_object(object):
-    def __init__(self, instanceList,adjList):
+    def __init__(self, instanceList,adjList,interList):
         try:
             chance = (random.randint(1, 100))
             if chance < 41:
@@ -71,6 +71,7 @@ class Noun_object(object):
                 self.instanceTitle = random.choice(instanceList)
         except NotImplementedError:
             logging.error("Instance list not implemented for " + self.objectTitlePlural + "!")
+        self.interjections = interList
         self.down_relations = {
 
         }
@@ -79,6 +80,11 @@ class Noun_object(object):
         }
     def getInstanceTitle(self):
         return self.instanceTitle
+    def getInterjection(self):
+        if len(self.interjections) > 0:
+            return random.choice(self.interjections)
+        else:
+            return ""
     def getParentRelation(self):
         upVerb = random.choice(list(self.up_relations.keys()))
         parentNoun = random.choice(self.up_relations[upVerb])
@@ -126,7 +132,7 @@ class Noun_object(object):
 #Generic container class to be used when we run out of up relations
 class CONTAINERS(Noun_object):
     def __init__(self):
-        super(CONTAINERS, self).__init__(random_lists_data.CONTAINERS_list,random_lists_data.CONTAINERS_list_adj)
+        super(CONTAINERS, self).__init__(random_lists_data.CONTAINERS_list,random_lists_data.CONTAINERS_list_adj,random_lists_data.CONTAINERS_list_inter)
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.objectTitleSingular = "CONTAINER"
@@ -156,7 +162,7 @@ class CONTAINERS(Noun_object):
 # They are reasonable items to contain ie A CITIES has buildings. A CITIES would not have atoms
 class CONTINENTS(Noun_object):
     def __init__(self):
-        super(CONTINENTS, self).__init__(random_lists_data.CONTINENTS_list,random_lists_data.CONTINENTS_list_adj)
+        super(CONTINENTS, self).__init__(random_lists_data.CONTINENTS_list,random_lists_data.CONTINENTS_list_adj,random_lists_data.CONTINENTS_list_inter)
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.objectTitleSingular = "CONTINENT"
@@ -184,7 +190,7 @@ class CONTINENTS(Noun_object):
 
 class COUNTRIES(Noun_object):
     def __init__(self):
-        super(COUNTRIES, self).__init__(random_lists_data.COUNTRIES_list,random_lists_data.COUNTRIES_list_adj)
+        super(COUNTRIES, self).__init__(random_lists_data.COUNTRIES_list,random_lists_data.COUNTRIES_list_adj,random_lists_data.COUNTRIES_list_inter)
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.objectTitleSingular = "COUNTRY"
@@ -214,7 +220,7 @@ class COUNTRIES(Noun_object):
 
 class STATES(Noun_object):
     def __init__(self):
-        super(STATES, self).__init__(random_lists_data.STATES_list,random_lists_data.STATES_list_adj)
+        super(STATES, self).__init__(random_lists_data.STATES_list,random_lists_data.STATES_list_adj,random_lists_data.STATES_list_inter)
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.objectTitleSingular = "STATE"
@@ -247,7 +253,7 @@ class STATES(Noun_object):
 
 class CITIES(Noun_object):
     def __init__(self):
-        super(CITIES, self).__init__(random_lists_data.CITIES_list,random_lists_data.CITIES_list_adj)
+        super(CITIES, self).__init__(random_lists_data.CITIES_list,random_lists_data.CITIES_list_adj,random_lists_data.CITIES_list_inter)
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
         self.objectTitleSingular = "CITIES"
@@ -306,7 +312,7 @@ class CITIES(Noun_object):
 
 class STREETS(Noun_object):
     def __init__(self):
-        super(STREETS, self).__init__(random_lists_data.STREETS_list,random_lists_data.STREETS_list_adj)
+        super(STREETS, self).__init__(random_lists_data.STREETS_list,random_lists_data.STREETS_list_adj,random_lists_data.STATES_list_inter)
         self.objectTitleSingular = "STREET"
         self.objectTitlePlural = "STREETS"
         self.down_relations = {
@@ -344,7 +350,7 @@ class STREETS(Noun_object):
 
 class BUILDINGS(Noun_object):
     def __init__(self):
-        super(BUILDINGS, self).__init__(random_lists_data.BUILDINGS_list,random_lists_data.BUILDINGS_list_adj)
+        super(BUILDINGS, self).__init__(random_lists_data.BUILDINGS_list,random_lists_data.BUILDINGS_list_adj,random_lists_data.BUILDINGS_list_inter)
         self.objectTitleSingular = "BUILDING"
         self.objectTitlePlural = "BUILDINGS"
         self.down_relations = {
@@ -406,7 +412,7 @@ class BUILDINGS(Noun_object):
 
 class CARS(Noun_object):
     def __init__(self):
-        super(CARS, self).__init__(random_lists_data.CARS_list,random_lists_data.CARS_list_adj)
+        super(CARS, self).__init__(random_lists_data.CARS_list,random_lists_data.CARS_list_adj,random_lists_data.CARS_list_inter)
         self.objectTitleSingular = "CAR"
         self.objectTitlePlural = "CARS"
         self.down_relations = {
@@ -454,7 +460,7 @@ class CARS(Noun_object):
 
 class PEOPLE(Noun_object):
     def __init__(self):
-        super(PEOPLE, self).__init__(random_lists_data.PEOPLE_list,random_lists_data.PEOPLE_list_adj)
+        super(PEOPLE, self).__init__(random_lists_data.PEOPLE_list,random_lists_data.PEOPLE_list_adj,random_lists_data.PEOPLE_list_inter)
         self.objectTitleSingular = "PEOPLE"
         self.objectTitlePlural = "PEOPLE"
         self.down_relations = {
@@ -519,7 +525,7 @@ class PEOPLE(Noun_object):
 
 class PARKS(Noun_object):
     def __init__(self):
-        super(PARKS, self).__init__(random_lists_data.PARKS_list,random_lists_data.PARKS_list_adj)
+        super(PARKS, self).__init__(random_lists_data.PARKS_list,random_lists_data.PARKS_list_adj,random_lists_data.PARKS_list_inter)
         self.objectTitleSingular = "PARK"
         self.objectTitlePlural = "PARKS"
         self.down_relations = {
@@ -553,7 +559,7 @@ class PARKS(Noun_object):
 
 class PLANTS(Noun_object):
     def __init__(self):
-        super(PLANTS, self).__init__(random_lists_data.PLANTS_list,random_lists_data.PLANTS_list_adj)
+        super(PLANTS, self).__init__(random_lists_data.PLANTS_list,random_lists_data.PLANTS_list_adj,random_lists_data.PLANTS_list_inter)
         self.objectTitleSingular = "PLANT"
         self.objectTitlePlural = "PLANTS"
         self.down_relations = {
@@ -579,7 +585,7 @@ class PLANTS(Noun_object):
 
 class LIGHTS(Noun_object):
     def __init__(self):
-        super(LIGHTS, self).__init__(random_lists_data.LIGHTS_list,random_lists_data.LIGHTS_list_adj)
+        super(LIGHTS, self).__init__(random_lists_data.LIGHTS_list,random_lists_data.LIGHTS_list_adj,random_lists_data.LIGHTS_list_inter)
         self.objectTitleSingular = "LIGHT"
         self.objectTitlePlural = "LIGHTS"
         self.down_relations = {
@@ -615,7 +621,7 @@ class LIGHTS(Noun_object):
 
 class ANIMALS(Noun_object):
     def __init__(self):
-        super(ANIMALS, self).__init__(random_lists_data.ANIMALS_list,random_lists_data.ANIMALS_list_adj)
+        super(ANIMALS, self).__init__(random_lists_data.ANIMALS_list,random_lists_data.ANIMALS_list_adj,random_lists_data.ANIMALS_list_inter)
         self.objectTitleSingular = "ANIMAL"
         self.objectTitlePlural = "ANIMALS"
         self.down_relations = {
@@ -656,7 +662,7 @@ class ANIMALS(Noun_object):
 
 class WINDOWS(Noun_object):
     def __init__(self):
-        super(WINDOWS, self).__init__(random_lists_data.WINDOWS_list,random_lists_data.WINDOWS_list_adj)
+        super(WINDOWS, self).__init__(random_lists_data.WINDOWS_list,random_lists_data.WINDOWS_list_adj,random_lists_data.WINDOWS_list_inter)
         self.objectTitleSingular = "WINDOW"
         self.objectTitlePlural = "WINDOWS"
         self.down_relations = {
@@ -679,7 +685,7 @@ class WINDOWS(Noun_object):
 
 class SEATS(Noun_object):
     def __init__(self):
-        super(SEATS, self).__init__(random_lists_data.SEATS_list,random_lists_data.SEATS_list_adj)
+        super(SEATS, self).__init__(random_lists_data.SEATS_list,random_lists_data.SEATS_list_adj,random_lists_data.SEATS_list_inter)
         self.objectTitleSingular = "SEAT"
         self.objectTitlePlural = "SEATS"
         self.down_relations = {
@@ -702,7 +708,7 @@ class SEATS(Noun_object):
 
 class DOORS(Noun_object):
     def __init__(self):
-        super(DOORS, self).__init__(random_lists_data.DOORS_list,random_lists_data.DOORS_list_adj)
+        super(DOORS, self).__init__(random_lists_data.DOORS_list,random_lists_data.DOORS_list_adj,random_lists_data.DOORS_list_inter)
         self.objectTitleSingular = "DOOR"
         self.objectTitlePlural = "DOORS"
         self.down_relations = {
@@ -731,7 +737,7 @@ class DOORS(Noun_object):
 
 class FLOOR_MATS(Noun_object):
     def __init__(self):
-        super(FLOOR_MATS, self).__init__(random_lists_data.FLOOR_MATS_list,random_lists_data.FLOOR_MATS_list_adj)
+        super(FLOOR_MATS, self).__init__(random_lists_data.FLOOR_MATS_list,random_lists_data.FLOOR_MATS_list_adj,random_lists_data.FLOOR_MATS_list_inter)
         self.objectTitleSingular = "FLOOR_MAT"
         self.objectTitlePlural = "FLOOR_MATS"
         self.down_relations = {
@@ -753,7 +759,7 @@ class FLOOR_MATS(Noun_object):
 
 class SIGNS(Noun_object):
     def __init__(self):
-        super(SIGNS, self).__init__(random_lists_data.SIGNS_list,random_lists_data.SIGNS_list_adj)
+        super(SIGNS, self).__init__(random_lists_data.SIGNS_list,random_lists_data.SIGNS_list_adj,random_lists_data.SIGNS_list_inter)
         self.objectTitleSingular = "SIGN"
         self.objectTitlePlural = "SIGNS"
         self.down_relations = {
@@ -779,7 +785,7 @@ class SIGNS(Noun_object):
 
 class TRASH(Noun_object):
     def __init__(self):
-        super(TRASH, self).__init__(random_lists_data.TRASH_list,random_lists_data.TRASH_list_adj)
+        super(TRASH, self).__init__(random_lists_data.TRASH_list,random_lists_data.TRASH_list_adj,random_lists_data.TRASH_list_inter)
         self.objectTitleSingular = "TRASH"
         self.objectTitlePlural = "TRASH"
         self.down_relations = {
@@ -807,7 +813,7 @@ class TRASH(Noun_object):
 
 class SIDEWALKS(Noun_object):
     def __init__(self):
-        super(SIDEWALKS, self).__init__(random_lists_data.SIDEWALKS_list,random_lists_data.SIDEWALKS_list_adj)
+        super(SIDEWALKS, self).__init__(random_lists_data.SIDEWALKS_list,random_lists_data.SIDEWALKS_list_adj,random_lists_data.SIDEWALKS_list_inter)
         self.objectTitleSingular = "SIDEWALK"
         self.objectTitlePlural = "SIDEWALKS"
         self.down_relations = {
@@ -834,7 +840,7 @@ class SIDEWALKS(Noun_object):
 
 class BASKETS(Noun_object):
     def __init__(self):
-        super(BASKETS, self).__init__(random_lists_data.BASKETS_list,random_lists_data.BASKETS_list_adj)
+        super(BASKETS, self).__init__(random_lists_data.BASKETS_list,random_lists_data.BASKETS_list_adj,random_lists_data.BASKETS_list_inter)
         self.objectTitleSingular = "BASKET"
         self.objectTitlePlural = "BASKETS"
         self.down_relations = {
@@ -853,7 +859,7 @@ class BASKETS(Noun_object):
 
 class FRUITS(Noun_object):
     def __init__(self):
-        super(FRUITS, self).__init__(random_lists_data.FRUITS_list,random_lists_data.FRUITS_list_adj)
+        super(FRUITS, self).__init__(random_lists_data.FRUITS_list,random_lists_data.FRUITS_list_adj,random_lists_data.FRUITS_list_inter)
         self.objectTitleSingular = "FRUIT"
         self.objectTitlePlural = "FRUITS"
         self.down_relations = {
