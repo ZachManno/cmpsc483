@@ -584,7 +584,7 @@ FRUITS_list_adj = [
 
 SIDEWALKS_list = [
     'concrete sidewalk',
-    'boardwalk',
+    'boardwalk'
 ]
 SIDEWALKS_list_adj = [
     'concrete',
@@ -616,30 +616,6 @@ SEATS_list_adj = [
     'uncomfortable',
     'cushioned',
     'reserved'
-]
-
-ultimate_type_list = [
-    "CONTINENTS",
-    "COUNTRIES",
-    "STATES",
-    "CITIES",
-    "STREETS",
-    "BUILDINGS",
-    "CARS",
-    "PEOPLE",
-    "PLANTS",
-    "PARKS",
-    "LIGHTS",
-    "ANIMALS",
-    "WINDOWS",
-    "SEATS",
-    "DOORS",
-    "FLOOR_MATS",
-    "SIGNS",
-    "TRASH",
-    "BASKETS",
-    "FRUITS",
-    "SIDEWALKS"
 ]
 
 
@@ -730,3 +706,26 @@ FRUITS_list_inter = [
 SIDEWALK_list_inter = [
 ]
 
+ultimate_type_list = [
+    "CONTINENTS",
+    "COUNTRIES",
+    "STATES",
+    "CITIES",
+    "STREETS",
+    "BUILDINGS",
+    "CARS",
+    "PEOPLE",
+    "PLANTS",
+    "PARKS",
+    "LIGHTS",
+    "ANIMALS",
+    "WINDOWS",
+    "SEATS",
+    "DOORS",
+    "FLOOR_MATS",
+    "SIGNS",
+    "TRASH",
+    "BASKETS",
+    "FRUITS",
+    # "SIDEWALKS"
+]

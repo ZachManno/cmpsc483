@@ -73,6 +73,14 @@ def options(lines):
 
 def doread(lines):
     next = input("Input next line of code:\n")
+
+    tokens = next.split('=')  # this splits the equation into two parts
+    # Example:
+    # VAR1=x+y+6
+    # tokens = ['VAR1','x+y+6]
+    if len(tokens[0]>1):
+        next = input('Variable names must be one letter. Enter line again')
+
     lines.append(next)
     i = 0
     while i < len(lines):
@@ -126,4 +134,5 @@ def modify(lines):
     else:
         print(next + " is not an option.\n")
         modify(lines)
+
 
