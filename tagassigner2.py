@@ -181,12 +181,12 @@ def compileequation(equation):
 
                 # One special case: if window[0] a term, window[1] not a term, window[2] same attr as window[0]: Combine
                 if isinstance(window[0], Term) and isinstance(window[1], str) and attributeequivalence(window[2], window[0].attribute):
-                    term = Term([], window[1])
+                    term = Term([], window[1].upper())
                     if window[2] == "-":
                         term.sign = "-"
                     window[0].terms.append(term)
                 else:
-                    parent = Term([t1, t2], convertsign(window[2]))
+                    parent = Term([t1, t2], convertsign(window[2]).upper())
                     if window[2] == "-":
                         t2.sign = "-"
 
