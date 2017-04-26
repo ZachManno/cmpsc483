@@ -15,7 +15,7 @@ import getopt
 def readin_real():
     ### save each line of input to a list of lines, output them when the next input is an empty line
     ### print all previous lines before prompting for next line
-
+    ansFlag = False
     lines = []
 
     intro = input("Enter the first line of code, or hit ENTER to quit:\n")
@@ -37,6 +37,20 @@ def readin_real():
     while i < len(lines):
         print(str(i) + ".\t" + lines[i])
         i = i + 1
+    for line in lines:
+        if 'ANS' in line:
+            ansFlag = True
+    if not ansFlag:
+        addedAnsLine = input("No \'ANS\' variable input, please add\n")
+        lines.append(addedAnsLine)
+
+    options(lines)
+    print("Your code input:\n")
+    i = 0
+    while i < len(lines):
+        print(str(i) + ".\t" + lines[i])
+        i = i + 1
+
     return lines
 
 
@@ -112,3 +126,4 @@ def modify(lines):
     else:
         print(next + " is not an option.\n")
         modify(lines)
+

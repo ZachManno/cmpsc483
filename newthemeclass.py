@@ -149,11 +149,6 @@ class CONTAINERS(Noun_object):
 
 #Chains are defined by: Top level -> as many nouns as you would like ... -> nouns,with,no,down,relations,separated,by,commas
 
-#Weights:
-#100 = Generic container
-#95 = top level of chain
-#0 = nouns with no down relations
-
 #////////////////// Geography chain \\\\\\\\\\\\\\\\\\\\\\\\\\
 #  Continents -> Countries -> States -> Cities -> Streets -> Buildings .... -> Fruits,Trash,Signs,Floor mats,Windows
 
@@ -878,14 +873,4 @@ class FRUITS(Noun_object):
 
         }
 
-#There are b streets. All streets have c cars. How many cars?
-
-
-
-#There are c cages. Each cage has f animals. How many animals?
-
-#STREET/ROAD/TYPE OF
-
-
-
-#////////////////// End Geography chain \\\\\\\\\\\\\\\\\\\\\\\\\\
+# ////////////////// END Geography chain \\\\\\\\\\\\\\\\\\\\\\\\\\
