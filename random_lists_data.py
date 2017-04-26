@@ -641,3 +641,92 @@ ultimate_type_list = [
     "FRUITS",
     "SIDEWALKS"
 ]
+
+
+"""
+This is a list of optional interjections for the datatypes, which have a small chance of being stated in the code.
+"""
+
+CONTAINERS_list_inter = [
+]
+CONTINENTS_list_inter = [
+    "The continents are massive, spanning thousands of miles across."
+]
+COUNTRIES_list_inter = [
+    "They have a convoluted history, including the rise and fall of many types of government."
+]
+STATES_list_inter = [
+]
+CITIES_list_inter = [
+    "It's really easy to get lost in a sprawling city.",
+    "The crime rate in these cities has never been higher."
+]
+STREETS_list_inter = [
+]
+BUILDINGS_list_inter = [
+    "The creaky floor boards of the buildings is offsetting to some visitors.",
+    "All of the buildings were built in the late 1800s."
+    "All of the buildings were built in the late 1900s."
+    "Rumor has it that some of the structures were haunted by ghosts."
+]
+CARS_list_inter = [
+    "Honk honk!",
+    "Beep beep!!",
+    "Meep meep!!",
+    "Ayyy I'm walking 'ere!",
+    "Vroom vroom!!",
+]
+PEOPLE_list_inter = [
+    "They're all really friendly once you get to know them",
+    "They mostly keep to themselves",
+    "One of them was a Nobel Peace Prize Winner!"
+    "A recent wave of sickness in their town left many of them ill."
+    "They all got together to start a cool new fishing club. Care to join?!"
+]
+PLANTS_list_inter = [
+    "The leaves glisten in the light."
+]
+PARKS_list_inter = [
+    "You can hear birds chirp in the distance.",
+    "The Parks and Recreation department really need to clean these up.",
+    "People gather to ennjoy the park on a warm summer day."
+]
+LIGHTS_list_inter = [
+    "They're hot to the touch!",
+    "You find yourself mezmorized by the warm glow of the lights."
+]
+ANIMALS_list_inter = [
+    "It appears that they are very territorial."
+]
+WINDOWS_list_inter = [
+]
+SEATS_list_inter = [
+    "Looks comfy.",
+]
+DOORS_list_inter = [
+]
+FLOOR_MATS_list_inter = [
+]
+SIGNS_list_inter = [
+]
+TRASH_list_inter = [
+    "Yuck!",
+    "Gross!",
+    "Disgusting!",
+    "Can somebody clean this up?",
+    "Who put this trash here?",
+    "Eww!",
+    "Everyone was too lazy to pick up the trash."
+]
+BASKETS_list_inter = [
+]
+FRUITS_list_inter = [
+    "They're tasty!",
+    "Scrumptious!",
+    "The native population loves the fruit.",
+    "Delicious!",
+    "They're quite sweet."
+]
+SIDEWALK_list_inter = [
+]
+
