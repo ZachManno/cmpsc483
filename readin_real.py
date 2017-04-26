@@ -164,13 +164,18 @@ def printInputRequirements():
             \n#  z  = 6                 #\
             \n#  w = z * x              #\
             \n#                         # \
+            \n#  (no ANS var)           # \
+            \n--------------------------- \
             \n#  INVALID INPUT EXAMPLE: # \
             \n#                         # \
             \n#  X=5+y                  #\
             \n#  Zeta  = 6              #\
             \n#  white = Zeta * X       #\
+            \n#                         # \
+            \n#  (var names more        # \
+            \n#   than one letter)      # \
             \n--------------------------- \
-            \n\"")
+            ")
 
 def printCodeInput(lines):
     print("Your code input:\n")
@@ -184,6 +189,3 @@ def answerCheck(lines):
         if 'ANS' in line:
             return True
     return False
-
-
-readin_real()
