@@ -58,7 +58,6 @@ BUILDING
 
 
 
-#new relation types other than has
 
 
 
