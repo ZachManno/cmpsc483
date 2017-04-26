@@ -16,9 +16,6 @@ class EnglishProblemGenerator(object):
 
         # Save strrep of equation for later.
         self.strequation = equation
-        # print(type(equation))
-        # if type(equation) != type(str):
-        #     raise TypeError("Expected string for equation, received " + type(equation))
 
         # Format equation
         self.formatequation = tagassigner2.compileequation(self.strequation)
@@ -28,18 +25,19 @@ class EnglishProblemGenerator(object):
         self.initialproblemtype = newthemeclass.get_random_type()
 
     def debug_type_test(self):
-        #TODO Remove
+        # Debug function to test the word "city"
         myclass = "CITY"
         myclassobject = newthemeclass.str_to_class("newthemeclass", myclass)
         print(type(myclassobject))
         print(myclassobject.instanceTitle)
 
     def has_replacer(self):
+        # Replace the word "has" with something...tastier.
         return random.choice(['has', 'is beside', 'is around', 'is surrounded by',
                               'is flanked by', 'is situated beside'])
 
     def debug_display_contents(self, equationdict):
-        #TODO Remove
+        # Debug print function to display dictionary contents.
         for entry in equationdict:
             print(str(entry) + ": " + str(equationdict[entry][0].attribute) + " " + str(equationdict[entry][1]) + " " +
                   str(equationdict[entry][2]))
@@ -107,8 +105,6 @@ class EnglishProblemGenerator(object):
         self.ultimatefinalproblem = ""
         self.problemtype = newthemeclass.get_random_type()
         self.denominatortype = ""
-        print(self.initialproblemtype)
-        self.problemobject = newthemeclass.str_to_class("newthemeclass", self.initialproblemtype)
         nodeid = 0
 
         # Generate a humble introduction.
@@ -267,10 +263,17 @@ class EnglishProblemGenerator(object):
         """Generate division type subproblem based on parentid"""
         childrenids = self.equationdict[parentid][2]
 
+
+
         # Get Denominator Type
         parentrelation = ""
         if self.denominatortype == "":
-            parentrelation = self.problemobject.getParentRelation()
+            # Generate appropriate parent for problem type.
+            type = problemType
+            if type == None:
+                type = self.problemtype
+            themeobject = newthemeclass.str_to_class("newthemeclass", self.problemtype)
+            parentrelation = themeobject.getParentRelation()
             self.denominator = parentrelation.parent
 
 
