@@ -12,8 +12,11 @@ a + b     =>     There are a apples and b bananas. How much fruit is there?
 #### Installation
 
 1. Pull the code from github. 
-2. Install Inflect. 
-<code>sudo -H pip install -e git+https://github.com/pwdyson/inflect.py#egg=inflect</code>
+2. Install [Inflect](https://pypi.python.org/pypi/inflect "Inflect Documentation"). 
+   - Mac: <code>sudo -H pip install -e git+https://github.com/pwdyson/inflect.py#egg=inflect</code>
+   - Windows: <code>pip install -e git+https://github.com/pwdyson/inflect.py#egg=inflect</code>
+
+
 
 *** 
 
