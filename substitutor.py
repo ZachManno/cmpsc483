@@ -14,6 +14,8 @@ class Substitutor(object):
         self.finalEquation = self.getFinalEquation(self.equations)
 
     def getFinalEquation(self,equations):
+        if len(equations) == 1:
+            return equations[0]
         for substitutor in equations:
             for substitutee in equations:
                 if substitutor != substitutee:
