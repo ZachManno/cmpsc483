@@ -82,7 +82,11 @@ class Noun_object(object):
         return self.instanceTitle
     def getInterjection(self):
         if len(self.interjections) > 0:
-            return random.choice(self.interjections)
+            chance = (random.randint(1, 100))
+            if chance < 16:
+                return random.choice(self.interjections) + " "
+            else:
+                return ""
         else:
             return ""
     def getParentRelation(self):
