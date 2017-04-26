@@ -1,7 +1,6 @@
 import random_lists_data
 import newthemeclass
 
-#TODO: ADD UP AND DOWN RELATIONS IF CHECK
 
 def check():
     foundFlag = False
@@ -87,21 +86,6 @@ def check():
                             foundFlag = False
 
 
-
-
-
-
-
-
-
-
-
-
-
-                    #
-                    # The dictionary has a key of the type of down relation ('has' or etc)
-                    # And a value of a list of all Noun_objects corresponding to said type of down relation
-                    # Example. key = 'has', myclassobject.down_relations[key] = ['ROOMS','PLANTS','PEOPLE'].
 
 
 check()

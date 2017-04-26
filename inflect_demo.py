@@ -1,5 +1,6 @@
 import inflect
 import newthemeclass
+import random_lists_data
 
 
 
@@ -66,10 +67,19 @@ print(parentRelation1.child.objectTitleSingular)
 print(parentRelation1.parent.instanceTitle)
 
 print('--------------------------')
-t1 = newthemeclass.PEOPLE()
+t1 = newthemeclass.CONTAINERS()
 parentRelation1 = t1.getParentRelation()
 print(parentRelation1.parent.objectTitleSingular)
 print(parentRelation1.downVerb)
 print(parentRelation1.upVerb)
 print(parentRelation1.child.objectTitleSingular)
 print(parentRelation1.parent.instanceTitle)
+
+t1 = newthemeclass.FRUITS()
+print(t1.instanceTitle)
+print('-------------------------')
+
+for noun in random_lists_data.ultimate_type_list:
+    print('noun = ' + noun)
+    myclassobject = newthemeclass.str_to_class("newthemeclass", noun)
+    print("instance title = " + myclassobject.instanceTitle)

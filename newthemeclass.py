@@ -58,13 +58,18 @@ BUILDING
 
 
 
+#new relation types other than has
 
 
 
 class Noun_object(object):
-    def __init__(self, instanceList):
+    def __init__(self, instanceList,adjList):
         try:
-            self.instanceTitle = random.choice(instanceList)
+            chance = (random.randint(1, 100))
+            if chance < 41:
+                self.instanceTitle = random.choice(adjList) + ' ' + random.choice(instanceList)
+            else:
+                self.instanceTitle = random.choice(instanceList)
         except NotImplementedError:
             logging.error("Instance list not implemented for " + self.objectTitlePlural + "!")
         self.down_relations = {
@@ -119,41 +124,75 @@ class Noun_object(object):
 
 
 
+#Generic container class to be used when we run out of up relations
+class CONTAINERS(Noun_object):
+    def __init__(self):
+        super(CONTAINERS, self).__init__(random_lists_data.CONTAINERS_list,random_lists_data.CONTAINERS_list_adj)
+        # Noun_object.__init__(random_lists_data.CITIES_list)
+        # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
+        self.objectTitleSingular = "CONTAINER"
+        self.objectTitlePlural = "CONTAINERS"
+        self.down_relations = {
+            #Each top level noun object of a chain must be in CONTAINER'S down relations list
+            'has':
+                [
+                    'CONTAINERS',
+                    'CONTINENTS'
+                ]
+        }
+        self.up_relations = {
+            'is in':
+                [
+                    'CONTAINERS'
+                ]
+
+        }
+
+#Chains are defined by: Top level -> as many nouns as you would like ... -> nouns,with,no,down,relations,separated,by,commas
+
+#Weights:
+#100 = Generic container
+#95 = top level of chain
+#0 = nouns with no down relations
+
+#////////////////// Geography chain \\\\\\\\\\\\\\\\\\\\\\\\\\
+#  Continents -> Countries -> States -> Cities -> Streets -> Buildings .... -> Fruits,Trash,Signs,Floor mats,Windows
+
 # For down relations:
 # They are reasonable items to contain ie A CITIES has buildings. A CITIES would not have atoms
 class CONTINENTS(Noun_object):
     def __init__(self):
-        super(CONTINENTS, self).__init__(random_lists_data.CONTINENTS_list)
+        super(CONTINENTS, self).__init__(random_lists_data.CONTINENTS_list,random_lists_data.CONTINENTS_list_adj)
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
-        self.adjectives = [
-            'cold',
-            'warm',
-        ]
         self.objectTitleSingular = "CONTINENT"
         self.objectTitlePlural = "CONTINENTS"
         self.down_relations = {
-            'has':
+            'consists of':
                 [
                     'COUNTRIES',
                     'STATES',
                     'CITIES',
+                ]
+            ,
+            'governs':
+                [
                     'PEOPLE'
                 ]
         }
         self.up_relations = {
+            'is in':
+                [
+                    'CONTAINERS'
+                ]
 
         }
 
 class COUNTRIES(Noun_object):
     def __init__(self):
-        super(COUNTRIES, self).__init__(random_lists_data.COUNTRIES_list)
+        super(COUNTRIES, self).__init__(random_lists_data.COUNTRIES_list,random_lists_data.COUNTRIES_list_adj)
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
-        self.adjectives = [
-            'crowded',
-            'developed',
-        ]
         self.objectTitleSingular = "COUNTRY"
         self.objectTitlePlural = "COUNTRIES"
         self.down_relations = {
@@ -170,7 +209,7 @@ class COUNTRIES(Noun_object):
                 ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'CONTINENTS'
 
@@ -181,13 +220,9 @@ class COUNTRIES(Noun_object):
 
 class STATES(Noun_object):
     def __init__(self):
-        super(STATES, self).__init__(random_lists_data.STATES_list)
+        super(STATES, self).__init__(random_lists_data.STATES_list,random_lists_data.STATES_list_adj)
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
-        self.adjectives = [
-            'industrial',
-            'farming'
-        ]
         self.objectTitleSingular = "STATE"
         self.objectTitlePlural = "STATES"
         self.down_relations = {
@@ -205,7 +240,7 @@ class STATES(Noun_object):
                 ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'CONTINENTS',
                     'COUNTRIES'
@@ -218,16 +253,9 @@ class STATES(Noun_object):
 
 class CITIES(Noun_object):
     def __init__(self):
-        super(CITIES, self).__init__(random_lists_data.CITIES_list)
+        super(CITIES, self).__init__(random_lists_data.CITIES_list,random_lists_data.CITIES_list_adj)
         # Noun_object.__init__(random_lists_data.CITIES_list)
         # self.instanceTitle = random.choice(random_lists_data.CITIES_list)
-        self.adjectives = [
-            'gleaming',
-            'dirty',
-            'clean',
-            'crowded',
-            'developed',
-        ]
         self.objectTitleSingular = "CITIES"
         self.objectTitlePlural = "CITIES"
         self.down_relations = {
@@ -269,7 +297,7 @@ class CITIES(Noun_object):
 
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'STATES',
                     'COUNTRIES',
@@ -284,13 +312,7 @@ class CITIES(Noun_object):
 
 class STREETS(Noun_object):
     def __init__(self):
-        super(STREETS, self).__init__(random_lists_data.STREETS_list)
-        self.adjectives = [
-            'dirty',
-            'clean',
-            'crowded',
-            'packed',
-        ]
+        super(STREETS, self).__init__(random_lists_data.STREETS_list,random_lists_data.STREETS_list_adj)
         self.objectTitleSingular = "STREET"
         self.objectTitlePlural = "STREETS"
         self.down_relations = {
@@ -316,7 +338,7 @@ class STREETS(Noun_object):
 
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'CITIES',
                     'STATES',
@@ -328,17 +350,11 @@ class STREETS(Noun_object):
 
 class BUILDINGS(Noun_object):
     def __init__(self):
-        super(BUILDINGS, self).__init__(random_lists_data.BUILDINGS_list)
-        self.adjectives = [
-            'modern',
-            'rustic',
-            'expensive',
-            'grandoise'
-        ]
+        super(BUILDINGS, self).__init__(random_lists_data.BUILDINGS_list,random_lists_data.BUILDINGS_list_adj)
         self.objectTitleSingular = "BUILDING"
         self.objectTitlePlural = "BUILDINGS"
         self.down_relations = {
-            'has':
+            'contains':
                 [
                     #'FLOORS',
                     #'ROOMS',
@@ -379,7 +395,7 @@ class BUILDINGS(Noun_object):
                     'STREETS'
                 ]
             ,
-            'in':
+            'is in':
                 [
                     'CITIES',
                     'STATES',
@@ -396,13 +412,7 @@ class BUILDINGS(Noun_object):
 
 class CARS(Noun_object):
     def __init__(self):
-        super(CARS, self).__init__(random_lists_data.CARS_list)
-        self.adjectives = [
-            'fast',
-            'slow',
-            'luxury',
-            'powerful'
-        ]
+        super(CARS, self).__init__(random_lists_data.CARS_list,random_lists_data.CARS_list_adj)
         self.objectTitleSingular = "CAR"
         self.objectTitlePlural = "CARS"
         self.down_relations = {
@@ -438,7 +448,7 @@ class CARS(Noun_object):
                     'STREETS'
                 ]
             ,
-            'in':
+            'is in':
                 [
                     'CITIES',
                     'STATES',
@@ -450,16 +460,7 @@ class CARS(Noun_object):
 
 class PEOPLE(Noun_object):
     def __init__(self):
-        super(PEOPLE, self).__init__(random_lists_data.PEOPLE_list)
-        self.adjectives = [
-            'annoying',
-            'smart',
-            'arrogent',
-            'kind',
-            'pessimistic',
-            'broke',
-            'rich'
-        ]
+        super(PEOPLE, self).__init__(random_lists_data.PEOPLE_list,random_lists_data.PEOPLE_list_adj)
         self.objectTitleSingular = "PEOPLE"
         self.objectTitlePlural = "PEOPLE"
         self.down_relations = {
@@ -491,7 +492,7 @@ class PEOPLE(Noun_object):
                 ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'BUILDINGS',
                     'STREETS',
@@ -524,14 +525,7 @@ class PEOPLE(Noun_object):
 
 class PARKS(Noun_object):
     def __init__(self):
-        super(PARKS, self).__init__(random_lists_data.PARKS_list)
-        self.adjectives = [
-            'beautiful',
-            'green',
-            'popular',
-            'spacious',
-            'wooded'
-        ]
+        super(PARKS, self).__init__(random_lists_data.PARKS_list,random_lists_data.PARKS_list_adj)
         self.objectTitleSingular = "PARK"
         self.objectTitlePlural = "PARKS"
         self.down_relations = {
@@ -554,7 +548,7 @@ class PARKS(Noun_object):
                     'STREETS'
                 ]
             ,
-            'in':
+            'is in':
                 [
                     'CITIES',
                     'STATES',
@@ -565,15 +559,7 @@ class PARKS(Noun_object):
 
 class PLANTS(Noun_object):
     def __init__(self):
-        super(PLANTS, self).__init__(random_lists_data.PLANTS_list)
-        self.adjectives = [
-            'aquatic',
-            'infected',
-            'tall',
-            'hardy',
-            'rare',
-            'potted'
-        ]
+        super(PLANTS, self).__init__(random_lists_data.PLANTS_list,random_lists_data.PLANTS_list_adj)
         self.objectTitleSingular = "PLANT"
         self.objectTitlePlural = "PLANTS"
         self.down_relations = {
@@ -586,7 +572,7 @@ class PLANTS(Noun_object):
             #   ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'PARKS',
                     'BUILDINGS',
@@ -599,13 +585,7 @@ class PLANTS(Noun_object):
 
 class LIGHTS(Noun_object):
     def __init__(self):
-        super(LIGHTS, self).__init__(random_lists_data.LIGHTS_list)
-        self.adjectives = [
-            'bright',
-            'shiny',
-            'luminous',
-            'dull'
-        ]
+        super(LIGHTS, self).__init__(random_lists_data.LIGHTS_list,random_lists_data.LIGHTS_list_adj)
         self.objectTitleSingular = "LIGHT"
         self.objectTitlePlural = "LIGHTS"
         self.down_relations = {
@@ -622,7 +602,7 @@ class LIGHTS(Noun_object):
                 ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'CARS',
                     'PARKS',
@@ -641,18 +621,7 @@ class LIGHTS(Noun_object):
 
 class ANIMALS(Noun_object):
     def __init__(self):
-        super(ANIMALS, self).__init__(random_lists_data.ANIMALS_list)
-        self.adjectives = [
-            "fluffy",
-            "furry",
-            "silky",
-            "loud",
-            "lumbering",
-            "hibernating",
-            "shaggy",
-            "tired",
-        ]
-
+        super(ANIMALS, self).__init__(random_lists_data.ANIMALS_list,random_lists_data.ANIMALS_list_adj)
         self.objectTitleSingular = "ANIMAL"
         self.objectTitlePlural = "ANIMALS"
         self.down_relations = {
@@ -662,7 +631,7 @@ class ANIMALS(Noun_object):
                 ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'PARKS',
                     'CARS',
@@ -693,15 +662,7 @@ class ANIMALS(Noun_object):
 
 class WINDOWS(Noun_object):
     def __init__(self):
-        super(WINDOWS, self).__init__(random_lists_data.WINDOWS_list)
-        self.adjectives = [
-            'small',
-            'large',
-            'stained',
-            'dirty',
-            'shattered',
-            'latticed'
-        ]
+        super(WINDOWS, self).__init__(random_lists_data.WINDOWS_list,random_lists_data.WINDOWS_list_adj)
         self.objectTitleSingular = "WINDOW"
         self.objectTitlePlural = "WINDOWS"
         self.down_relations = {
@@ -712,7 +673,7 @@ class WINDOWS(Noun_object):
             #  ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'CARS',
                     'BUILDINGS',
@@ -724,15 +685,7 @@ class WINDOWS(Noun_object):
 
 class SEATS(Noun_object):
     def __init__(self):
-        super(SEATS, self).__init__(random_lists_data.SEATS_list)
-        self.adjectives = [
-            'comfortable',
-            'vacant',
-            'cheap',
-            'uncomfortable',
-            'cushioned',
-            'reserved'
-        ]
+        super(SEATS, self).__init__(random_lists_data.SEATS_list,random_lists_data.SEATS_list_adj)
         self.objectTitleSingular = "SEAT"
         self.objectTitlePlural = "SEATS"
         self.down_relations = {
@@ -743,7 +696,7 @@ class SEATS(Noun_object):
                 ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'PARKS',
                     'CARS',
@@ -755,16 +708,7 @@ class SEATS(Noun_object):
 
 class DOORS(Noun_object):
     def __init__(self):
-        super(DOORS, self).__init__(random_lists_data.DOORS_list)
-        self.adjectives = [
-            'closed',
-            'open',
-            'heavy',
-            'revolving',
-            'golden',
-            'hidden',
-            'panelled'
-        ]
+        super(DOORS, self).__init__(random_lists_data.DOORS_list,random_lists_data.DOORS_list_adj)
         self.objectTitleSingular = "DOOR"
         self.objectTitlePlural = "DOORS"
         self.down_relations = {
@@ -777,7 +721,7 @@ class DOORS(Noun_object):
             #   ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'BUILDINGS'
                 ]
@@ -793,13 +737,7 @@ class DOORS(Noun_object):
 
 class FLOOR_MATS(Noun_object):
     def __init__(self):
-        super(FLOOR_MATS, self).__init__(random_lists_data.FLOOR_MATS_list)
-        self.adjectives = [
-            'dirty',
-            'clean',
-            'sparkly',
-            'pristine'
-        ]
+        super(FLOOR_MATS, self).__init__(random_lists_data.FLOOR_MATS_list,random_lists_data.FLOOR_MATS_list_adj)
         self.objectTitleSingular = "FLOOR_MAT"
         self.objectTitlePlural = "FLOOR_MATS"
         self.down_relations = {
@@ -810,7 +748,7 @@ class FLOOR_MATS(Noun_object):
             #  ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'CARS',
                     'BUILDINGS'
@@ -821,16 +759,7 @@ class FLOOR_MATS(Noun_object):
 
 class SIGNS(Noun_object):
     def __init__(self):
-        self.instanceTitle = random.choice(random_lists_data.SIGNS_list)
-        self.adjectives = [
-            'clean',
-            'obnoxious',
-            'informative',
-            'boring',
-            'funny',
-            'whimsical',
-            'enlightening'
-        ]
+        super(SIGNS, self).__init__(random_lists_data.SIGNS_list,random_lists_data.SIGNS_list_adj)
         self.objectTitleSingular = "SIGN"
         self.objectTitlePlural = "SIGNS"
         self.down_relations = {
@@ -840,7 +769,7 @@ class SIGNS(Noun_object):
             #   ]
         }
         self.up_relations = {
-            'in':
+            'is in':
                 [
                     'PARKS',
                     'BUILDINGS'
@@ -856,13 +785,7 @@ class SIGNS(Noun_object):
 
 class TRASH(Noun_object):
     def __init__(self):
-        self.instanceTitle = random.choice(random_lists_data.TRASH_list)
-        self.adjectives = [
-            'dirty',
-            'disgusting',
-            'horrid',
-            'wretched'
-        ]
+        super(TRASH, self).__init__(random_lists_data.TRASH_list,random_lists_data.TRASH_list_adj)
         self.objectTitleSingular = "TRASH"
         self.objectTitlePlural = "TRASH"
         self.down_relations = {
@@ -878,7 +801,7 @@ class TRASH(Noun_object):
                     'SIDEWALKS'
                 ]
             ,
-            'in':
+            'is in':
                 [
                     'PARKS',
                     'CARS',
@@ -890,21 +813,7 @@ class TRASH(Noun_object):
 
 class SIDEWALKS(Noun_object):
     def __init__(self):
-        self.instanceTitle = random.choice(random_lists_data.SIDEWALKS_list)
-        self.adjectives = [
-            'concrete',
-            'icey',
-            'dirty',
-            'snowy',
-            'littered',
-            'grassy',
-            'muddy',
-            'wide',
-            'narrow',
-            'busy',
-            'slippery',
-            'unpaved'
-        ]
+        super(SIDEWALKS, self).__init__(random_lists_data.SIDEWALKS_list,random_lists_data.SIDEWALKS_list_adj)
         self.objectTitleSingular = "SIDEWALK"
         self.objectTitlePlural = "SIDEWALKS"
         self.down_relations = {
@@ -931,15 +840,7 @@ class SIDEWALKS(Noun_object):
 
 class BASKETS(Noun_object):
     def __init__(self):
-        self.instanceTitle = random.choice(random_lists_data.BASKETS_list)
-        self.adjectives = [
-            'woven',
-            'fancy',
-            'expensive',
-            'cheap',
-            'clean',
-            'dirty'
-        ]
+        super(BASKETS, self).__init__(random_lists_data.BASKETS_list,random_lists_data.BASKETS_list_adj)
         self.objectTitleSingular = "BASKET"
         self.objectTitlePlural = "BASKETS"
         self.down_relations = {
@@ -958,15 +859,7 @@ class BASKETS(Noun_object):
 
 class FRUITS(Noun_object):
     def __init__(self):
-        self.instanceTitle = random.choice(random_lists_data.FRUITS_list)
-        self.adjectives = [
-            'rotten',
-            'succulent',
-            'juicy',
-            'ripe',
-            'delicious'
-
-        ]
+        super(FRUITS, self).__init__(random_lists_data.FRUITS_list,random_lists_data.FRUITS_list_adj)
         self.objectTitleSingular = "FRUIT"
         self.objectTitlePlural = "FRUITS"
         self.down_relations = {
@@ -993,3 +886,7 @@ class FRUITS(Noun_object):
 #There are c cages. Each cage has f animals. How many animals?
 
 #STREET/ROAD/TYPE OF
+
+
+
+#////////////////// End Geography chain \\\\\\\\\\\\\\\\\\\\\\\\\\

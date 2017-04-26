@@ -79,6 +79,17 @@ VERBS_list = [
 ###############################################################################################
 ###############################################################################################
 ###############################################################################################
+CONTAINERS_list = [
+    'group',
+    'collection',
+    'assortment'
+]
+
+CONTAINERS_list_adj = [
+            'colorful',
+            'groovy',
+            'boring'
+        ]
 
 #City has all of these things in it
 #Topic to discuss: Cities can have animals, but also dogs and cats. But animals cant have dogs and cats, they are dogs and cats
@@ -87,10 +98,18 @@ CONTINENTS_list = [
     'Eastern Hemisphere',
     'Western Hemisphere'
 ]
+CONTINENTS_list_adj = [
+    'cold',
+    'warm'
+]
 
 COUNTRIES_list = [
     'First-world country',
     'Third-world country'
+]
+COUNTRIES_list_adj = [
+            'crowded',
+            'developed'
 ]
 
 STATES_list = [
@@ -98,12 +117,23 @@ STATES_list = [
     'Northeastern state',
     'coastal state'
 ]
+STATES_list_adj = [
+        'industrial',
+        'farming'
+        ]
 
 CITIES_list = [
     'utopia',
     'metropolis',
     'village',
     'town'
+]
+CITIES_list_adj = [
+    'gleaming',
+    'dirty',
+    'clean',
+    'crowded',
+    'developed'
 ]
 
 #A lot of these things loop in circles. when searching need to make sure we dont use something already used
@@ -116,6 +146,12 @@ STREETS_list = [
     'highway'
 
 ]
+STREETS_list_adj = [
+    'dirty',
+    'clean',
+    'crowded',
+    'packed'
+]
 
 BUILDINGS_list = [
     'shop',
@@ -126,7 +162,12 @@ BUILDINGS_list = [
     'apartment',
     'townhouse',
     'library'
-
+]
+BUILDINGS_list_adj = [
+    'modern',
+    'rustic',
+    'expensive',
+    'grandoise'
 ]
 
 CARS_list = [
@@ -136,6 +177,12 @@ CARS_list = [
     'minivan',
     'station wagon',
     'recreational vehicle'
+]
+CARS_list_adj = [
+    'fast',
+    'slow',
+    'luxury',
+    'powerful'
 ]
 
 #People can have clothes on them but that is different
@@ -201,6 +248,15 @@ PEOPLE_list = [
     'Physicist',
     'Computer Scientist'
 ]
+PEOPLE_list_adj = [
+    'annoying',
+    'smart',
+    'arrogent',
+    'kind',
+    'pessimistic',
+    'broke',
+    'rich'
+]
 
 PLANTS_list = [
     'orchid',
@@ -211,7 +267,15 @@ PLANTS_list = [
     'daisy',
     'violet'
 ]
-
+PLANTS_list_adj = [
+    'aquatic',
+    'infected',
+    'tall',
+    'hardy',
+    'rare',
+    'potted',
+    'pretty'
+]
 
 PARKS_list = [
     'national park',
@@ -219,12 +283,25 @@ PARKS_list = [
     'amusement park',
     'skate park'
 ]
+PARKS_list_adj = [
+    'beautiful',
+    'green',
+    'popular',
+    'spacious',
+    'wooded'
+]
 
 
 
 LIGHTS_list = [
     'LED light',
     'CFL light'
+]
+LIGHTS_list_adj = [
+    'bright',
+    'shiny',
+    'luminous',
+    'dull'
 ]
 
 #people are animals but differnt. Can be a "has" relationship and an "are" relationship. Or maybe "are" relationship doesnt
@@ -316,6 +393,16 @@ ANIMALS_list = [
     'Cross River Gorilla',
     'Fish'
 ]
+ANIMALS_list_adj = [
+    "fluffy",
+    "furry",
+    "silky",
+    "loud",
+    "lumbering",
+    "hibernating",
+    "shaggy",
+    "tired"
+]
 
 
 
@@ -333,6 +420,14 @@ WINDOWS_list = [
     #car window list
 
 ]
+WINDOWS_list_adj = [
+    'small',
+    'large',
+    'stained',
+    'dirty',
+    'shattered',
+    'latticed'
+]
 
 EATS_list = [
 
@@ -345,6 +440,15 @@ DOORS_list = [
     'bay door',
     'falcon wing door'
 ]
+DOORS_list_adj = [
+    'closed',
+    'open',
+    'heavy',
+    'revolving',
+    'golden',
+    'hidden',
+    'panelled'
+]
 
 ##AREADY HAVE LIGHTS
 
@@ -355,7 +459,12 @@ FLOOR_MATS_list = [
     'Anti-Fatigue Floor Mat',
     'Entrance Floor Mat',
     'Grease Resistant Mat',
-
+]
+FLOOR_MATS_list_adj = [
+    'dirty',
+    'clean',
+    'sparkly',
+    'pristine'
 ]
 
 SIGNS_list = [
@@ -364,6 +473,15 @@ SIGNS_list = [
     'speed limit sign',
     'ped walking sign',
     'school zone sign',
+]
+SIGNS_list_adj = [
+    'clean',
+    'obnoxious',
+    'informative',
+    'boring',
+    'funny',
+    'whimsical',
+    'enlightening'
 ]
 
 TRASH_list = [
@@ -380,12 +498,26 @@ TRASH_list = [
     'Recyclable item',
     'Hazardous material',
 ]
+TRASH_list_adj = [
+    'dirty',
+    'disgusting',
+    'horrid',
+    'wretched'
+]
 
 BASKETS_list = [
     'shopping basket',
     'all purpose basket',
     'wooden basket',
     'handwoven basket',
+]
+BASKETS_list_adj = [
+    'woven',
+    'fancy',
+    'expensive',
+    'cheap',
+    'clean',
+    'dirty'
 ]
 
 FRUITS_list = [
@@ -451,10 +583,31 @@ FRUITS_list = [
     'Strawberry',
 
 ]
+FRUITS_list_adj = [
+    'rotten',
+    'succulent',
+    'juicy',
+    'ripe',
+    'delicious'
+]
 
 SIDEWALKS_list = [
     'concrete sidewalk',
     'boardwalk',
+]
+SIDEWALKS_list_adj = [
+    'concrete',
+    'icey',
+    'dirty',
+    'snowy',
+    'littered',
+    'grassy',
+    'muddy',
+    'wide',
+    'narrow',
+    'busy',
+    'slippery',
+    'unpaved'
 ]
 
 SEATS_list = [
@@ -464,6 +617,14 @@ SEATS_list = [
     'studio chair',
     'desk seat',
     'egg chair',
+]
+SEATS_list_adj = [
+    'comfortable',
+    'vacant',
+    'cheap',
+    'uncomfortable',
+    'cushioned',
+    'reserved'
 ]
 
 ultimate_type_list = [
