@@ -15,6 +15,48 @@ import getopt
 def readin_real():
     ### save each line of input to a list of lines, output them when the next input is an empty line
     ### print all previous lines before prompting for next line
+    print('-------------------------------------------------------------')
+    print('#                    WELCOME TO THE                         #')
+    print('#                   CSE NAT LANG TEAM                       #')
+    print('#                EQUATION TO WORD PROBLEM                   #')
+    print('#                   GENERATION SYSTEM                       #')
+    print('#                                                           #')
+    print('#  BY:RODNEY WELLS, ZACH MANNO, STEVE LASKY, JOSH MARINI    #')
+    print('-------------------------------------------------------------')
+
+    response = input("Would you like to print the input requirements? Enter for no, any input for yes.\n")
+    if len(response) > 0:
+        print('-----------------------------------------------------------------------------------------')
+        print("#             INPUT REQUIREMENTS:                                                       #\
+               \n#  All equation vars have lower case letters                                            #\
+               \n#  The final result must begin with the variable \"ANS\"                                  #\
+               \n#  Any equations that are unrelated to the \"ANS\" equation will be disregarded           #\
+               \n#  Any spaces and tabs are okay                                                         #\
+               \n#  Variables should be 1 letter                                                         #\
+               \n#  All macros are wrapped in brackets                                                   #\
+              \n-----------------------------------------------------------------------------------------\
+               \n#  VALID INPUT EXAMPLE:   #\
+                \n#                         #\
+                \n#  x=5+y                  #\
+                \n#  z  = 6                 # \
+                \n#  ANS = z * x            #\
+                \n#                         #\
+                \n#  RESULT:                #\
+                \n#  (6)*(5+y)              #\
+                \n--------------------------- \
+                \n#  INVALID INPUT EXAMPLE: #\
+                \n#                         #\
+                \n#  x=5+y                  #\
+                \n#  z  = 6                 #\
+                \n#  w = z * x              #\
+                \n#                         # \
+                \n#  INVALID INPUT EXAMPLE: # \
+                \n#                         # \
+                \n#  X=5+y                  #\
+                \n#  Zeta  = 6              #\
+                \n#  white = Zeta * X       #\
+                \n--------------------------- \
+                \n\"")
     ansFlag = False
     lines = []
 
@@ -44,13 +86,13 @@ def readin_real():
         addedAnsLine = input("No \'ANS\' variable input, please add\n")
         lines.append(addedAnsLine)
 
-    options(lines)
     print("Your code input:\n")
     i = 0
     while i < len(lines):
         print(str(i) + ".\t" + lines[i])
         i = i + 1
 
+    print("lines = " + str(lines))
     return lines
 
 
@@ -73,14 +115,6 @@ def options(lines):
 
 def doread(lines):
     next = input("Input next line of code:\n")
-
-    tokens = next.split('=')  # this splits the equation into two parts
-    # Example:
-    # VAR1=x+y+6
-    # tokens = ['VAR1','x+y+6]
-    if len(tokens[0]>1):
-        next = input('Variable names must be one letter. Enter line again')
-
     lines.append(next)
     i = 0
     while i < len(lines):
