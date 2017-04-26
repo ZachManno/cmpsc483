@@ -109,7 +109,7 @@ class EnglishProblemGenerator(object):
 
         # Generate a humble introduction.
         # self.ultimatefinalproblem += introdata.generate_intro()
-        print("The topic is " + self.problemtype)
+        # print("The topic is " + self.problemtype)
 
         # Initiate recursion to generate problem.
         self.gen_on_datatype(self.get_term(nodeid, self.equationdict).attribute, 0)
@@ -199,11 +199,11 @@ class EnglishProblemGenerator(object):
             mulproblemtype = self.problemtype
 
         # Generate problem type based on mulproblemtype for each var in mul chain.
-        print("Current Problem Type : " + self.problemtype)
+        # print("Current Problem Type : " + self.problemtype)
         tempobjectlist.append(newthemeclass.str_to_class("newthemeclass", mulproblemtype))
         for idx in range(len(self.equationdict[parentid][2])):
             prevobject = tempobjectlist[idx]
-            print("Here: " + prevobject.objectTitleSingular)
+            # print("Here: " + prevobject.objectTitleSingular)
             parentRelation = prevobject.getParentRelation()
 
             # Save these for later.
@@ -296,10 +296,3 @@ class EnglishProblemGenerator(object):
 
         # Statement to eliminate denominator type.
         self.ultimatefinalproblem += " Consider only one " + p.singular_noun(parentrelation.parent.objectTitlePlural.lower()) + ". "
-
-print(p.plural_verb("eat"))
-
-#Each highway has b libraries.
-"""
-[has, is beside, is around, is surrounded by, is flanked, is situated beside]
-"""

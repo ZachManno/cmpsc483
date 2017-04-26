@@ -3,20 +3,6 @@ import substitutor
 import main
 import testing
 
-
-# inputgenerator =
-# mysubstitutedinput = substitutor.Substitutor().finalEquation
-
-mysubstitutedinput = "a + b + c"
-mysubstitutedinput = "a * b * c + d * RAND[100]"
-# print("Lessgooo")
-# generator = testing.EnglishProblemGenerator(mysubstitutedinput);
-# print(generator.generate_problem_for_equation())
-# print(testing.generate_problem_for_equation(mysubstitutedinput))
-
-
-# a * (b + c) * d
-
 def run_tests():
     """
     Run a series of tests to display equation output
@@ -24,19 +10,15 @@ def run_tests():
 
     equations = [
         # "a * b + 5",
-        "(a*b * c) / 2 + f"
-        # "RAND[20] * RAND[20]",
-        # "RAND[20] * RAND[20]",
-        # "RAND[20] * RAND[20]",
-        # "RAND[20] * RAND[20]",
-        # "RAND[20] * RAND[20]",
-        # "RAND[20] * RAND[20]",
-        # "RAND[100] + RAND[50] * f",
-        # "a * b + c",
-        # "(a * b) + (e * f * g)",
+        "RAND[20] * RAND[20]",
+        "RAND[20] * RAND[20]",
+        "RAND[100] + RAND[50] * f",
+        "a * b + c",
+        "(a * b) + (e * f * g)",
         # "RAND[150] * (b + (k * p + n) * (1 + 2) + g) * d",
-        # "a + b * c + (d * e * f)",
-        # "b * c + d * e * f"
+        "a + b * c + (d * e * f)",
+        "b * c + d * e * f",
+        "(a * b * c) / 2 + f"
     ]
 
     for equation in equations:
@@ -54,4 +36,4 @@ def run_tests():
         print()
 
 
-run_tests()
+# run_tests()

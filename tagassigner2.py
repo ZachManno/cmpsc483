@@ -173,11 +173,11 @@ def compileequation(equation):
                 # Creating relation with two children.
                 t1 = window[0]
                 if not isinstance(window[0], Term):
-                    t1 = Term([], window[0])
+                    t1 = Term([], window[0].upper())
 
                 t2 = window[1]
                 if not isinstance(window[1], Term):
-                    t2 = Term([], window[1])
+                    t2 = Term([], window[1].upper())
 
                 # One special case: if window[0] a term, window[1] not a term, window[2] same attr as window[0]: Combine
                 if isinstance(window[0], Term) and isinstance(window[1], str) and attributeequivalence(window[2], window[0].attribute):
@@ -237,7 +237,7 @@ def nextleveltests():
 
 
 # postorder_tests(
-nextleveltests()
+# nextleveltests()
 # print()
 # print()
 # run_tests()
