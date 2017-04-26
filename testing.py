@@ -16,9 +16,6 @@ class EnglishProblemGenerator(object):
 
         # Save strrep of equation for later.
         self.strequation = equation
-        # print(type(equation))
-        # if type(equation) != type(str):
-        #     raise TypeError("Expected string for equation, received " + type(equation))
 
         # Format equation
         self.formatequation = tagassigner2.compileequation(self.strequation)
@@ -28,14 +25,19 @@ class EnglishProblemGenerator(object):
         self.initialproblemtype = newthemeclass.get_random_type()
 
     def debug_type_test(self):
-        #TODO Remove
+        # Debug function to test the word "city"
         myclass = "CITY"
         myclassobject = newthemeclass.str_to_class("newthemeclass", myclass)
         print(type(myclassobject))
         print(myclassobject.instanceTitle)
 
+    def has_replacer(self):
+        # Replace the word "has" with something...tastier.
+        return random.choice(['has', 'is beside', 'is around', 'is surrounded by',
+                              'is flanked by', 'is situated beside'])
+
     def debug_display_contents(self, equationdict):
-        #TODO Remove
+        # Debug print function to display dictionary contents.
         for entry in equationdict:
             print(str(entry) + ": " + str(equationdict[entry][0].attribute) + " " + str(equationdict[entry][1]) + " " +
                   str(equationdict[entry][2]))
@@ -102,8 +104,7 @@ class EnglishProblemGenerator(object):
         """Generate initial statements. Determine type."""
         self.ultimatefinalproblem = ""
         self.problemtype = newthemeclass.get_random_type()
-        print(self.initialproblemtype)
-        self.problemobject = newthemeclass.str_to_class("newthemeclass", self.initialproblemtype)
+        self.denominatortype = ""
         nodeid = 0
 
         # Generate a humble introduction.
@@ -118,14 +119,14 @@ class EnglishProblemGenerator(object):
 
         return self.ultimatefinalproblem
 
-    def gen_on_datatype(self, attribute, childid):
+    def gen_on_datatype(self, attribute, childid, problemType = None, quick = False):
         """Fork in problem generation based on subproblem attribute type."""
         if attribute == "+" or attribute == "-":
-            self.gen_addition_helper(childid)
+            self.gen_addition_helper(childid, problemType, quick)
         elif attribute == "*":
-            self.gen_mul_helper(childid)
+            self.gen_mul_helper(childid, problemType, quick)
         elif attribute == "/":
-            self.gen_div_helper(childid)
+            self.gen_div_helper(childid, problemType, quick)
 
     def gen_addition_helper(self, parentid, problemtype = None, quick=False):
         """Generate addition type subproblem based on parentid"""
@@ -162,7 +163,7 @@ class EnglishProblemGenerator(object):
                 if not quick:
                     title = themeobject.getInstanceTitle()
                     if self.equationdict[childid][0].sign == "-":
-                        title = themeobject.objectTitleSingular.lower()
+                        title = p.singular_noun(themeobject.objectTitlePlural.lower())
 
                     self.ultimatefinalproblem += self.combine_subprob(message, self.get_term(childid, self.equationdict),
                                                                   title, "")
@@ -187,13 +188,15 @@ class EnglishProblemGenerator(object):
 
                 self.ultimatefinalproblem += " "
 
-    def gen_mul_helper(self, parentid):
+    def gen_mul_helper(self, parentid, problemType = None, quick = False):
         """Generate multiplilcation type subproblem based on parentid"""
 
         # Generate encapsulating terms for each mul piece.
         containerlist = []
         tempobjectlist = []
         mulproblemtype = self.problemtype
+        if problemType != None:
+            mulproblemtype = self.problemtype
 
         # Generate problem type based on mulproblemtype for each var in mul chain.
         print("Current Problem Type : " + self.problemtype)
@@ -223,6 +226,8 @@ class EnglishProblemGenerator(object):
             if prevproblem != None:
                 if not subproblem:
                     downverb = parentrelation.downVerb
+                    if downverb == "has":
+                        downverb = self.has_replacer()
                     if parentrelation.downVerb == "":
                         downverb = "(MISSING)"
 
@@ -254,7 +259,47 @@ class EnglishProblemGenerator(object):
 
             # self.ultimatefinalproblem += message
 
-
-    def gen_div_helper(self, parentid):
+    def gen_div_helper(self, parentid, problemType = None, quick = False):
         """Generate division type subproblem based on parentid"""
-        pass
+        childrenids = self.equationdict[parentid][2]
+
+
+
+        # Get Denominator Type
+        parentrelation = ""
+        if self.denominatortype == "":
+            # Generate appropriate parent for problem type.
+            type = problemType
+            if type == None:
+                type = self.problemtype
+            themeobject = newthemeclass.str_to_class("newthemeclass", self.problemtype)
+            parentrelation = themeobject.getParentRelation()
+            self.denominator = parentrelation.parent
+
+
+        # Display denominator
+        denominator = self.equationdict[childrenids[1]]
+        if self.issign(denominator[0].attribute):
+            self.gen_on_datatype(denominator[0].attribute, childrenids[1], self.denominator.objectTitlePlural)
+        else:
+            self.ultimatefinalproblem += denominator[0].attribute + " " + p.plural_noun(self.denominator.getInstanceTitle()) + "."
+
+        # Connect denominator into numerator
+        self.ultimatefinalproblem += " Split evenly among these " + parentrelation.parent.objectTitlePlural.lower() + ", "
+
+        # Display numerator
+        numerator = self.equationdict[childrenids[0]]
+        if self.issign(numerator[0].attribute):
+            self.gen_on_datatype(numerator[0].attribute, childrenids[0])
+        else:
+            self.ultimatefinalproblem += numerator[0].attribute + " " + numerator.getInstanceTitle() + "."
+
+        # Statement to eliminate denominator type.
+        self.ultimatefinalproblem += " Consider only one " + p.singular_noun(parentrelation.parent.objectTitlePlural.lower()) + ". "
+
+print(p.plural_verb("eat"))
+
+#Each highway has b libraries.
+"""
+[has, is beside, is around, is surrounded by, is flanked, is situated beside]
+"""
