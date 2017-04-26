@@ -23,7 +23,8 @@ def run_tests():
     """
 
     equations = [
-        "a - b + c - d",
+        # "a * b + 5",
+        "(a*b * c) / 2 + f"
         # "RAND[20] * RAND[20]",
         # "RAND[20] * RAND[20]",
         # "RAND[20] * RAND[20]",
@@ -33,7 +34,7 @@ def run_tests():
         # "RAND[100] + RAND[50] * f",
         # "a * b + c",
         # "(a * b) + (e * f * g)",
-        "RAND[150] * (b + f * (1 + 2) + g) * d",
+        # "RAND[150] * (b + (k * p + n) * (1 + 2) + g) * d",
         # "a + b * c + (d * e * f)",
         # "b * c + d * e * f"
     ]
