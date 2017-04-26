@@ -33,8 +33,8 @@ a + b     =>     There are a apples and b bananas. How much fruit is there?
 #### Credits 
 
 The project wouldn't have been possible without the following contributors: 
-- Rodney Wells 
-- Zach Manno 
-- Stephen Lasky 
+- Rodney Wells - https://www.linkedin.com/in/rodneywells/
+- Zach Manno - https://www.linkedin.com/in/zachmanno/
+- Stephen Lasky - https://www.linkedin.com/in/stephen-lasky-878b51a3/
 - Josh Marini 
-- Dr. Stephen Shaffer (Advising) 
+- Dr. Stephen Shaffer (Advising) - https://www.linkedin.com/in/scs12/
