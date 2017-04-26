@@ -4,8 +4,9 @@
 The ultimate goal of this project is to develop natural language expressions (word problems) from mathematic equations.  
 
 Example: 
+<code>a + b</code>     =>     <code>There are a apples and b bananas. How much fruit is there? </code>
 
-a + b     =>     There are a apples and b bananas. How much fruit is there? 
+* [Project Report](https://drive.google.com/open?id=1dMMDF4w7kvLdJ-hLHWn3Bbbab42CPzhQ5-hcz-6UK3A) 
 
 *** 
 
@@ -19,6 +20,29 @@ a + b     =>     There are a apples and b bananas. How much fruit is there?
 
 
 *** 
+
+### Sample Program 
+A sample execution program is available in <code>program_sample.py  </code> '
+
+Run the program. The system will prompt you to input variables and what they equate to. Be sure to include one line to be the answer. 
+ 
+Sample Input: 
+<code>a = 1 + 2</code>
+<code>b = x + 5</code>
+<code>ANS = a * b</code>
+
+We also support a few **macros**, including: 
+- AVG[] (Average of all values pased in) 
+   - <code>AVG[X, Y, Z] </code>
+- SQR[] (Square of the one value passed in) 
+   - <code>SQR[x]</code>
+- RAND[] (Pick a random number between 0 and the value passed in. 
+   - <code>RAND[100]</code>
+
+Follow the prompts to finsh your equation input. The system will then prompt you for the number of equations you would like to see generated. Proceed to see your output!  
+
+*** 
+
 
 #### Use of Program
 *Coming Soon! 
