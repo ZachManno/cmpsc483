@@ -263,8 +263,6 @@ class EnglishProblemGenerator(object):
         """Generate division type subproblem based on parentid"""
         childrenids = self.equationdict[parentid][2]
 
-
-
         # Get Denominator Type
         parentrelation = ""
         if self.denominatortype == "":
@@ -280,9 +278,9 @@ class EnglishProblemGenerator(object):
         # Display denominator
         denominator = self.equationdict[childrenids[1]]
         if self.issign(denominator[0].attribute):
-            self.gen_on_datatype(denominator[0].attribute, childrenids[1], self.denominator.objectTitlePlural)
+            self.gen_on_datatype(denominator[0].attribute, childrenids[1], self.denominator.objectTitlePlural, True)
         else:
-            self.ultimatefinalproblem += denominator[0].attribute + " " + p.plural_noun(self.denominator.getInstanceTitle()) + "."
+            self.ultimatefinalproblem += p.plural_verb(introdata.generate_intro()) + denominator[0].attribute + " " + p.plural_noun(self.denominator.getInstanceTitle()) + "."
 
         # Connect denominator into numerator
         self.ultimatefinalproblem += " Split evenly among these " + parentrelation.parent.objectTitlePlural.lower() + ", "
@@ -290,7 +288,7 @@ class EnglishProblemGenerator(object):
         # Display numerator
         numerator = self.equationdict[childrenids[0]]
         if self.issign(numerator[0].attribute):
-            self.gen_on_datatype(numerator[0].attribute, childrenids[0])
+            self.gen_on_datatype(numerator[0].attribute, childrenids[0], None, True)
         else:
             self.ultimatefinalproblem += numerator[0].attribute + " " + numerator.getInstanceTitle() + "."
 

@@ -1,10 +1,10 @@
-import readin
+import readin_real
 #equations = readin.readin()
 
 class Substitutor(object):
     def __init__(self):
         #lines = ['x=AVG(y,     z,w)','p=b*    g/4','   ANS  =  x/p    ']     #testing
-        lines = readin.readin()
+        lines = readin_real.readin_real()
         #strip white space
         for i, equation in enumerate(lines):
             equation = equation.replace(" ", "")
