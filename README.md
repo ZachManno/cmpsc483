@@ -1,10 +1,13 @@
-# cmpsc483
-### *CMPSC 483 - CSE Department - Generating Natural Language Specifications from Computer Code*
+
+![We Are Penn State!](http://www.underconsideration.com/brandnew/archives/penn_state_logo_detail.png "We Are Penn State!")
+
+### *PSU CMPSC 483 - CSE Department - Generating Natural Language Specifications from Computer Code*
+
 
 The ultimate goal of this project is to develop natural language expressions (word problems) from mathematic equations.  
 
 Example: 
-<code>a + b</code>     =>     <code>There are a apples and b bananas. How much fruit is there? </code>
+<code>a + b</code>     =>     <code>There are a apples and b bananas. How much fruit is there?</code>
 
 * [Project Report](https://drive.google.com/open?id=1dMMDF4w7kvLdJ-hLHWn3Bbbab42CPzhQ5-hcz-6UK3A) 
 
@@ -22,14 +25,14 @@ Example:
 *** 
 
 ### Sample Program 
-A sample execution program is available in <code>program_sample.py  </code> '
+A sample execution program is available in <code>program_sample.py</code> '
 
 Run the program. The system will prompt you to input variables and what they equate to. Be sure to include one line to be the answer. 
  
 Sample Input: 
-<code>a = 1 + 2</code>
-<code>b = x + 5</code>
-<code>ANS = a * b</code>
+- <code>a = 1 + 2</code>
+- <code>b = x + 5</code>
+- <code>ANS = a * b</code>
 
 We also support a few **macros**, including: 
 - AVG[] (Average of all values pased in) 
