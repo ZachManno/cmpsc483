@@ -84,7 +84,7 @@ class Noun_object(object):
         if len(self.interjections) > 0:
             chance = (random.randint(1, 100))
             if chance < 16:
-                return random.choice(self.interjections)
+                return random.choice(self.interjections) + " "
             else:
                 return ""
         else:
