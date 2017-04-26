@@ -665,9 +665,9 @@ STREETS_list_inter = [
 ]
 BUILDINGS_list_inter = [
     "The creaky floor boards of the buildings is offsetting to some visitors.",
-    "All of the buildings were built in the late 1800s."
-    "All of the buildings were built in the late 1900s."
-    "Rumor has it that some of the structures were haunted by ghosts."
+    "All of the buildings were built in the late 1800s.",
+    "All of the buildings were built in the late 1900s.",
+    "Rumor has it that some of the structures were haunted by ghosts.",
 ]
 CARS_list_inter = [
     "Honk honk!",
@@ -679,9 +679,9 @@ CARS_list_inter = [
 PEOPLE_list_inter = [
     "They're all really friendly once you get to know them",
     "They mostly keep to themselves",
-    "One of them was a Nobel Peace Prize Winner!"
-    "A recent wave of sickness in their town left many of them ill."
-    "They all got together to start a cool new fishing club. Care to join?!"
+    "One of them was a Nobel Peace Prize Winner!",
+    "A recent wave of sickness in their town left many of them ill.",
+    "They all got together to start a cool new fishing club. Care to join?!",
 ]
 PLANTS_list_inter = [
     "The leaves glisten in the light."
@@ -727,6 +727,6 @@ FRUITS_list_inter = [
     "Delicious!",
     "They're quite sweet."
 ]
-SIDEWALK_list_inter = [
+SIDEWALKS_list_inter = [
 ]
 
