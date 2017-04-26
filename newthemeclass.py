@@ -80,10 +80,11 @@ class Noun_object(object):
         }
     def getInstanceTitle(self):
         return self.instanceTitle
-    def getInterjection(self):
+    def getInterjection(self, maxrollchance = 16):
         if len(self.interjections) > 0:
+
             chance = (random.randint(1, 100))
-            if chance < 16:
+            if chance < maxrollchance:
                 return random.choice(self.interjections) + " "
             else:
                 return ""

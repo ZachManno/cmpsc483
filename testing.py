@@ -33,8 +33,7 @@ class EnglishProblemGenerator(object):
 
     def has_replacer(self):
         # Replace the word "has" with something...tastier.
-        return random.choice(['has', 'is beside', 'is around', 'is surrounded by',
-                              'is flanked by', 'is situated beside'])
+        return "has"
 
     def debug_display_contents(self, equationdict):
         # Debug print function to display dictionary contents.
@@ -188,6 +187,10 @@ class EnglishProblemGenerator(object):
 
                 self.ultimatefinalproblem += " "
 
+                if (idx == len(self.equationdict[parentid][2]) - 1):
+                    # Chance to interject!
+                    self.ultimatefinalproblem += themeobject.getInterjection()
+
     def gen_mul_helper(self, parentid, problemType = None, quick = False):
         """Generate multiplilcation type subproblem based on parentid"""
 
@@ -256,6 +259,11 @@ class EnglishProblemGenerator(object):
 
                 message += self.equationdict[multermid][0].attribute + " " + p.plural_noun(prevproblem.getInstanceTitle()) + ". "
                 self.ultimatefinalproblem += message
+
+                # Chance to interject!
+                interjection = prevproblem.getInterjection()
+                if len(interjection) > 0:
+                    self.ultimatefinalproblem += " " + interjection
 
             # self.ultimatefinalproblem += message
 

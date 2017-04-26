@@ -638,6 +638,11 @@ CITIES_list_inter = [
     "The crime rate in these cities has never been higher."
 ]
 STREETS_list_inter = [
+    "Some of these streets are controlled by a local gang, 'Los Fogosos Mexicanos'.",
+    "Some of these streets are controlled by a local gang, 'Los Castores Enojados'.",
+    "Some of these streets are controlled by a local gang, 'Los Osos Asesinos'.",
+    "Some of these streets are controlled by a local gang, 'La Moda de la Multitud'.",
+    "Some of these streets are controlled by a local gang, 'Los Adolescentes Angustiados'.",
 ]
 BUILDINGS_list_inter = [
     "The creaky floor boards of the buildings is offsetting to some visitors.",
@@ -651,6 +656,10 @@ CARS_list_inter = [
     "Meep meep!!",
     "Ayyy I'm walking 'ere!",
     "Vroom vroom!!",
+    "You can hear some of the drivers are disgruntled about the traffic.",
+    "Some of them are speeding.",
+    "Rush hour traffic substantially holds up the cars.",
+    "Some of the cars are really nice looking!"
 ]
 PEOPLE_list_inter = [
     "They're all really friendly once you get to know them",
@@ -658,18 +667,23 @@ PEOPLE_list_inter = [
     "One of them was a Nobel Peace Prize Winner!",
     "A recent wave of sickness in their town left many of them ill.",
     "They all got together to start a cool new fishing club. Care to join?!",
+    "It looks like they're all hanging out together!",
+    "A couple of them are getting into a fight, and the rest are cheering on. Fight! Fight! Fight!"
 ]
 PLANTS_list_inter = [
-    "The leaves glisten in the light."
+    "The leaves glisten in the light.",
+    "The plants are growing rather quickly!",
+    "The plants take such a long time to grow.",
 ]
 PARKS_list_inter = [
     "You can hear birds chirp in the distance.",
     "The Parks and Recreation department really need to clean these up.",
-    "People gather to ennjoy the park on a warm summer day."
+    "People gather to enjoy the park on a warm summer day.",
+    "Pouring rain prevents anyone from enjoying the park.",
 ]
 LIGHTS_list_inter = [
     "They're hot to the touch!",
-    "You find yourself mezmorized by the warm glow of the lights."
+    "You find yourself mesmorized by the warm glow of the lights."
 ]
 ANIMALS_list_inter = [
     "It appears that they are very territorial."
@@ -677,9 +691,11 @@ ANIMALS_list_inter = [
 WINDOWS_list_inter = [
 ]
 SEATS_list_inter = [
-    "Looks comfy.",
+    "They look comfy.",
+    "You contemplate taking a nap in one.",
 ]
 DOORS_list_inter = [
+    "Some creak upon opening.",
 ]
 FLOOR_MATS_list_inter = [
 ]
@@ -692,7 +708,8 @@ TRASH_list_inter = [
     "Can somebody clean this up?",
     "Who put this trash here?",
     "Eww!",
-    "Everyone was too lazy to pick up the trash."
+    "Everyone was too lazy to pick up the trash.",
+    "Somebody should clean this trash up."
 ]
 BASKETS_list_inter = [
 ]
@@ -701,7 +718,12 @@ FRUITS_list_inter = [
     "Scrumptious!",
     "The native population loves the fruit.",
     "Delicious!",
-    "They're quite sweet."
+    "They're quite sweet.",
+    "They're quite good.",
+    "They're quite tasty.",
+    "Some are starting to ripen.",
+    "Some are too ripe for your taste.",
+    "One has fruit flies in it! Yuck!",
 ]
 SIDEWALKS_list_inter = [
 ]

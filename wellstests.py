@@ -9,12 +9,12 @@ def run_tests():
     """
 
     equations = [
-        # "a * b + 5",
-        # "RAND[20] * RAND[20]",
-        # "RAND[20] * RAND[20]",
-        # "RAND[100] + RAND[50] * f",
-        # "a * b + c",
-        # "(a * b) + (e * f * g)",
+        "a * b + 5",
+        "RAND[20] * RAND[20]",
+        "RAND[20] * RAND[20]",
+        "RAND[100] + RAND[50] * f",
+        "a * b + c",
+        "(a * b) + (e * f * g)",
         # "RAND[150] * (b + (k * p + n) * (1 + 2) + g) * d",
         # "a + b * c + (d * e * f)",
         # "b * c + d * e * f",
