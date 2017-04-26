@@ -15,48 +15,13 @@ import getopt
 def readin_real():
     ### save each line of input to a list of lines, output them when the next input is an empty line
     ### print all previous lines before prompting for next line
-    print('-------------------------------------------------------------')
-    print('#                    WELCOME TO THE                         #')
-    print('#                   CSE NAT LANG TEAM                       #')
-    print('#                EQUATION TO WORD PROBLEM                   #')
-    print('#                   GENERATION SYSTEM                       #')
-    print('#                                                           #')
-    print('#  BY:RODNEY WELLS, ZACH MANNO, STEVE LASKY, JOSH MARINI    #')
-    print('-------------------------------------------------------------')
+
+    printIntro()
 
     response = input("Would you like to print the input requirements? Enter for no, any input for yes.\n")
     if len(response) > 0:
-        print('-----------------------------------------------------------------------------------------')
-        print("#             INPUT REQUIREMENTS:                                                       #\
-               \n#  All equation vars have lower case letters                                            #\
-               \n#  The final result must begin with the variable \"ANS\"                                  #\
-               \n#  Any equations that are unrelated to the \"ANS\" equation will be disregarded           #\
-               \n#  Any spaces and tabs are okay                                                         #\
-               \n#  Variables should be 1 letter                                                         #\
-               \n#  All macros are wrapped in brackets                                                   #\
-              \n-----------------------------------------------------------------------------------------\
-               \n#  VALID INPUT EXAMPLE:   #\
-                \n#                         #\
-                \n#  x=5+y                  #\
-                \n#  z  = 6                 # \
-                \n#  ANS = z * x            #\
-                \n#                         #\
-                \n#  RESULT:                #\
-                \n#  (6)*(5+y)              #\
-                \n--------------------------- \
-                \n#  INVALID INPUT EXAMPLE: #\
-                \n#                         #\
-                \n#  x=5+y                  #\
-                \n#  z  = 6                 #\
-                \n#  w = z * x              #\
-                \n#                         # \
-                \n#  INVALID INPUT EXAMPLE: # \
-                \n#                         # \
-                \n#  X=5+y                  #\
-                \n#  Zeta  = 6              #\
-                \n#  white = Zeta * X       #\
-                \n--------------------------- \
-                \n\"")
+        printInputRequirements()
+
     ansFlag = False
     lines = []
 
@@ -74,19 +39,18 @@ def readin_real():
 
     options(lines)
 
-    for line in lines:
-        if 'ANS' in line:
-            ansFlag = True
-    if not ansFlag:
+    ansFlag = answerCheck(lines)
+    while  not ansFlag:
         addedAnsLine = input("No \'ANS\' variable input, please add\n")
         lines.append(addedAnsLine)
+        ansFlag = answerCheck(lines)
 
-    print("Your code input:\n")
-    i = 0
-    while i < len(lines):
-        print(str(i) + ".\t" + lines[i])
-        i = i + 1
+    printCodeInput(lines)
 
+    confirm = input("\nConfirm? Enter for yes, any input for no.\n")
+    while len(confirm) > 0:
+        options(lines)
+        confirm = input("\nConfirm? Enter for yes, any input for no.\n")
 
     return lines
 
@@ -159,10 +123,67 @@ def modify(lines):
 
         else:
             print("Line " + next + " deleted.\n")
+        printCodeInput(lines)
         return
     else:
         print(next + " is not an option.\n")
         modify(lines)
 
+def printIntro():
+    print('-------------------------------------------------------------')
+    print('#                    WELCOME TO THE                         #')
+    print('#                   CSE NAT LANG TEAM                       #')
+    print('#                EQUATION TO WORD PROBLEM                   #')
+    print('#                   GENERATION SYSTEM                       #')
+    print('#                                                           #')
+    print('#  BY:RODNEY WELLS, ZACH MANNO, STEVE LASKY, JOSH MARINI    #')
+    print('-------------------------------------------------------------')
+
+def printInputRequirements():
+    print('-----------------------------------------------------------------------------------------')
+    print("#             INPUT REQUIREMENTS:                                                       #\
+           \n#  All equation vars have lower case letters                                            #\
+           \n#  The final result must begin with the variable \"ANS\"                                  #\
+           \n#  Any equations that are unrelated to the \"ANS\" equation will be disregarded           #\
+           \n#  Any spaces and tabs are okay                                                         #\
+           \n#  Variables should be 1 letter                                                         #\
+           \n#  All macros are wrapped in brackets                                                   #\
+          \n-----------------------------------------------------------------------------------------\
+           \n#  VALID INPUT EXAMPLE:   #\
+            \n#                         #\
+            \n#  x=5+y                  #\
+            \n#  z  = 6                 # \
+            \n#  ANS = z * x            #\
+            \n#                         #\
+            \n#  RESULT:                #\
+            \n#  (6)*(5+y)              #\
+            \n--------------------------- \
+            \n#  INVALID INPUT EXAMPLE: #\
+            \n#                         #\
+            \n#  x=5+y                  #\
+            \n#  z  = 6                 #\
+            \n#  w = z * x              #\
+            \n#                         # \
+            \n#  INVALID INPUT EXAMPLE: # \
+            \n#                         # \
+            \n#  X=5+y                  #\
+            \n#  Zeta  = 6              #\
+            \n#  white = Zeta * X       #\
+            \n--------------------------- \
+            \n\"")
+
+def printCodeInput(lines):
+    print("Your code input:\n")
+    i = 0
+    while i < len(lines):
+        print(str(i) + ".\t" + lines[i])
+        i = i + 1
+
+def answerCheck(lines):
+    for line in lines:
+        if 'ANS' in line:
+            return True
+    return False
 
 
+readin_real()
