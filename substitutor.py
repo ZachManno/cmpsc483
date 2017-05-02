@@ -2,6 +2,10 @@ import readin_real
 #equations = readin.readin()
 
 class Substitutor(object):
+    """
+    The Substitutor takes in lines of code from the input reader and converts it into
+    one single equation string, and removes the 'ANS=' portion of the string
+    """
     def __init__(self):
         #lines = ['x=AVG(y,     z,w)','p=b*    g/4','   ANS  =  x/p    ']     #testing
         lines = readin_real.readin_real()
@@ -14,8 +18,9 @@ class Substitutor(object):
         self.finalEquation = self.getFinalEquation(self.equations)
 
     def getFinalEquation(self,equations):
+        #if there is only one equation, no subsituting needs to be done
         if len(equations) == 1:
-            return equations[0]
+            return equations[0].lstrip('ANS=')
         for substitutor in equations:
             for substitutee in equations:
                 if substitutor != substitutee:
@@ -40,6 +45,9 @@ class Substitutor(object):
                                 i +=1      #no substitute found, increment i by 1
                         equations[equations.index(substitutee)] = teeTokens[0] + '=' + teeTokens[1] #replace equation in list with new substituted equation
         #print(equations)
-        return equations[len(equations)-1]
+        for substituted_equation in equations:
+            if 'ANS' in substituted_equation:
+                return substituted_equation.lstrip('ANS=')
+        #return equations[len(equations)-1].lstrip('ANS=')
 
 

@@ -8,7 +8,7 @@ def run(verbose):
     # Validate integrity of data cache.
     relation_checker_utility.check(verbose)
 
-    # Ask the user for input
+    # Ask the user for input and substitute it into one simplified equation
     simplifiedequation = substitutor.Substitutor().finalEquation
 
     print("You provided the following equation: ")
