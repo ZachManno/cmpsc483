@@ -48,7 +48,7 @@ Follow the prompts to finish your equation input. The system will then prompt yo
 
 
 ### Use of Program
-This system will be primarily used in an academic setting, although applications of this development could potentially extend beyond this setting.
+This system will be primarily used in an academic setting, although applications of this development could potentially extend beyond this.
 There has already been extensive research and development regarding the translation of natural language to computer code, but very little for the reverse.
 For programming assignments, professors often write word problems for the students to write the corresponding code.
 However, writing multiple word problems is tedious, and students often google search the word problems to easily find the answers.
