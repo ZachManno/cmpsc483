@@ -53,7 +53,7 @@ Follow the prompts to finish your equation input. The system will then prompt yo
 *** 
 
 ### Ideas for Future
-This project is still in it's infant stages, however there are many exciting possible improvements/additions to the system including:
+This project is still in its infant stages, however there are many exciting possible improvements/additions to the system including:
 - Including support for conditional if/else statements
 - A full application with an intuitive GUI to allow students to have infinite practice
 - Machine learning to improve the quality of problems
