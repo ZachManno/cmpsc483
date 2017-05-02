@@ -42,7 +42,7 @@ We also support a few **macros**, including:
 - RAND[] (Pick a random number between 0 and the value passed in. 
    - <code>RAND[100]</code>
 
-Follow the prompts to finsh your equation input. The system will then prompt you for the number of equations you would like to see generated. Proceed to see your output!  
+Follow the prompts to finish your equation input. The system will then prompt you for the number of equations you would like to see generated. Proceed to see your output!
 
 *** 
 
